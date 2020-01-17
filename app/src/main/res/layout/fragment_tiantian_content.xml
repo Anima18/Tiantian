@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.youth.banner.Banner
+            android:id="@+id/ttFragment_banner"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/ttFragment_title_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ttFragment_banner"
+            android:padding="10dp"
+            android:text="天天资讯"
+            android:textColor="@color/primary_text_dark_color" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/content_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/ttFragment_title_view"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+</ScrollView>

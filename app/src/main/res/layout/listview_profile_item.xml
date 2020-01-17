@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:background="@drawable/item_clickable_background">
+
+    <ImageView
+        android:id="@+id/profileLv_image"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/profileLv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/profileLv_image"
+        android:layout_centerVertical="true"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:text="TEST"/>
+
+    <ImageView
+        android:id="@+id/profileLv_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tint="@color/secondary_text_dark_color"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_chevron_right_black_18dp"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/profileLv_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:textSize="14sp"
+        android:layout_toLeftOf="@+id/profileLv_indicator"
+        android:visibility="gone"
+        android:textColor="@color/message_error"
+        android:text="TEST"/>
+</RelativeLayout>

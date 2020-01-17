@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    card_view:cardElevation="2dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <View
+            android:id="@+id/subItem_mark"
+            android:layout_width="6dp"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/subList_title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/primary_text_dark_color"
+                android:paddingTop="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="做多信号"/>
+
+            <TextView
+                android:id="@+id/subList_summary_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:lines="1"
+                android:text="2019/12/19 12:56 当前策略: (趋势策略)"
+                android:textSize="14sp"
+                android:textColor="@color/secondary_text_dark_color" />
+
+            <TextView
+                android:id="@+id/subList_description_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="4dp"
+                android:text="经过近期较长一段时间的跌势, 价格下行中多次背离K线下方多次受页常下映, 且有峰下方正处于前期关键之策我. 强烈建议平砍, 并建立多单(8%止损). "
+                android:textSize="14sp"
+                android:textColor="@color/secondary_text_dark_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/subList_action_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:text="建议操作: 做多"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/subList_stop_price_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:text="建议止损: $180.55"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+    
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="nav_icon_size">20dp</dimen>
+
+    <dimen name="tool_bar_height">48dp</dimen>
+
+    <dimen name="plaza_item_primary_text_size">16sp</dimen>
+    <dimen name="plaza_item_second_text_size">13sp</dimen>
+</resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1b82d2</color>
+    <color name="colorPrimaryDark">#0056a0</color>
+    <color name="colorPrimaryLight">#89afff</color>
+    <color name="colorAccent">#0ba194</color>
+    <color name="windowBackground">#f4f5f6</color>
+    <color name="colorError">#FA6470</color>
+    <color name="colorSelected">#eceef2</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#cccccc</color>
+    <color name="recyclerView_divider_line_color">#f7f8fb</color>
+
+
+    <color name="transparent_background">#50000000</color>
+    <color name="tabbackgroundColorPress">#6c6e6f</color>
+
+    <color name="colorStatusDefault">#4e80f5</color>
+    <color name="colorStatusWarning">#FF9B26</color>
+    <color name="colorStatusSuccess">#00CA8D</color>
+    <color name="colorStatusError">#FA6470</color>
+
+    <color name="colorStatusDefaultLight">#5492fe</color>
+    <color name="colorStatusWarningLight">#ffcc5a</color>
+    <color name="colorStatusSuccessLight">#9000CA8D</color>
+    <color name="colorStatusErrorLight">#ff969e</color>
+
+    <!-- 信息提示栏 -->
+    <color name="message_success">#4CAF50</color>
+    <color name="message_error">#F44336</color>
+    <color name="message_warning">#FF9800</color>
+    <color name="message_success_action">#212121</color>
+    <color name="message_warning_action">#c51162</color>
+    <color name="message_error_action">#ffd600</color>
+    <color name="message_default_action">#03DAC6</color>
+
+    <!-- text color -->
+    <color name="primary_text_dark_color">#212121</color>
+    <color name="secondary_text_dark_color">#727272</color>
+    <color name="disabled_text_dark_color">#B8B8B8</color>
+    <color name="divider_text_dark_color">#DADADA</color>
+    <color name="primary_text_white_color">#FFFFFF</color>
+    <color name="secondary_text_white_color">#FDFDFD</color>
+    <color name="disabled_text_white_color">#FBFBFB</color>
+    <color name="divider_text_white_color">#F9F9F9</color>
+    <color name="dividing_line_color">#EEEEEE</color>
+
+    <color name="listview_item_selected">#bde1ff</color>
+</resources>
