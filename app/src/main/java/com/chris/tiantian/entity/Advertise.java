@@ -23,6 +23,7 @@ public class Advertise implements Parcelable {
     private String link;
     private int weight;
     private String img;
+    private String detail;
 
     protected Advertise(Parcel in) {
         id = in.readInt();
@@ -31,6 +32,7 @@ public class Advertise implements Parcelable {
         link = in.readString();
         weight = in.readInt();
         img = in.readString();
+        detail = in.readString();
     }
 
     public static final Creator<Advertise> CREATOR = new Creator<Advertise>() {
@@ -93,6 +95,14 @@ public class Advertise implements Parcelable {
         this.img = img;
     }
 
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -106,5 +116,6 @@ public class Advertise implements Parcelable {
         dest.writeString(link);
         dest.writeInt(weight);
         dest.writeString(img);
+        dest.writeString(detail);
     }
 }

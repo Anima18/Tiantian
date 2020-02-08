@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,8 +33,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
-
-import static com.chris.tiantian.entity.Constant.SP_LOADING_POLICY_SIGNAL_NETWORK;
 
 /**
  * Created by jianjianhong on 19-12-18
@@ -68,12 +65,11 @@ public class PolicyFragment extends Fragment implements PolicyActionView {
     @Override
     public void onResume() {
         super.onResume();
-        boolean isNetworkRefresh = preferences.getBooleanValue(Constant.SP_LOADING_POLICY_NETWORK, true);
-        boolean isLocalRefresh = preferences.getBooleanValue(Constant.SP_LOADING_POLICY_DATABASE, true);
-        if(isNetworkRefresh) {
-            presenter.requestDataByNetwork();
-        }else if(isLocalRefresh) {
+        boolean isLocalRefresh = preferences.getBooleanValue(Constant.SP_LOADING_POLICY_DATABASE, false);
+        if(isLocalRefresh) {
             presenter.requestDataByLocal();
+        }else {
+            presenter.requestDataByNetwork();
         }
     }
     @Override
@@ -136,7 +132,7 @@ public class PolicyFragment extends Fragment implements PolicyActionView {
 
     private void changeCurrentPolicy(UserInfoSharedPreferences sharedPreferences, int id) {
         sharedPreferences.putIntValue(Constant.SP_CURRENT_POLICY, id);
-        sharedPreferences.putBooleanValue(SP_LOADING_POLICY_SIGNAL_NETWORK, true);
+        sharedPreferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, false);
         recycleView.getAdapter().notifyDataSetChanged();
     }
 
@@ -174,20 +170,20 @@ public class PolicyFragment extends Fragment implements PolicyActionView {
         TextView timeLevelView;
         TextView accuracyView;
         TextView typeView;
-        ImageView currentView;
+        TextView currentView;
 
         //UserInfoSharedPreferences preferences;
 
         public PolicyItemViewHolder(Context context, View itemView) {
             super(itemView);
             this.itemView = itemView;
-            nameView = itemView.findViewById(R.id.list_policy_name_value);
-            developerView = itemView.findViewById(R.id.list_policy_developer_value);
-            marketView = itemView.findViewById(R.id.list_policy_market_value);
-            timeLevelView = itemView.findViewById(R.id.list_policy_time_value);
-            accuracyView = itemView.findViewById(R.id.list_policy_accuracy_value);
-            typeView = itemView.findViewById(R.id.list_policy_type);
-            currentView = itemView.findViewById(R.id.list_policy_current);
+            nameView = itemView.findViewById(R.id.policy_name);
+            developerView = itemView.findViewById(R.id.policy_developerId);
+            marketView = itemView.findViewById(R.id.policy_market);
+            timeLevelView = itemView.findViewById(R.id.policy_timeLevel);
+            accuracyView = itemView.findViewById(R.id.policy_accuracy);
+            typeView = itemView.findViewById(R.id.policy_kind);
+            currentView = itemView.findViewById(R.id.policy_current);
 
             //preferences = UserInfoSharedPreferences.Companion.getInstance(context);
         }
@@ -197,10 +193,10 @@ public class PolicyFragment extends Fragment implements PolicyActionView {
             int currentPolicy = preferences.getIntValue(Constant.SP_CURRENT_POLICY, -1);
             if(currentPolicy == data.getId()) {
                 itemView.setBackground(getResources().getDrawable(R.drawable.item_selected_background));
-                currentView.setImageResource(R.drawable.ic_action_start_selected);
+                currentView.setVisibility(View.VISIBLE);
             }else {
                 itemView.setBackground(getResources().getDrawable(R.drawable.item_clickable_background));
-                currentView.setImageResource(R.drawable.ic_action_start);
+                currentView.setVisibility(View.INVISIBLE);
             }
             nameView.setText(data.getName());
             developerView.setText(data.getDeveloperId()+"");

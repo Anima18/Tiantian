@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#EEEEEE">
+        android:background="#f7f8fa">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/subFragment_listView"
@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="3dp"
             android:layout_alignParentBottom="true" />
 
         <TextView

@@ -1,10 +1,12 @@
 package com.chris.tiantian.module.main.activity;
 
 import android.content.Intent;
+import android.graphics.Outline;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ import com.chris.tiantian.R;
 import com.chris.tiantian.entity.Advertise;
 import com.chris.tiantian.entity.NetworkDataParser;
 import com.chris.tiantian.entity.New;
+import com.chris.tiantian.module.tiantian.AdvertiseDetailActivity;
 import com.chris.tiantian.module.tiantian.TiantianDetailActivity;
 import com.chris.tiantian.util.CommonAdapter;
 import com.chris.tiantian.util.CommonItemViewHolder;
@@ -44,6 +47,8 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
     private MultipleStatusView statusView;
     private RecyclerView recyclerView;
 
+    private List<Advertise> advertises = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,7 +57,6 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
             banner = rootView.findViewById(R.id.ttFragment_banner);
             statusView = rootView.findViewById(R.id.ttFragment_status_view);
             recyclerView = rootView.findViewById(R.id.content_listView);
-
             initNewsListView();
             requestData();
             statusView.setOnRetryClickListener(new View.OnClickListener() {
@@ -102,7 +106,7 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
 
     private void requestData() {
         statusView.showLoading();
-        String adUrl = String.format("%s/comment/apiv2/policylist", CommonUtil.getBaseUrl());
+        String adUrl = String.format("%s/comment/apiv2/homead", CommonUtil.getBaseUrl());
         NetworkRequest adRequest = new NetworkRequest<Advertise>(getActivity())
                 .url(adUrl)
                 .method(RequestParam.Method.GET)
@@ -138,15 +142,19 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
     }
 
     private void showBanner(List<Advertise> advertises) {
+        this.advertises = advertises;
         List<String> urls = new ArrayList<>();
-                        /*for(Advertise advertise : list) {
-                            urls.add(advertise.getImg());
-                        }*/
-        urls.add("https://img.36krcdn.com/20191219/v2_a9a8f104a1a741678c3693641345af30_img_png");
-        urls.add("https://img.36krcdn.com/20191218/v2_af9b1a7a5b354444bed6d7d80b432d5f_img_jpg");
-        urls.add("https://img.36krcdn.com/20191219/v2_d0a22e2c6a8d47378af5167ad2fe15a5_img_png");
-        urls.add("https://img.36krcdn.com/20191211/v2_ad0b0a0af0234cb891dd674824438d62_img_jpg");
-        urls.add("https://img.36krcdn.com/20191219/v2_d11ac4ec7f984cb29cb1583bf8e4139f_img_png");
+        for(Advertise advertise : advertises) {
+            urls.add(advertise.getImg());
+        }
+
+        banner.setOutlineProvider(new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), 20);
+            }
+        });
+        banner.setClipToOutline(true);
 
         banner.setImages(urls)
                 .setImageLoader(new GlideImageLoader())
@@ -164,7 +172,9 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
 
     @Override
     public void OnBannerClick(int position) {
-        //startActivity(new Intent(getContext(), TiantianDetailActivity.class));
+        Intent intent = new Intent(getContext(), AdvertiseDetailActivity.class);
+        intent.putExtra(AdvertiseDetailActivity.ADVERTISE_DETAIL, advertises.get(position));
+        startActivity(intent);
     }
 
     @Override

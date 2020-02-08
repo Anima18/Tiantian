@@ -3,14 +3,15 @@ package com.chris.tiantian.util;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.ActionMenuItem;
@@ -70,12 +71,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             }
 
             if(TextUtils.isEmpty(data.getValue())) {
-                holder.indicatorView.setVisibility(View.VISIBLE);
                 holder.valueTv.setVisibility(View.GONE);
             }else {
                 holder.valueTv.setVisibility(View.VISIBLE);
                 holder.valueTv.setText(data.getValue());
-                holder.indicatorView.setVisibility(View.GONE);
             }
         }else {
             holder.imageView.setVisibility(View.GONE);
@@ -87,6 +86,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         }else {
             holder.valueTv.setVisibility(View.GONE);
         }
+
+        holder.markView.setVisibility(data.isMake()?View.VISIBLE:View.GONE);
     }
 
     // Return the total count of items
@@ -104,6 +105,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         public ImageView imageView;
         public TextView valueTv;
         public ImageView indicatorView;
+        public View markView;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -114,6 +116,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             imageView = itemView.findViewById(R.id.profileLv_image);
             valueTv = itemView.findViewById(R.id.profileLv_value);
             indicatorView = itemView.findViewById(R.id.profileLv_indicator);
+            markView = itemView.findViewById(R.id.profileLv_mark);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

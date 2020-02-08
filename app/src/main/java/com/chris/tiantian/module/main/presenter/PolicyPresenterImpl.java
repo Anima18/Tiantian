@@ -3,7 +3,6 @@ package com.chris.tiantian.module.main.presenter;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 
 import com.anima.networkrequest.DataListCallback;
 import com.anima.networkrequest.NetworkRequest;
@@ -50,7 +49,6 @@ public class PolicyPresenterImpl implements PolicyPresenter {
     public void requestDataByLocal() {
         List<Policy> Policys = manager.query();
         actionView.showData(Policys);
-        preferences.putBooleanValue(Constant.SP_LOADING_POLICY_DATABASE, false);
     }
 
     @Override
@@ -74,7 +72,6 @@ public class PolicyPresenterImpl implements PolicyPresenter {
                         manager.clear();
                         manager.insertList((List<Policy>) list);
                         preferences.putStringValue(Constant.SP_LASTTIME_POLICY_NETWORK, DateUtil.getTime(new Date()));
-                        preferences.putBooleanValue(Constant.SP_LOADING_POLICY_NETWORK, false);
                         preferences.putBooleanValue(Constant.SP_LOADING_POLICY_DATABASE, true);
                     }
                 });

@@ -1,73 +1,73 @@
 package com.chris.tiantian.module.main;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
-import android.util.Log;
+import android.content.Context;
 
-import androidx.annotation.Nullable;
-
-import com.chris.tiantian.entity.Policy;
-import com.chris.tiantian.entity.PolicySignal;
+import com.chris.tiantian.module.main.presenter.PolicyPresenter;
+import com.chris.tiantian.module.main.presenter.PolicyPresenterImpl;
 import com.chris.tiantian.module.main.presenter.PolicySignalPresenter;
 import com.chris.tiantian.module.main.presenter.PolicySignalPresenterImpl;
+import com.fanjun.keeplive.config.KeepLiveService;
 
-import org.greenrobot.eventbus.EventBus;
+import java.util.Calendar;
 
 /**
- * Created by jianjianhong on 19-9-27
+ * Created by jianjianhong on 20-1-14
  */
-public class PolicyMonitorService extends Service {
-
+public class PolicyMonitorService implements KeepLiveService {
     private static final String TAG = "PolicyMonitorService";
+    private static PolicyMonitorService sInstance;
+
+    private PolicyPresenter policyPresenter;
     private PolicySignalPresenter signalPresenter;
     private MonitorThread monitorThread;
     private boolean monitorFlag = true;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Log.i(TAG, "onCreate");
+    public static PolicyMonitorService getInstance(Context context) {
+        synchronized (PolicyMonitorService.class) {
+            if (sInstance == null) {
+                synchronized (PolicyMonitorService.class) {
+                    Calendar calendar = Calendar.getInstance();
+                    sInstance = new PolicyMonitorService(context);
+                }
 
-        signalPresenter = new PolicySignalPresenterImpl(this);
+            }
+        }
+
+        return sInstance;
+    }
+
+    private PolicyMonitorService(Context context){
+        signalPresenter = new PolicySignalPresenterImpl(context);
+        policyPresenter = new PolicyPresenterImpl(context);
+    }
+
+    @Override
+    public void onWorking() {
+        if(monitorThread != null) {
+            monitorThread.interrupt();
+            monitorThread = null;
+            monitorFlag = false;
+        }
         monitorThread = new MonitorThread();
+        monitorFlag = true;
         monitorThread.start();
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(TAG, "onStartCommand");
-        return Service.START_STICKY;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.i(TAG, "onDestroy");
+    public void onStop() {
+        monitorThread.interrupt();
         monitorFlag = false;
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        Log.i(TAG, "onLowMemory");
-    }
-
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
     }
 
     private class MonitorThread extends Thread {
         @Override
         public void run() {
             while (monitorFlag) {
-                Log.i(TAG, "Monitor...");
+               // Log.i(TAG, "Monitor...");
                 try {
-                    Thread.sleep(10000);
-                    EventBus.getDefault().post(new Policy());
-                    signalPresenter.monitorPolicySignal();
+                    Thread.sleep(5000);
+                    //policyPresenter.monitorPolicy();
+                    //signalPresenter.monitorPolicySignal();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

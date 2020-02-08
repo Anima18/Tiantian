@@ -34,6 +34,6 @@ public class TiantianDetailActivity extends AppCompatActivity {
         titleView.setText(newData.getTitle());
         comeFromView.setText(newData.getComefrom());
         timeView.setText(newData.getTime());
-        textView.setText(newData.getText());
+        textView.setText(newData.getText().replaceAll("\\\\n", "\n"));
     }
 }

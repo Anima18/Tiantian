@@ -47,42 +47,41 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
 
     @Override
     public void requestDataByLocal() {
-        int currentPolicy = preferences.getIntValue(Constant.SP_CURRENT_POLICY, -1);
-        if(currentPolicy == -1) {
-            actionView.showError("请在广场列表选择一个策略");
-        }else {
-            List<PolicySignal> policySignals = manager.query();
-            actionView.showData(policySignals);
-            preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, false);
-        }
+        List<PolicySignal> policySignals = manager.query();
+        actionView.showData(policySignals);
     }
 
     @Override
     public void requestDataByNetwork() {
-        actionView.showLoading();
         int currentPolicy = preferences.getIntValue(Constant.SP_CURRENT_POLICY, -1);
-        String url = String.format("%s/comment/apiv2/policysignallist/%s", CommonUtil.getBaseUrl(), currentPolicy+"");
-        new NetworkRequest<PolicySignal>(context)
-                .url(url)
-                .method(RequestParam.Method.GET)
-                .dataClass(PolicySignal.class)
-                .dataParser(new NetworkDataParser<PolicySignal>())
-                .getList(new DataListCallback<PolicySignal>() {
-                    @Override
-                    public void onFailure(@NotNull String s) {
-                        actionView.showError(s);
-                    }
+        if(currentPolicy == -1) {
+            actionView.showError("请在广场列表选择一个策略");
+        }else {
+            actionView.showLoading();
+            String url = String.format("%s/comment/apiv2/policysignallist/%s", CommonUtil.getBaseUrl(), currentPolicy+"");
+            new NetworkRequest<PolicySignal>(context)
+                    .url(url)
+                    .method(RequestParam.Method.GET)
+                    .dataClass(PolicySignal.class)
+                    .dataParser(new NetworkDataParser<PolicySignal>())
+                    .getList(new DataListCallback<PolicySignal>() {
+                        @Override
+                        public void onFailure(@NotNull String s) {
+                            actionView.showError(s);
+                        }
 
-                    @Override
-                    public void onSuccess(@NotNull List<? extends PolicySignal> list) {
-                        actionView.showData((List<PolicySignal>)list);
+                        @Override
+                        public void onSuccess(@NotNull List<? extends PolicySignal> list) {
+                            actionView.showData((List<PolicySignal>)list);
 
-                        preferences.putStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date()));
-                        preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_NETWORK, false);
-                        manager.clear();
-                        manager.insertList((List<PolicySignal>) list);
-                    }
-                });
+                            preferences.putStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date()));
+                            preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, true);
+                            manager.clear();
+                            manager.insertList((List<PolicySignal>) list);
+                        }
+                    });
+        }
+
     }
 
     @Override

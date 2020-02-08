@@ -17,4 +17,12 @@ public class GlideImageLoader extends ImageLoader {
                 .load(path)
                 .into(imageView);
     }
+
+    /*@Override
+    public ImageView createImageView(Context context) {
+        RoundedImageView riv = new RoundedImageView(context);
+        riv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        riv.setCornerRadius((float) 20);
+        return riv;
+    }*/
 }

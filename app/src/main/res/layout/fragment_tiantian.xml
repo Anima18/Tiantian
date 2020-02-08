@@ -11,7 +11,8 @@
     <ScrollView
         android:id="@+id/ttFragment_scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#f7f8fa">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -21,22 +22,49 @@
             <com.youth.banner.Banner
                 android:id="@+id/ttFragment_banner"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:padding="10dp" />
+                android:layout_height="150dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="9dp"
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                app:indicator_width="10dp"
+                app:indicator_height="2dp"
+                app:indicator_drawable_selected="@drawable/banner_indicator_selected"
+                app:indicator_drawable_unselected="@drawable/banner_indicator_normal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="广告"
+                android:layout_marginRight="6dp"
+                android:layout_marginBottom="10dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:background="@drawable/adveritse_mark_background"
+                android:textSize="12sp"
+                android:textColor="#c2c2c2"
+                android:layout_alignRight="@+id/ttFragment_banner"
+                android:layout_alignBottom="@+id/ttFragment_banner"/>
 
             <TextView
                 android:id="@+id/ttFragment_title_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ttFragment_banner"
-                android:padding="10dp"
-                android:text="天天资讯"
-                android:textColor="@color/primary_text_dark_color" />
+                android:background="@color/white"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="11dp"
+                android:text="天机简讯"
+                android:textSize="16dp"
+                android:textColor="#727272" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/content_listView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/ttFragment_title_view"
                 android:layout_alignParentBottom="true" />
         </RelativeLayout>

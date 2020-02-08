@@ -9,6 +9,7 @@ public class ActionMenuItem {
     private String value;
     private Integer iconResId;
     private Integer iconColor;
+    private boolean make = false;
 
     public ActionMenuItem(String title) {
         this.title = title;
@@ -17,6 +18,17 @@ public class ActionMenuItem {
     public ActionMenuItem(String title, String value) {
         this.title = title;
         this.value = value;
+    }
+
+    public ActionMenuItem(String title, Integer iconResId) {
+        this.title = title;
+        this.iconResId = iconResId;
+    }
+
+    public ActionMenuItem(String title, String value, Integer iconResId) {
+        this.title = title;
+        this.value = value;
+        this.iconResId = iconResId;
     }
 
     public ActionMenuItem(String title, String value, Integer iconResId, Integer iconColor) {
@@ -56,5 +68,13 @@ public class ActionMenuItem {
 
     public void setIconColor(Integer iconColor) {
         this.iconColor = iconColor;
+    }
+
+    public boolean isMake() {
+        return make;
+    }
+
+    public void setMake(boolean make) {
+        this.make = make;
     }
 }

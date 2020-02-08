@@ -9,8 +9,7 @@
         style="@style/toolbar_white"
         app:isshowbackbtn="true"
         app:menuiconcolor="@color/white"
-        app:titleplace="left"
-        app:title="意识、睡眠与大脑"/>
+        app:titleplace="left"/>
 
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -26,9 +25,9 @@
             <ImageView
                 android:id="@+id/detailAct_new_img"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test"/>
+                android:src="@drawable/tiantian_defualt"/>
 
             <TextView
                 android:id="@+id/detailAct_new_title"
@@ -37,8 +36,7 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="4dp"
                 android:textColor="@color/primary_text_dark_color"
-                android:textSize="16sp"
-                android:text="意识、睡眠与大脑"/>
+                android:textSize="16sp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,14 +46,12 @@
                     android:id="@+id/detailAct_new_comeForm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="dd"
                     />
                 <TextView
                     android:id="@+id/detailAct_new_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:text="2019/12/23 17:50:45"
                     />
             </LinearLayout>
 
@@ -64,8 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="24dp"
-                android:text="对梦境和睡眠的所有讨论都是对人类大脑的终极探索。\n\n因为梦境就是区别有意识生物和无意识生物的重要因素，睡眠也是生物进化中的必然产物。过去20年间，随着以迈克尔•加扎尼加、马修•沃克、史蒂芬•平克为代表一批认知神经学家和认知心理学家出现，以及新型的神经影像技术发展，睡眠、梦、大脑和意识的秘密才逐渐被解开——在心理上，睡眠和梦境与意识、认知、思考、欲望、记忆、情绪有关，从生理上，睡眠和梦境与免疫系统、新陈代谢、先天疾病、内分泌系统有关。
-\n\n作者在这本横跨心理学、医学、脑科学、神经学、行为学、遗传和基因学、生物学、进化论的书中，不仅系统的阐述了睡眠、梦境和大脑的关系，还将生物学内容作为整本书知识体系的补充。他没有在“潜意识”“本我”“超我”等精神分析学派的领域深入探讨，而是选择从情绪、行为、生理心理学和生物遗传学的角度切入，探讨了“睡眠”和“梦境”对生物、人类和社会的巨大影响。"/>
+                android:text=""/>
 
         </LinearLayout>
 

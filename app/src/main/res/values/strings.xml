@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">TianTian</string>
+    <string name="app_name">天机</string>
 
-    <string name="bottom_nav_home">天天</string>
+    <string name="bottom_nav_home">天机</string>
     <string name="bottom_nav_role">订阅</string>
     <string name="bottom_nav_message">广场</string>
     <string name="bottom_nav_me">我的</string>

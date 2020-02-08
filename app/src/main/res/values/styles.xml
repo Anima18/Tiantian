@@ -39,11 +39,11 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/tool_bar_height</item>
         <item name="isshowbackbtn">true</item>
-        <item name="titlesize">@dimen/tool_bar_title_size</item>
-        <item name="backgroundcolor">@color/colorPrimary</item>
+        <item name="titlesize">18sp</item>
+        <item name="backgroundcolor">@color/white</item>
         <item name="menuiconcolor">@color/white</item>
         <item name="titleplace">center</item>
-        <item name="titlecolor">@color/black</item>
+        <item name="titlecolor">#0a0909</item>
     </style>
 
     <!--没有选中的样式-->

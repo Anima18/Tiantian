@@ -1,27 +1,25 @@
 package com.chris.tiantian;
 
-import android.content.Context;
-import android.content.Intent;
+import android.Manifest;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-
-import com.chris.tiantian.module.main.PolicyMonitorService;
-import com.chris.tiantian.module.main.PolicyMonitorService2;
-import com.chris.tiantian.module.main.activity.PolicySignalFragment2;
-import com.fanjun.keeplive.KeepLive;
-import com.fanjun.keeplive.config.ForegroundNotification;
-import com.fanjun.keeplive.config.ForegroundNotificationClickListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
+import com.chris.tiantian.base.service.VersionUploadService;
 import com.chris.tiantian.module.main.activity.MeFragment;
 import com.chris.tiantian.module.main.activity.PolicyFragment;
+import com.chris.tiantian.module.main.activity.PolicySignalFragment;
 import com.chris.tiantian.module.main.activity.TiantianFragment;
 import com.chris.tiantian.util.BottomNavigationViewHelper;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar;
+
+import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,6 +43,16 @@ public class MainActivity extends AppCompatActivity {
 
         /*policyMonitoIntent = new Intent(this, PolicyMonitorService.class);
         startService(policyMonitoIntent);*/
+        new RxPermissions(this)
+                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        if(aBoolean) {
+                            VersionUploadService.checkUpdateInBackground(MainActivity.this);
+                        }
+                    }
+                });
     }
 
     private void initNavigationView() {
@@ -64,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.bottom_nav_role:
                         if(subscriptionFragment == null) {
-                            subscriptionFragment = new PolicySignalFragment2();
+                            subscriptionFragment = new PolicySignalFragment();
                         }
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, subscriptionFragment).commitAllowingStateLoss();
                         toolbar.setTitle((String) item.getTitle());

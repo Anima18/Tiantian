@@ -4,13 +4,13 @@
     <color name="colorPrimaryDark">#0056a0</color>
     <color name="colorPrimaryLight">#89afff</color>
     <color name="colorAccent">#0ba194</color>
-    <color name="windowBackground">#f4f5f6</color>
+    <color name="windowBackground">#f7f8fa</color>
     <color name="colorError">#FA6470</color>
     <color name="colorSelected">#eceef2</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="gray">#cccccc</color>
-    <color name="recyclerView_divider_line_color">#f7f8fb</color>
+    <color name="recyclerView_divider_line_color">#f0f1f3</color>
 
 
     <color name="transparent_background">#50000000</color>
@@ -46,5 +46,7 @@
     <color name="divider_text_white_color">#F9F9F9</color>
     <color name="dividing_line_color">#EEEEEE</color>
 
-    <color name="listview_item_selected">#bde1ff</color>
+    <color name="listview_item_selected">#d2dff9</color>
+    <color name="banner_indicator_normal_color">#BBBBBB</color>
+    <color name="banner_indicator_selected_color">#FFFFFF</color>
 </resources>
