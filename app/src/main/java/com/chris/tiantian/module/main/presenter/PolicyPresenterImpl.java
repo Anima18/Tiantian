@@ -2,6 +2,7 @@ package com.chris.tiantian.module.main.presenter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 
 import com.anima.networkrequest.DataListCallback;
@@ -71,7 +72,7 @@ public class PolicyPresenterImpl implements PolicyPresenter {
                         actionView.showData((List<Policy>)list);
                         manager.clear();
                         manager.insertList((List<Policy>) list);
-                        preferences.putStringValue(Constant.SP_LASTTIME_POLICY_NETWORK, DateUtil.getTime(new Date()));
+                        preferences.putStringValue(Constant.SP_LASTTIME_POLICY_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
                         preferences.putBooleanValue(Constant.SP_LOADING_POLICY_DATABASE, true);
                     }
                 });
@@ -80,12 +81,13 @@ public class PolicyPresenterImpl implements PolicyPresenter {
     @Override
     public void monitorPolicy() {
         Log.i("PolicyMonitorService", "monitorPolicy");
-        String lastTime = preferences.getStringValue(Constant.SP_LASTTIME_POLICY_NETWORK, DateUtil.getTime(new Date()));
+        String lastTime = preferences.getStringValue(Constant.SP_LASTTIME_POLICY_NETWORK, "");
         if(TextUtils.isEmpty(lastTime)) {
             return;
         }
 
-        String url = String.format("%s/comment/apiv2/policylist", CommonUtil.getBaseUrl());
+        lastTime = Base64.encodeToString(lastTime.getBytes(), Base64.DEFAULT);
+        String url = String.format("%s/comment/apiv2/policylist/%s", CommonUtil.getBaseUrl(), lastTime);
         new NetworkRequest<Policy>(context)
                 .url(url)
                 .method(RequestParam.Method.GET)
@@ -99,8 +101,8 @@ public class PolicyPresenterImpl implements PolicyPresenter {
                     @Override
                     public void onSuccess(@NotNull List<? extends Policy> list) {
                         if(list != null && list.size() > 0) {
-                            manager.insertList((List<Policy>) list);
-                            preferences.putStringValue(Constant.SP_LASTTIME_POLICY_NETWORK, DateUtil.getTime(new Date()));
+                            manager.updateList((List<Policy>) list);
+                            preferences.putStringValue(Constant.SP_LASTTIME_POLICY_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
                             preferences.putBooleanValue(Constant.SP_LOADING_POLICY_DATABASE, true);
                             EventBus.getDefault().post(new PolicyMessage());
                         }

@@ -82,11 +82,29 @@ public class PolicyAction {
         return locations;
     }
 
+    public static boolean findById(SQLiteOpenHelper helper, String id) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME, AVAILABLE_PROJECTION, "id=?", new String[] {id}, null, null, null, null);
+        return cursor.getCount() > 0;
+    }
+
+    public static void updateOrInsert(SQLiteOpenHelper helper, Policy policy) {
+        if(findById(helper, policy.getId()+"")) {
+            update(helper, policy);
+        }else {
+            insert(helper, policy);
+        }
+    }
+
     public static void insert(SQLiteOpenHelper helper, Policy student) {
         SQLiteDatabase db = helper.getWritableDatabase();
         db.insert(TABLE_NAME, null, toContentValues(student));
     }
 
+    public static void update(SQLiteOpenHelper helper, Policy policy) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        db.update(TABLE_NAME, toContentValues(policy), "id=?", new String[] {policy.getId()+""});
+    }
 
     private static Policy getPolicyFromCursor(Cursor cursor) {
         Policy Policy = new Policy();

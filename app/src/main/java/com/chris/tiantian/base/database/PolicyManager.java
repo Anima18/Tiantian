@@ -38,6 +38,15 @@ public class PolicyManager {
         }
     }
 
+    public void updateList(List<Policy> Policys) {
+        if(Policys == null || Policys.size() == 0) {
+            return;
+        }
+        for(Policy signal : Policys) {
+            PolicyAction.updateOrInsert(dbHelper, signal);
+        }
+    }
+
     public void clear()
     {
         PolicyAction.clear(dbHelper);

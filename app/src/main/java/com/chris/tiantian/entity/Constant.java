@@ -15,4 +15,6 @@ public interface Constant {
 
     String SP_LASTTIME_POLICY_NETWORK = "SP_LASTTIME_POLICY_NETWORK";
     String SP_LOADING_POLICY_DATABASE = "SP_LOADING_POLICY_DATABASE";
+
+    String DATA_TIME_FORMAT = "yyyy.MM.dd HH:mm:ss";
 }
