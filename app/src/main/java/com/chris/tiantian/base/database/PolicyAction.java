@@ -72,7 +72,7 @@ public class PolicyAction {
 
     public static List<Policy> query(SQLiteOpenHelper helper) {
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NAME, AVAILABLE_PROJECTION, null, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, AVAILABLE_PROJECTION, null, null, null, null, PolicyColumns.publishDate + " desc", null);
         List<Policy> locations = new ArrayList<>();
         while (cursor.moveToNext())
         {

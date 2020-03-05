@@ -2,8 +2,8 @@ package com.chris.tiantian.module.main.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,6 +89,11 @@ public class PolicySignalFragment extends Fragment implements PolicySignalAction
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void policySignalEventBus(PolicySignalMessage message) {
         refreshHintView.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable(){
+            public void run() {
+                refreshHintView.setVisibility(View.GONE);
+            }
+        }, 5000);
         presenter.requestDataByLocal();
     }
 

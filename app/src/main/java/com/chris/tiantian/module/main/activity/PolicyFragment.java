@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -140,6 +141,11 @@ public class PolicyFragment extends Fragment implements PolicyActionView {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void policyEventBus(PolicyMessage policyMessage) {
         refreshHintView.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable(){
+            public void run() {
+                refreshHintView.setVisibility(View.GONE);
+            }
+        }, 5000);
         presenter.requestDataByLocal();
     }
     @Override

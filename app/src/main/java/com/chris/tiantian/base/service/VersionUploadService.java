@@ -125,6 +125,8 @@ public class VersionUploadService {
                                         downloadApk(context, lastVersionInfo);
                                     }
                                 });
+                            }else {
+                                Toast.makeText(context, "已经是最新版本！", Toast.LENGTH_SHORT).show();
                             }
                         }else {
                             Toast.makeText(context, "已经是最新版本！", Toast.LENGTH_SHORT).show();
