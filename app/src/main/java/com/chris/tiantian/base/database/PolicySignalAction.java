@@ -58,7 +58,7 @@ public class PolicySignalAction {
 
     public static List<PolicySignal> query(SQLiteOpenHelper helper) {
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NAME, AVAILABLE_PROJECTION, null, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, AVAILABLE_PROJECTION, null, null, null, null, PolicySignalColumns.time + " desc", null);
         List<PolicySignal> locations = new ArrayList<>();
         while (cursor.moveToNext())
         {

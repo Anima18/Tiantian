@@ -67,7 +67,7 @@ public class PolicyMonitorService implements KeepLiveService {
                 try {
                     Thread.sleep(15000);
                     policyPresenter.monitorPolicy();
-                    //signalPresenter.monitorPolicySignal();
+                    signalPresenter.monitorPolicySignal();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

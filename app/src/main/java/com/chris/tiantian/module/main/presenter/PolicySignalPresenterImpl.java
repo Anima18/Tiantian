@@ -2,8 +2,12 @@ package com.chris.tiantian.module.main.presenter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 
+import com.anima.eventflow.Event;
+import com.anima.eventflow.EventFlow;
+import com.anima.eventflow.EventResult;
 import com.anima.networkrequest.DataListCallback;
 import com.anima.networkrequest.NetworkRequest;
 import com.anima.networkrequest.entity.RequestParam;
@@ -47,8 +51,20 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
 
     @Override
     public void requestDataByLocal() {
-        List<PolicySignal> policySignals = manager.query();
-        actionView.showData(policySignals);
+        Event event1 = new Event() {
+            @Override
+            protected Object run() {
+                return manager.query();
+            }
+        };
+        EventFlow.create(context, event1).subscribe(new EventResult() {
+            @Override
+            public void onResult(Object data) {
+                actionView.showData((List<PolicySignal>)data);
+            }
+        });
+        /*List<PolicySignal> policySignals = manager.query();
+        actionView.showData(policySignals);*/
     }
 
     @Override
@@ -74,7 +90,7 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                         public void onSuccess(@NotNull List<? extends PolicySignal> list) {
                             actionView.showData((List<PolicySignal>)list);
 
-                            preferences.putStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date()));
+                            preferences.putStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
                             preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, true);
                             manager.clear();
                             manager.insertList((List<PolicySignal>) list);
@@ -87,13 +103,14 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
     @Override
     public void monitorPolicySignal() {
         Log.i("PolicyMonitorService", "monitorPolicySignal");
-        String lastTime = preferences.getStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date()));
+        String lastTime = preferences.getStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, "");
         int currentPolicy = preferences.getIntValue(Constant.SP_CURRENT_POLICY, -1);
         if(currentPolicy == -1 || TextUtils.isEmpty(lastTime)) {
             return;
         }
 
-        String url = String.format("%s/comment/apiv2/policysignallist/%s", CommonUtil.getBaseUrl(), currentPolicy+"");
+        lastTime = Base64.encodeToString(lastTime.getBytes(), Base64.DEFAULT);
+        String url = String.format("%s/comment/apiv2/policysignallist/%s/%s", CommonUtil.getBaseUrl(), currentPolicy+"", lastTime);
         new NetworkRequest<PolicySignal>(context)
                 .url(url)
                 .method(RequestParam.Method.GET)
@@ -109,7 +126,7 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                     public void onSuccess(@NotNull List<? extends PolicySignal> list) {
                         if(list != null && list.size() > 0) {
                             manager.insertList((List<PolicySignal>) list);
-                            preferences.putStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date()));
+                            preferences.putStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
                             preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, true);
                             EventBus.getDefault().post(new PolicySignalMessage());
                         }

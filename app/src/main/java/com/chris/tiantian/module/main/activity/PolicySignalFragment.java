@@ -2,6 +2,8 @@ package com.chris.tiantian.module.main.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -166,12 +168,17 @@ public class PolicySignalFragment extends Fragment implements PolicySignalAction
 
         @Override
         public void bindto(@NonNull PolicySignal signal) {
-            if(signal.getDirection().contains("做多") || signal.getDirection().contains("平空")) {
-                directionView.setBackground(context.getResources().getDrawable(R.drawable.signal_direction_duo_back));
+            if(!TextUtils.isEmpty(signal.getDirection())) {
+                directionView.setVisibility(View.VISIBLE);
+                if(signal.getDirection().contains("做多") || signal.getDirection().contains("平空")) {
+                    directionView.setBackground(context.getResources().getDrawable(R.drawable.signal_direction_duo_back));
+                }else {
+                    directionView.setBackground(context.getResources().getDrawable(R.drawable.signal_direction_kong_back));
+                }
+                directionView.setText(signal.getDirection());
             }else {
-                directionView.setBackground(context.getResources().getDrawable(R.drawable.signal_direction_kong_back));
+                directionView.setVisibility(View.INVISIBLE);
             }
-            directionView.setText(signal.getDirection());
 
             signalNameView.setText(signal.getPolicyName());
             timeView.setText(signal.getTime());
