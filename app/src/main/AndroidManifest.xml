@@ -35,6 +35,7 @@
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".module.tiantian.TiantianDetailActivity"/>
         <activity android:name=".module.tiantian.AdvertiseDetailActivity"/>
+        <activity android:name=".module.main.activity.UserGuideActivity"/>
 
         <!--<service android:name=".module.main.PolicyMonitorService" android:priority="1000" />-->
 

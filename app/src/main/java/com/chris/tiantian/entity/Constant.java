@@ -16,5 +16,9 @@ public interface Constant {
     String SP_LASTTIME_POLICY_NETWORK = "SP_LASTTIME_POLICY_NETWORK";
     String SP_LOADING_POLICY_DATABASE = "SP_LOADING_POLICY_DATABASE";
 
+    //网络请求时间戳格式
     String DATA_TIME_FORMAT = "yyyy.MM.dd HH:mm:ss";
+
+    //是否已经提示自动启动设置
+    String SHOW_AUTO_STARTUP_MAKER = "SHOW_AUTO_STARTUP_MAKER";
 }

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.chris.tiantian.entity.Policy;
 import com.chris.tiantian.entity.PolicySignal;
 
 import java.util.ArrayList;
@@ -66,6 +67,18 @@ public class PolicySignalAction {
         }
         cursor.close();
         return locations;
+    }
+
+    public static boolean findByPolicySignal(SQLiteOpenHelper helper, PolicySignal policySignal) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME, AVAILABLE_PROJECTION, "policyId=? and time=?", new String[] {policySignal.policyId+"", policySignal.time}, null, null, null, null);
+        return cursor.getCount() > 0;
+    }
+
+    public static void insertIfNotExists(SQLiteOpenHelper helper, PolicySignal policySignal) {
+        if(!findByPolicySignal(helper, policySignal)) {
+            insert(helper, policySignal);
+        }
     }
 
     public static void insert(SQLiteOpenHelper helper, PolicySignal student) {

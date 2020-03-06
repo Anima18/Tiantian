@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar
+        android:id="@+id/activity_toolBar"
+        style="@style/toolbar_white"
+        app:isshowbackbtn="true"
+        app:menuiconcolor="@color/white"
+        app:titleplace="left"
+        app:title="使用教程"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="让应用在后台一直运行,需要尽量做以下设置:"
+                android:textColor="@color/primary_text_dark_color"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/secondary_text_dark_color"
+                android:layout_marginTop="6dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:text="a、设置应用允许“自启动”或者“后台运行”"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:textSize="14sp"
+                android:text="点击, 去设置..."
+                android:onClick="autoStartupSetting"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/secondary_text_dark_color"
+                android:layout_marginTop="6dp"
+                android:text="b、将应用加入“白名单”"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/secondary_text_dark_color"
+                android:layout_marginTop="6dp"
+                android:text="c、尽量不要手动去杀进程"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,5 +1,6 @@
 package com.chris.tiantian.module.main.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,6 +76,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             public void onItemClick(View itemView, int position) {
                 if(position == 0) {
                     VersionUploadService.checkUpdate(getContext());
+                }else if(position == 2) {
+                    startActivity(new Intent(getContext(), UserGuideActivity.class));
                 }else {
                     Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
                 }
@@ -120,26 +123,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         itemList.add(new ActionMenuItem("我的积分", R.drawable.settings_ic_score));
         itemList.add(new ActionMenuItem("使用教程", R.drawable.settings_ic_using_tutorials));
         itemList.add(new ActionMenuItem("关于我们", R.drawable.settings_ic_about_us));
+        itemList.get(2).setMake(true);
         return itemList;
     }
 
-    public void toVip(View view) {
-        Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
-    }
-
-    public void toMyPublish(View view) {
-        Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
-    }
-
-    public void toMyBuy(View view) {
-        Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
-    }
-
-    public void toAlert(View view) {
-        Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
-    }
-
-    public void toVipCenter(View view) {
-        Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
-    }
 }

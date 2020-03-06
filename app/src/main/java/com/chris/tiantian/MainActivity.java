@@ -1,6 +1,7 @@
 package com.chris.tiantian;
 
 import android.Manifest;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.chris.tiantian.module.main.activity.PolicyFragment;
 import com.chris.tiantian.module.main.activity.PolicySignalFragment;
 import com.chris.tiantian.module.main.activity.TiantianFragment;
 import com.chris.tiantian.util.BottomNavigationViewHelper;
+import com.chris.tiantian.util.AutoStartupSetting;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar;
@@ -29,30 +31,38 @@ public class MainActivity extends AppCompatActivity {
     private Fragment subscriptionFragment;
     private Fragment plazaFragment;
     private Fragment meFragment;
-
-    //private Intent policyMonitoIntent;
+    private int currentPageIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (savedInstanceState!=null){
+            currentPageIndex = savedInstanceState.getInt("KEY_PAGE_INDEX");
+        }
+
         toolbar = findViewById(R.id.activity_toolBar);
         navigationView = findViewById(R.id.bottom_nav);
         initNavigationView();
 
-        /*policyMonitoIntent = new Intent(this, PolicyMonitorService.class);
-        startService(policyMonitoIntent);*/
-        new RxPermissions(this)
-                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean aBoolean) {
-                        if(aBoolean) {
-                            VersionUploadService.checkUpdateInBackground(MainActivity.this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            new RxPermissions(this)
+                    .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .subscribe(new Action1<Boolean>() {
+                        @Override
+                        public void call(Boolean aBoolean) {
+                            if (aBoolean) {
+                                VersionUploadService.checkUpdateInBackground(MainActivity.this);
+                                AutoStartupSetting.open(MainActivity.this);
+                            }
                         }
-                    }
-                });
+                    });
+        }else {
+            AutoStartupSetting.open(this);
+        }
+
+
     }
 
     private void initNavigationView() {
@@ -69,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, tiantainFragment).commitAllowingStateLoss();
                         toolbar.setTitle((String) item.getTitle());
                         toolbar.setVisibility(View.VISIBLE);
+                        currentPageIndex = 0;
                         break;
                     case R.id.bottom_nav_role:
                         if(subscriptionFragment == null) {
@@ -77,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, subscriptionFragment).commitAllowingStateLoss();
                         toolbar.setTitle((String) item.getTitle());
                         toolbar.setVisibility(View.VISIBLE);
+                        currentPageIndex = 1;
                         break;
                     case R.id.bottom_nav_message:
                         if(plazaFragment == null) {
@@ -85,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, plazaFragment).commitAllowingStateLoss();
                         toolbar.setTitle((String)item.getTitle());
                         toolbar.setVisibility(View.VISIBLE);
+                        currentPageIndex = 2;
                         break;
                     case R.id.bottom_nav_me:
                         if(meFragment == null) {
@@ -93,21 +106,21 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, meFragment).commitAllowingStateLoss();
                         toolbar.setTitle((String) item.getTitle());
                         toolbar.setVisibility(View.VISIBLE);
+                        currentPageIndex = 3;
                         break;
                 }
                 return true;
             }
         });
 
-        navigationView.setSelectedItemId(navigationView.getMenu().getItem(0).getItemId());
-        toolbar.setTitle((String) navigationView.getMenu().getItem(0).getTitle());
+        navigationView.setSelectedItemId(navigationView.getMenu().getItem(currentPageIndex).getItemId());
+        toolbar.setTitle((String) navigationView.getMenu().getItem(currentPageIndex).getTitle());
 
     }
 
-
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //stopService(policyMonitoIntent);
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("KEY_PAGE_INDEX", currentPageIndex);
     }
 }

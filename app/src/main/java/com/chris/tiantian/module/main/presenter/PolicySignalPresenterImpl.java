@@ -125,7 +125,7 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                     @Override
                     public void onSuccess(@NotNull List<? extends PolicySignal> list) {
                         if(list != null && list.size() > 0) {
-                            manager.insertList((List<PolicySignal>) list);
+                            manager.updateList((List<PolicySignal>) list);
                             preferences.putStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
                             preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, true);
                             EventBus.getDefault().post(new PolicySignalMessage());

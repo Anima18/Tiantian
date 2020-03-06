@@ -38,6 +38,15 @@ public class PolicySignalManager {
         }
     }
 
+    public void updateList(List<PolicySignal> policySignals){
+        if(policySignals == null || policySignals.size() == 0) {
+            return;
+        }
+        for(PolicySignal signal : policySignals) {
+            PolicySignalAction.insertIfNotExists(dbHelper, signal);
+        }
+    }
+
     public void clear()
     {
         PolicySignalAction.clear(dbHelper);

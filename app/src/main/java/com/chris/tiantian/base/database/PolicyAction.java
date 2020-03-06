@@ -84,7 +84,7 @@ public class PolicyAction {
 
     public static boolean findById(SQLiteOpenHelper helper, String id) {
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NAME, AVAILABLE_PROJECTION, "id=?", new String[] {id}, null, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, AVAILABLE_PROJECTION, PolicyColumns.id+"=?", new String[] {id}, null, null, null, null);
         return cursor.getCount() > 0;
     }
 
@@ -103,7 +103,7 @@ public class PolicyAction {
 
     public static void update(SQLiteOpenHelper helper, Policy policy) {
         SQLiteDatabase db = helper.getWritableDatabase();
-        db.update(TABLE_NAME, toContentValues(policy), "id=?", new String[] {policy.getId()+""});
+        db.update(TABLE_NAME, toContentValues(policy), PolicyColumns.id+"=?", new String[] {policy.getId()+""});
     }
 
     private static Policy getPolicyFromCursor(Cursor cursor) {
