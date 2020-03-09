@@ -1,9 +1,18 @@
 package com.chris.tiantian.module.main.presenter;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
 
 import com.anima.eventflow.Event;
 import com.anima.eventflow.EventFlow;
@@ -12,6 +21,8 @@ import com.anima.networkrequest.DataListCallback;
 import com.anima.networkrequest.NetworkRequest;
 import com.anima.networkrequest.entity.RequestParam;
 import com.anima.networkrequest.util.sharedprefs.UserInfoSharedPreferences;
+import com.chris.tiantian.MainActivity;
+import com.chris.tiantian.R;
 import com.chris.tiantian.base.database.DBManager;
 import com.chris.tiantian.base.database.PolicySignalManager;
 import com.chris.tiantian.entity.Constant;
@@ -63,8 +74,7 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                 actionView.showData((List<PolicySignal>)data);
             }
         });
-        /*List<PolicySignal> policySignals = manager.query();
-        actionView.showData(policySignals);*/
+
     }
 
     @Override
@@ -89,11 +99,22 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                         @Override
                         public void onSuccess(@NotNull List<? extends PolicySignal> list) {
                             actionView.showData((List<PolicySignal>)list);
-
                             preferences.putStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
                             preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, true);
-                            manager.clear();
-                            manager.insertList((List<PolicySignal>) list);
+
+                            Event event = new Event() {
+                                @Override
+                                protected Object run() {
+                                    manager.clear();
+                                    manager.insertList((List<PolicySignal>) list);
+                                    return null;
+                                }
+                            };
+                            EventFlow.create(context, event).subscribe(new EventResult() {
+                                @Override
+                                public void onResult(Object data) {
+                                }
+                            });
                         }
                     });
         }
@@ -125,12 +146,64 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                     @Override
                     public void onSuccess(@NotNull List<? extends PolicySignal> list) {
                         if(list != null && list.size() > 0) {
-                            manager.updateList((List<PolicySignal>) list);
-                            preferences.putStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
-                            preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, true);
-                            EventBus.getDefault().post(new PolicySignalMessage());
+                            Event event = new Event() {
+                                @Override
+                                protected Object run() {
+                                    preferences.putStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
+                                    preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, true);
+                                    manager.updateList((List<PolicySignal>) list);
+                                    return null;
+                                }
+                            };
+                            EventFlow.create(context, event).subscribe(new EventResult() {
+                                @Override
+                                public void onResult(Object data) {
+                                    EventBus.getDefault().post(new PolicySignalMessage());
+                                    showNotification(context);
+                                }
+                            });
+
                         }
                     }
                 });
+    }
+
+    public static void showNotification(Context context) {
+        //获取NotificationManager实例
+        NotificationManager notifyManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        String NOTIFICATION_CHANNEL_ID = "my_channel_id_01";
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notifications", NotificationManager.IMPORTANCE_HIGH);
+
+            // Configure the notification channel.
+            notificationChannel.setDescription("Channel description");
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.RED);
+            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+            notificationChannel.enableVibration(true);
+            notifyManager.createNotificationChannel(notificationChannel);
+        }
+
+
+
+        Intent mainIntent = new Intent(context, MainActivity.class);
+        mainIntent.putExtra("KEY_PAGE_INDEX", 1);
+        PendingIntent mainPendingIntent = PendingIntent.getActivity(context, 0, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //实例化NotificationCompat.Builde并设置相关属性
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
+                //设置小图标
+                .setSmallIcon(R.mipmap.ic_app)
+                //设置通知标题
+                .setContentTitle("天机")
+                //设置通知内容
+                .setContentText("收到一个新的操作信号")
+                .setContentIntent(mainPendingIntent)
+                .setAutoCancel(true)
+                .setDefaults(Notification.DEFAULT_SOUND);
+        //设置通知时间，默认为系统发出通知的时间，通常不用设置
+        //.setWhen(System.currentTimeMillis());
+        //通过builder.build()方法生成Notification对象,并发送通知,id=1
+        notifyManager.notify(1, builder.build());
     }
 }

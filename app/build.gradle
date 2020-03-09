@@ -6,8 +6,8 @@ android {
         applicationId "com.chris.tiantian"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 7
-        versionName "1.0.7"
+        versionCode 8
+        versionName "1.0.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -15,6 +15,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        /*debug {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }*/
     }
     compileOptions {
         sourceCompatibility 1.8
@@ -51,10 +57,11 @@ dependencies {
 
     implementation 'com.fanjun:keeplive:1.1.20'
 
-    implementation 'com.anima:EventFlow:1.0.4'
+    implementation(name:'eventflow-1.0.6', ext:'aar')
 
     //基本控件库
-    //implementation "com.ut.utuicomponents:utuicomponents:${COMPONENT_VERSION}"
+    //implementation "com.ut.utuicomponents:utuicomponents:1.5.5.4.46-SNAPSHOT"
+
     implementation(name:'utuicomponents-1.5.5.4.46', ext:'aar')
     implementation 'com.google.zxing:core:3.3.2'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
@@ -65,9 +72,9 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.2.0'
     implementation 'io.reactivex:rxandroid:1.2.0'
     implementation 'io.reactivex:rxjava:1.1.5'
-    //implementation 'com.squareup.okhttp3:okhttp:3.11.0'
-    //implementation 'com.google.code.gson:gson:2.8.2'
-    //implementation 'com.squareup.okio:okio:1.14.0'
+    //implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    //implementation 'com.lxj:xpopup:1.8.10'
+
 
     //implementation 'com.anima:networkrequest:2.0.1'
     implementation(name:'networkrequest-2.0.2', ext:'aar')

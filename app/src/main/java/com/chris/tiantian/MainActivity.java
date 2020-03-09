@@ -1,6 +1,7 @@
 package com.chris.tiantian;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,13 +16,14 @@ import com.chris.tiantian.module.main.activity.MeFragment;
 import com.chris.tiantian.module.main.activity.PolicyFragment;
 import com.chris.tiantian.module.main.activity.PolicySignalFragment;
 import com.chris.tiantian.module.main.activity.TiantianFragment;
-import com.chris.tiantian.util.BottomNavigationViewHelper;
 import com.chris.tiantian.util.AutoStartupSetting;
+import com.chris.tiantian.util.BottomNavigationViewHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar;
 
 import rx.functions.Action1;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState!=null){
             currentPageIndex = savedInstanceState.getInt("KEY_PAGE_INDEX");
+        }else {
+            currentPageIndex = getIntent().getIntExtra("KEY_PAGE_INDEX", currentPageIndex);
         }
 
         toolbar = findViewById(R.id.activity_toolBar);
@@ -61,8 +65,16 @@ public class MainActivity extends AppCompatActivity {
         }else {
             AutoStartupSetting.open(this);
         }
+    }
 
-
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        int newPageIndex = intent.getIntExtra("KEY_PAGE_INDEX", currentPageIndex);
+        if(newPageIndex != currentPageIndex) {
+            currentPageIndex = newPageIndex;
+            setCurrentPage();
+        }
     }
 
     private void initNavigationView() {
@@ -113,9 +125,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        setCurrentPage();
+    }
+
+    private void setCurrentPage() {
         navigationView.setSelectedItemId(navigationView.getMenu().getItem(currentPageIndex).getItemId());
         toolbar.setTitle((String) navigationView.getMenu().getItem(currentPageIndex).getTitle());
-
     }
 
     @Override

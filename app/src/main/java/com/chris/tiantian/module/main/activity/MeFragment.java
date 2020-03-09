@@ -1,6 +1,13 @@
 package com.chris.tiantian.module.main.activity;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +17,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chris.tiantian.MainActivity;
 import com.chris.tiantian.R;
 import com.chris.tiantian.base.service.VersionUploadService;
 import com.chris.tiantian.entity.ActionMenuItem;
@@ -22,6 +31,8 @@ import com.chris.tiantian.util.ProfileAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.chris.tiantian.module.main.presenter.PolicySignalPresenterImpl.showNotification;
 
 /**
  * Created by jianjianhong on 19-12-18
@@ -95,6 +106,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.setting_my_publish:
                 Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
+                showNotification(getContext());
                 break;
             case R.id.setting_my_buy:
                 Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
@@ -107,6 +119,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
+
     private void hasNewVersion() {
         VersionUploadService.hasNewVersion(getContext(), new VersionUploadService.OnNewVersionListener() {
             @Override

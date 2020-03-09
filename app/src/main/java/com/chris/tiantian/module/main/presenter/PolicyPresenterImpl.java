@@ -5,6 +5,9 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
+import com.anima.eventflow.Event;
+import com.anima.eventflow.EventFlow;
+import com.anima.eventflow.EventResult;
 import com.anima.networkrequest.DataListCallback;
 import com.anima.networkrequest.NetworkRequest;
 import com.anima.networkrequest.entity.RequestParam;
@@ -70,10 +73,21 @@ public class PolicyPresenterImpl implements PolicyPresenter {
                     @Override
                     public void onSuccess(@NotNull List<? extends Policy> list) {
                         actionView.showData((List<Policy>)list);
-                        manager.clear();
-                        manager.insertList((List<Policy>) list);
                         preferences.putStringValue(Constant.SP_LASTTIME_POLICY_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
                         preferences.putBooleanValue(Constant.SP_LOADING_POLICY_DATABASE, true);
+                        Event event = new Event() {
+                            @Override
+                            protected Object run() {
+                                manager.clear();
+                                manager.insertList((List<Policy>) list);
+                                return null;
+                            }
+                        };
+                        EventFlow.create(context, event).subscribe(new EventResult() {
+                            @Override
+                            public void onResult(Object data) {
+                            }
+                        });
                     }
                 });
     }
@@ -101,10 +115,21 @@ public class PolicyPresenterImpl implements PolicyPresenter {
                     @Override
                     public void onSuccess(@NotNull List<? extends Policy> list) {
                         if(list != null && list.size() > 0) {
-                            manager.updateList((List<Policy>) list);
-                            preferences.putStringValue(Constant.SP_LASTTIME_POLICY_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
-                            preferences.putBooleanValue(Constant.SP_LOADING_POLICY_DATABASE, true);
-                            EventBus.getDefault().post(new PolicyMessage());
+                            Event event = new Event() {
+                                @Override
+                                protected Object run() {
+                                    manager.updateList((List<Policy>) list);
+                                    preferences.putStringValue(Constant.SP_LASTTIME_POLICY_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
+                                    preferences.putBooleanValue(Constant.SP_LOADING_POLICY_DATABASE, true);
+                                    return null;
+                                }
+                            };
+                            EventFlow.create(context, event).subscribe(new EventResult() {
+                                @Override
+                                public void onResult(Object data) {
+                                    EventBus.getDefault().post(new PolicyMessage());
+                                }
+                            });
                         }
                     }
                 });
