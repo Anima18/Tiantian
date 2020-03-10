@@ -19,43 +19,119 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="让应用在后台一直运行,需要尽量做以下设置:"
-                android:textColor="@color/primary_text_dark_color"
-                android:textSize="16sp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textColor="@color/secondary_text_dark_color"
-                android:layout_marginTop="6dp"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:text="a、设置应用允许“自启动”或者“后台运行”"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:textSize="14sp"
-                android:text="点击, 去设置..."
-                android:onClick="autoStartupSetting"/>
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/secondary_text_dark_color"
-                android:layout_marginTop="6dp"
-                android:text="b、将应用加入“白名单”"/>
-            <TextView
+                android:layout_height="48dp"
+                android:paddingLeft="16dp"
+                android:gravity="center_vertical"
+                android:background="#f5f8fa"
+                android:textColor="#8899a6"
+                android:text="为了保证天机更好运行,建议您进行如下设置:"/>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/secondary_text_dark_color"
-                android:layout_marginTop="6dp"
-                android:text="c、尽量不要手动去杀进程"/>
+                android:padding="16dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/primary_text_dark_color"
+                    android:text="请勿开启[省电模式]"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:textColor="@color/disabled_text_dark_color"
+                    android:text="如果开启了省电模式,将可能导致后台运行异常,不能及时收到新数据."/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F9F9F9"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="18sp"
+                        android:textColor="@color/primary_text_dark_color"
+                        android:text="电池优化白名单"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:background="@drawable/button_background_rectangle_colorprimary"
+                        android:textColor="@color/white"
+                        android:onClick="requestWhiteList"
+                        android:text="快速设置"/>
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:textColor="@color/disabled_text_dark_color"
+                    android:text="如系统为了省电,可能会在后台运行过程中误杀进程,需要您把天机加入保护名单中."/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F9F9F9"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="18sp"
+                        android:textColor="@color/primary_text_dark_color"
+                        android:text="后台运行权限"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:background="@drawable/button_background_rectangle_colorprimary"
+                        android:textColor="@color/white"
+                        android:onClick="autoStartupSetting"
+                        android:text="快速设置"/>
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:textColor="@color/disabled_text_dark_color"
+                    android:text="如果没有开启后台运行权限,将可能导致不能及时收到新消息."/>
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

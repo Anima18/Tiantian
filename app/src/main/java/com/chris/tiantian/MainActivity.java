@@ -16,7 +16,7 @@ import com.chris.tiantian.module.main.activity.MeFragment;
 import com.chris.tiantian.module.main.activity.PolicyFragment;
 import com.chris.tiantian.module.main.activity.PolicySignalFragment;
 import com.chris.tiantian.module.main.activity.TiantianFragment;
-import com.chris.tiantian.util.AutoStartupSetting;
+import com.chris.tiantian.util.BackgrounderSetting;
 import com.chris.tiantian.util.BottomNavigationViewHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tbruyelle.rxpermissions.RxPermissions;
@@ -58,12 +58,12 @@ public class MainActivity extends AppCompatActivity {
                         public void call(Boolean aBoolean) {
                             if (aBoolean) {
                                 VersionUploadService.checkUpdateInBackground(MainActivity.this);
-                                AutoStartupSetting.open(MainActivity.this);
+                                BackgrounderSetting.open(MainActivity.this);
                             }
                         }
                     });
         }else {
-            AutoStartupSetting.open(this);
+            BackgrounderSetting.open(this);
         }
     }
 

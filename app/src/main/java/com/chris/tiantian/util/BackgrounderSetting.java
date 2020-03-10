@@ -9,9 +9,14 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.os.PowerManager;
+import android.provider.Settings;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+
 import com.anima.networkrequest.util.sharedprefs.ConfigSharedPreferences;
+import com.chris.tiantian.module.main.activity.UserGuideActivity;
 
 import java.util.List;
 
@@ -20,26 +25,47 @@ import static com.chris.tiantian.entity.Constant.SHOW_AUTO_STARTUP_MAKER;
 /**
  * Created by jianjianhong on 20-3-6
  */
-public class AutoStartupSetting {
+public class BackgrounderSetting {
 
     public static void open(Context context) {
         boolean isShow = ConfigSharedPreferences.Companion.getInstance(context).getBooleanValue(SHOW_AUTO_STARTUP_MAKER, false);
         if(!isShow) {
             new AlertDialog.Builder(context)
                     .setTitle("提示")
-                    .setMessage("为了在后台正常运行,请允许应用自启动或者后台运行.")
+                    .setMessage("为了在后台正常运行, 请在使用教程开启后台运行设置.")
                     .setCancelable(false)
                     .setPositiveButton("设置", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            openSettingPage(context);
+                            context.startActivity(new Intent(context, UserGuideActivity.class));
                         }
                     })
                     .show();
         }
     }
 
-    public static void openSettingPage(Context context) {
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public static boolean isIgnoringBatteryOptimizations(Context context) {
+        boolean isIgnoring = false;
+        PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        if (powerManager != null) {
+            isIgnoring = powerManager.isIgnoringBatteryOptimizations(context.getPackageName());
+        }
+        return isIgnoring;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public static void requestIgnoreBatteryOptimizations(Context context) {
+        try {
+            Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+            intent.setData(Uri.parse("package:" + context.getPackageName()));
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void requestAutoRunning(Context context) {
         try {
             Intent intent = new Intent();
             String manufacturer = android.os.Build.MANUFACTURER;
