@@ -25,7 +25,7 @@
 #====================代码混淆压缩比，在0~7之间
 -optimizationpasses 5
 #====================修改包名
--repackageclass ""
+#-repackageclass ""
 #====================忽略访问修饰符，配合上一句使用
 -allowaccessmodification
 #====================抛出异常时保留代码行号
@@ -47,6 +47,14 @@
 -keep public class * extends android.preference.Preference
 -keep public class com.android.vending.licensing.ILicensingService
 -keep public class * extends android.view.View
+
+-keep class com.google.android.material.** {*;}
+-keep class androidx.** {*;}
+-keep public class * extends androidx.**
+-keep interface androidx.** {*;}
+-dontwarn com.google.android.material.**
+-dontnote com.google.android.material.**
+-dontwarn androidx.**
 
 #====================support包
 -dontwarn android.support.**
@@ -134,7 +142,46 @@ public static final android.os.Parcelable$Creator *;
   public void *(android.webkit.webView, jav.lang.String);
 }
 
+
+#kotlin
+-keepattributes *Annotation*
+-keep class kotlin.** { *; }
+-keep class org.jetbrains.** { *; }
+-keep class kotlin.Metadata { *; }
+-dontwarn kotlin.**
+-keepclassmembers class **$WhenMappings {
+    <fields>;
+}
+-keepclassmembers class kotlin.Metadata {
+    public <methods>;
+}
+-assumenosideeffects class kotlin.jvm.internal.Intrinsics {
+    static void checkParameterIsNotNull(java.lang.Object, java.lang.String);
+}
+
+
+#实体类
+-keep class com.chris.tiantian.entity.**{ *; }
+
+
 #------------------------------第三方库混淆（可以自行增加）------------------------------
+
+-keep class kotlinx.** { *; }
+-dontwarn kotlinx.coroutines.flow.**
+
+-keep class com.ut.utuicomponents.**{ *; }
+-dontwarn com.ut.utuicomponents.**
+-keep class com.ut.raw.**{ *; }
+-dontwarn com.ut.raw.**
+
+-keep class com.ut.requestmanager.**{ *; }
+-dontwarn com.ut.requestmanager.**
+
+
+-keep class org.conscrypt.**{ *; }
+-dontwarn com.ut.common.lua.**
+-keep class org.openjsse.net.ssl.**{ *; }
+-keep class org.openjsse.javax.net.ssl.**{ *; }
 
 #====================RxJava、RxAndroid混淆配置
 -dontwarn rx.*
@@ -158,5 +205,38 @@ public static final android.os.Parcelable$Creator *;
 
 #====================OkHttp3混淆配置
 -dontwarn com.squareup.okhttp3.**
+-dontwarn okhttp3.**
 -keep class com.squareup.okhttp3.** { *;}
 -dontwarn okio.**
+
+#Glide
+-dontwarn com.bumptech.glide.**
+-keep class com.bumptech.glide.load.model.stream.** {*;}
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+    **[] $VALUES;
+    public *;
+}
+
+#Gson
+-keepclassmembers public class com.google.gson.**
+-keepclassmembers public class com.google.gson.** {public private protected *;}
+-keepclassmembers public class com.project.mocha_patient.login.SignResponseData { private *; }
+-keepclassmembers class sun.misc.Unsafe { *; }
+-keep @interface com.google.gson.annotations.SerializedName
+-keepclassmembers class * {
+    @com.google.gson.annotations.SerializedName <fields>;
+}
+
+#eventbus
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}

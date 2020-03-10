@@ -23,7 +23,11 @@ public class CommonUtil {
     }
 
     public static String getBaseUrl() {
-        return "http://114.67.65.199:8080";
+        //真实环境IP
+        //return "http://114.67.65.199:8080";
+
+        //测试环境IP
+        return "http://114.67.85.91:8080";
     }
 
     public static String getDownloadDirPath() {
