@@ -142,7 +142,10 @@ public class VersionUploadService {
                @Override
                public void onSuccess(String s) {
                    Log.i(TAG, "download apk filePath: "+s);
-                   installAPK(context, new File(s));
+                   File apkFile = new File(s);
+                   File newFile = new File(apkFile.getParent() + File.separator + versionInfo.getInstallFileName());
+                   apkFile.renameTo(newFile);
+                   installAPK(context, newFile);
                }
 
                @Override
@@ -173,7 +176,7 @@ public class VersionUploadService {
                 .url(versionInfo.getLink())
                 .method(RequestParam.Method.GET)
                 .downloadFilePath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/")
-                .downloadFileName(versionInfo.getInstallFileName());
+                .downloadFileName(versionInfo.getInstallFileName()+".bak");
         return request;
     }
 

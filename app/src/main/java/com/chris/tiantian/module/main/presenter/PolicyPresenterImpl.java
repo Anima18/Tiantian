@@ -72,9 +72,7 @@ public class PolicyPresenterImpl implements PolicyPresenter {
 
                     @Override
                     public void onSuccess(@NotNull List<? extends Policy> list) {
-                        actionView.showData((List<Policy>)list);
-                        preferences.putStringValue(Constant.SP_LASTTIME_POLICY_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
-                        preferences.putBooleanValue(Constant.SP_LOADING_POLICY_DATABASE, true);
+
                         Event event = new Event() {
                             @Override
                             protected Object run() {
@@ -86,6 +84,9 @@ public class PolicyPresenterImpl implements PolicyPresenter {
                         EventFlow.create(context, event).subscribe(new EventResult() {
                             @Override
                             public void onResult(Object data) {
+                                actionView.showData((List<Policy>)list);
+                                preferences.putStringValue(Constant.SP_LASTTIME_POLICY_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
+                                preferences.putBooleanValue(Constant.SP_LOADING_POLICY_DATABASE, true);
                             }
                         });
                     }

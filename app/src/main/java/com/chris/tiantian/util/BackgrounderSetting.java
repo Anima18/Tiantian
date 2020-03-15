@@ -38,6 +38,7 @@ public class BackgrounderSetting {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             context.startActivity(new Intent(context, UserGuideActivity.class));
+                            ConfigSharedPreferences.Companion.getInstance(context).putBooleanValue(SHOW_AUTO_STARTUP_MAKER, true);
                         }
                     })
                     .show();
@@ -82,7 +83,7 @@ public class BackgrounderSetting {
             } else if ("samsung".equalsIgnoreCase(manufacturer)) {
                 intent.setComponent(ComponentName.unflattenFromString("com.samsung.android.sm/.app.dashboard.SmartManagerDashBoardActivity"));
             } else if ("HUAWEI".equalsIgnoreCase(manufacturer)) {
-                intent.setComponent(new ComponentName("com.huawei.systemmanager", "com.huawei.systemmanager.optimize.process.ProtectActivity"));//跳自启动管理
+                intent.setComponent(new ComponentName("com.huawei.systemmanager", "com.huawei.systemmanager.startupmgr.ui.StartupNormalAppListActivity"));//跳自启动管理
             } else if ("Meizu".equalsIgnoreCase(manufacturer)) {
                 intent.setComponent(ComponentName.unflattenFromString("com.meizu.safe/.permission.SmartBGActivity"));//跳转到后台管理页面
                 //componentName = ComponentName.unflattenFromString("com.meizu.safe/.permission.PermissionMainActivity");
@@ -101,7 +102,6 @@ public class BackgrounderSetting {
             List<ResolveInfo> list = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
             if (list.size() > 0) {
                 context.startActivity(intent);
-                ConfigSharedPreferences.Companion.getInstance(context).putBooleanValue(SHOW_AUTO_STARTUP_MAKER, true);
             }
         } catch (Exception e) {
             Log.e("exc", String.valueOf(e));

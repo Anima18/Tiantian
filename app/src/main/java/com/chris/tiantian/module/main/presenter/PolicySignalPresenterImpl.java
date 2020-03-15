@@ -7,7 +7,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -38,6 +40,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 import java.util.List;
+
+import static android.app.NotificationManager.IMPORTANCE_HIGH;
+import static androidx.core.app.NotificationCompat.PRIORITY_HIGH;
 
 /**
  * Created by jianjianhong on 20-1-14
@@ -149,8 +154,6 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                             Event event = new Event() {
                                 @Override
                                 protected Object run() {
-                                    preferences.putStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
-                                    preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, true);
                                     manager.updateList((List<PolicySignal>) list);
                                     return null;
                                 }
@@ -158,7 +161,10 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                             EventFlow.create(context, event).subscribe(new EventResult() {
                                 @Override
                                 public void onResult(Object data) {
+                                    preferences.putStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
+                                    preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, true);
                                     EventBus.getDefault().post(new PolicySignalMessage());
+                                    Log.i("PolicyMonitorService", "showNotification");
                                     showNotification(context);
                                 }
                             });
@@ -174,36 +180,46 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
         String NOTIFICATION_CHANNEL_ID = "my_channel_id_01";
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notifications", NotificationManager.IMPORTANCE_HIGH);
-
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notifications", IMPORTANCE_HIGH);
+            //Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             // Configure the notification channel.
-            notificationChannel.setDescription("Channel description");
+            notificationChannel.setDescription("收到一个新的操作信号");
+            notificationChannel.setBypassDnd(true);//设置绕过免打扰模式
+            notificationChannel.canBypassDnd();//检测是否绕过免打扰模式
+            notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);//设置在锁屏界面上显示这条通知
+            //设置通知出现时的呼吸灯
             notificationChannel.enableLights(true);
-            notificationChannel.setLightColor(Color.RED);
-            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
             notificationChannel.enableVibration(true);
+            notificationChannel.setLightColor(Color.WHITE);
+            //卸载重装，让设置的震动生效 注意：设置震动时不用动态申请震动权限，只在清单文件中声明即可
+            notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            Uri mUri = Settings.System.DEFAULT_NOTIFICATION_URI;
+            notificationChannel.setSound(mUri, Notification.AUDIO_ATTRIBUTES_DEFAULT);
             notifyManager.createNotificationChannel(notificationChannel);
         }
-
-
 
         Intent mainIntent = new Intent(context, MainActivity.class);
         mainIntent.putExtra("KEY_PAGE_INDEX", 1);
         PendingIntent mainPendingIntent = PendingIntent.getActivity(context, 0, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         //实例化NotificationCompat.Builde并设置相关属性
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-                //设置小图标
-                .setSmallIcon(R.mipmap.ic_app)
+        NotificationCompat.Builder builder = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID);
+        }else {
+            builder = new NotificationCompat.Builder(context);
+            builder.setPriority(PRIORITY_HIGH);
+        }
+
+        //设置小图标
+        builder.setSmallIcon(R.mipmap.ic_app)
                 //设置通知标题
                 .setContentTitle("天机")
                 //设置通知内容
                 .setContentText("收到一个新的操作信号")
                 .setContentIntent(mainPendingIntent)
                 .setAutoCancel(true)
-                .setDefaults(Notification.DEFAULT_SOUND);
+                .setDefaults(Notification.DEFAULT_ALL);
         //设置通知时间，默认为系统发出通知的时间，通常不用设置
-        //.setWhen(System.currentTimeMillis());
-        //通过builder.build()方法生成Notification对象,并发送通知,id=1
         notifyManager.notify(1, builder.build());
     }
 }

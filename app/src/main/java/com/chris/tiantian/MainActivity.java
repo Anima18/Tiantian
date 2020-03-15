@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.chris.tiantian.base.service.VersionUploadService;
 import com.chris.tiantian.module.main.activity.MeFragment;
 import com.chris.tiantian.module.main.activity.PolicyFragment;
 import com.chris.tiantian.module.main.activity.PolicySignalFragment;
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void call(Boolean aBoolean) {
                             if (aBoolean) {
-                                VersionUploadService.checkUpdateInBackground(MainActivity.this);
+                                //VersionUploadService.checkUpdateInBackground(MainActivity.this);
                                 BackgrounderSetting.open(MainActivity.this);
                             }
                         }

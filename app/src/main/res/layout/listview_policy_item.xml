@@ -25,7 +25,7 @@
         android:lines="1"
         android:ellipsize="end"
         android:textColor="#717171"
-        android:text="策略名称"/>
+        android:text=""/>
 
     <TextView
         android:id="@+id/policy_kind_label"
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/policy_kind_label"
         android:textColor="#717171"
-        android:text="策略类型"/>
+        android:text=""/>
 
     <TextView
         android:id="@+id/policy_free"
@@ -70,7 +70,7 @@
         android:layout_toRightOf="@id/policy_market_label"
         android:layout_alignTop="@id/policy_market_label"
         android:textColor="#3f3f3f"
-        android:text="适于市场"/>
+        android:text=""/>
 
     <TextView
         android:id="@+id/policy_timeLevel_label"
@@ -88,7 +88,7 @@
         android:layout_toRightOf="@id/policy_timeLevel_label"
         android:layout_alignTop="@id/policy_market_label"
         android:textColor="#3f3f3f"
-        android:text="策略类型"/>
+        android:text=""/>
 
     <TextView
         android:id="@+id/policy_current"
@@ -117,7 +117,7 @@
         android:layout_toRightOf="@id/policy_accuracy_label"
         android:layout_alignTop="@id/policy_accuracy_label"
         android:textColor="#3f3f3f"
-        android:text="99%"/>
+        android:text=""/>
 
     <TextView
         android:id="@+id/policy_developerId_label"
@@ -135,6 +135,6 @@
         android:layout_toRightOf="@id/policy_developerId_label"
         android:layout_alignTop="@id/policy_accuracy_label"
         android:textColor="#3f3f3f"
-        android:text="设计者"/>
+        android:text=""/>
 
 </RelativeLayout>
