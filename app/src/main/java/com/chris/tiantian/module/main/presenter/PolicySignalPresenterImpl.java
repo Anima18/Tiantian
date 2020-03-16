@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.anima.eventflow.Event;
@@ -29,6 +30,7 @@ import com.chris.tiantian.base.database.DBManager;
 import com.chris.tiantian.base.database.PolicySignalManager;
 import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.NetworkDataParser;
+import com.chris.tiantian.entity.Policy;
 import com.chris.tiantian.entity.PolicySignal;
 import com.chris.tiantian.entity.PolicySignalMessage;
 import com.chris.tiantian.module.main.activity.PolicySignalActionView;
@@ -38,8 +40,15 @@ import com.ut.utuicomponents.common.utils.DateUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import static android.app.NotificationManager.IMPORTANCE_HIGH;
 import static androidx.core.app.NotificationCompat.PRIORITY_HIGH;
@@ -70,7 +79,7 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
         Event event1 = new Event() {
             @Override
             protected Object run() {
-                return manager.query();
+                return uniqData(manager.query());
             }
         };
         EventFlow.create(context, event1).subscribe(new EventResult() {
@@ -80,6 +89,26 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
             }
         });
 
+    }
+
+    private List<PolicySignal> uniqData(List<PolicySignal> dataList) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return dataList.stream()
+                    .collect(
+                            Collectors.collectingAndThen(
+                                    Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(PolicySignal::getTime))), ArrayList::new))
+                    .stream()
+                    .sorted(Comparator.comparing(PolicySignal::getTime).reversed()).collect(Collectors.toList());
+        }else {
+            Set set = new HashSet();
+            List newList = new ArrayList();
+            for (Iterator iter = dataList.iterator(); iter.hasNext();) {
+                Object element = iter.next();
+                if (set.add(element))
+                    newList.add(element);
+            }
+            return newList;
+        }
     }
 
     @Override
@@ -103,9 +132,6 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
 
                         @Override
                         public void onSuccess(@NotNull List<? extends PolicySignal> list) {
-                            actionView.showData((List<PolicySignal>)list);
-                            preferences.putStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
-                            preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, true);
 
                             Event event = new Event() {
                                 @Override
@@ -118,6 +144,9 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                             EventFlow.create(context, event).subscribe(new EventResult() {
                                 @Override
                                 public void onResult(Object data) {
+                                    actionView.showData((List<PolicySignal>)list);
+                                    preferences.putStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
+                                    preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, true);
                                 }
                             });
                         }

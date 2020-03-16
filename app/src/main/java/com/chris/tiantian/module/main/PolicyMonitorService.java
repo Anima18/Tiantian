@@ -1,6 +1,7 @@
 package com.chris.tiantian.module.main;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.chris.tiantian.module.main.presenter.PolicyPresenter;
 import com.chris.tiantian.module.main.presenter.PolicyPresenterImpl;
@@ -48,6 +49,7 @@ public class PolicyMonitorService implements KeepLiveService {
             monitorThread = null;
             monitorFlag = false;
         }
+        Log.i("PolicyMonitorService", "onWorking");
         monitorThread = new MonitorThread();
         monitorFlag = true;
         monitorThread.start();
@@ -60,6 +62,11 @@ public class PolicyMonitorService implements KeepLiveService {
     }
 
     private class MonitorThread extends Thread {
+        public MonitorThread() {
+            Log.i("PolicyMonitorService", "new MonitorThread");
+        }
+
+
         @Override
         public void run() {
             while (monitorFlag) {

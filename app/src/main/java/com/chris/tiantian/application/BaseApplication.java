@@ -3,6 +3,7 @@ package com.chris.tiantian.application;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.chris.tiantian.R;
 import com.chris.tiantian.module.main.PolicyMonitorService;
@@ -26,6 +27,7 @@ public class BaseApplication extends Application {
 
 
     private void startForegroundKeepLive() {
+        Log.i("PolicyMonitorService", "startForegroundKeepLive");
         //定义前台服务的默认样式。即标题、描述和图标
         ForegroundNotification foregroundNotification = new ForegroundNotification("数据同步服务","已开启", R.mipmap.ic_app,
                 //定义前台服务的通知点击事件
@@ -38,7 +40,7 @@ public class BaseApplication extends Application {
 
         PolicyMonitorService policyMonitorService = PolicyMonitorService.getInstance(this);
         //启动保活服务
-        KeepLive.startWork(this, KeepLive.RunMode.ENERGY, foregroundNotification,
+        KeepLive.startWork(this, KeepLive.RunMode.ROGUE, foregroundNotification,
                 //你需要保活的服务，如socket连接、定时任务等，建议不用匿名内部类的方式在这里写
                 policyMonitorService);
     }

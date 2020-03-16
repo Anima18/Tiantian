@@ -1,6 +1,7 @@
 package com.chris.tiantian.module.main.presenter;
 
 import android.content.Context;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -18,6 +19,7 @@ import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.NetworkDataParser;
 import com.chris.tiantian.entity.Policy;
 import com.chris.tiantian.entity.PolicyMessage;
+import com.chris.tiantian.entity.PolicySignal;
 import com.chris.tiantian.module.main.activity.PolicyActionView;
 import com.chris.tiantian.util.CommonUtil;
 import com.ut.utuicomponents.common.utils.DateUtil;
@@ -25,8 +27,15 @@ import com.ut.utuicomponents.common.utils.DateUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 /**
  * Created by jianjianhong on 20-1-14
@@ -51,8 +60,28 @@ public class PolicyPresenterImpl implements PolicyPresenter {
 
     @Override
     public void requestDataByLocal() {
-        List<Policy> Policys = manager.query();
-        actionView.showData(Policys);
+        List<Policy> policies = manager.query();
+        actionView.showData(uniqData(policies));
+    }
+
+    private List<Policy> uniqData(List<Policy> dataList) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return dataList.stream()
+                    .collect(
+                            Collectors.collectingAndThen(
+                                    Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Policy::getId))), ArrayList::new))
+                    .stream()
+                    .sorted(Comparator.comparing(Policy::getPublishDate).reversed()).collect(Collectors.toList());
+        }else {
+            Set set = new HashSet();
+            List newList = new ArrayList();
+            for (Iterator iter = dataList.iterator(); iter.hasNext();) {
+                Object element = iter.next();
+                if (set.add(element))
+                    newList.add(element);
+            }
+            return newList;
+        }
     }
 
     @Override
