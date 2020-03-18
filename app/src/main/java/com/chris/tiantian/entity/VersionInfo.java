@@ -1,6 +1,6 @@
 package com.chris.tiantian.entity;
 
-public class VersionInfo implements Comparable<VersionInfo> {
+public class VersionInfo {
 
     /**
      * id : 2
@@ -119,8 +119,4 @@ public class VersionInfo implements Comparable<VersionInfo> {
         this.releaseType = releaseType;
     }
 
-    @Override
-    public int compareTo(VersionInfo o) {
-        return version.compareTo(o.getVersion());
-    }
 }
