@@ -11,9 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.chris.tiantian.module.main.activity.MeFragment;
-import com.chris.tiantian.module.main.activity.PolicyFragment;
-import com.chris.tiantian.module.main.activity.PolicySignalFragment;
+import com.chris.tiantian.module.me.activity.MeFragment;
+import com.chris.tiantian.module.plaza.activity.PlazaFragment;
+import com.chris.tiantian.module.signal.activity.PolicySignalFragment;
 import com.chris.tiantian.module.main.activity.TiantianFragment;
 import com.chris.tiantian.util.BackgrounderSetting;
 import com.chris.tiantian.util.BottomNavigationViewHelper;
@@ -103,11 +103,11 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.bottom_nav_message:
                         if(plazaFragment == null) {
-                            plazaFragment = new PolicyFragment();
+                            plazaFragment = new PlazaFragment();
                         }
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, plazaFragment).commitAllowingStateLoss();
                         toolbar.setTitle((String)item.getTitle());
-                        toolbar.setVisibility(View.VISIBLE);
+                        toolbar.setVisibility(View.GONE);
                         currentPageIndex = 2;
                         break;
                     case R.id.bottom_nav_me:

@@ -1,4 +1,4 @@
-package com.chris.tiantian.module.main.activity;
+package com.chris.tiantian.module.signal.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -21,8 +21,8 @@ import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.New;
 import com.chris.tiantian.entity.PolicySignal;
 import com.chris.tiantian.entity.PolicySignalMessage;
-import com.chris.tiantian.module.main.presenter.PolicySignalPresenter;
-import com.chris.tiantian.module.main.presenter.PolicySignalPresenterImpl;
+import com.chris.tiantian.module.signal.presenter.PolicySignalPresenter;
+import com.chris.tiantian.module.signal.presenter.PolicySignalPresenterImpl;
 import com.chris.tiantian.util.CommonAdapter;
 import com.chris.tiantian.util.CommonItemViewHolder;
 import com.chris.tiantian.view.DividerItemDecoration;

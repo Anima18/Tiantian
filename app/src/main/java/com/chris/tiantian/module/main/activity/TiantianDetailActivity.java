@@ -1,4 +1,4 @@
-package com.chris.tiantian.module.tiantian;
+package com.chris.tiantian.module.main.activity;
 
 import android.os.Bundle;
 import android.widget.TextView;

@@ -1,4 +1,4 @@
-package com.chris.tiantian.module.main.presenter;
+package com.chris.tiantian.module.plaza.presenter;
 
 import android.content.Context;
 import android.os.Build;
@@ -19,8 +19,7 @@ import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.NetworkDataParser;
 import com.chris.tiantian.entity.Policy;
 import com.chris.tiantian.entity.PolicyMessage;
-import com.chris.tiantian.entity.PolicySignal;
-import com.chris.tiantian.module.main.activity.PolicyActionView;
+import com.chris.tiantian.module.plaza.activity.PolicyActionView;
 import com.chris.tiantian.util.CommonUtil;
 import com.ut.utuicomponents.common.utils.DateUtil;
 

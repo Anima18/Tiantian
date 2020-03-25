@@ -22,8 +22,6 @@ import com.chris.tiantian.R;
 import com.chris.tiantian.entity.Advertise;
 import com.chris.tiantian.entity.NetworkDataParser;
 import com.chris.tiantian.entity.New;
-import com.chris.tiantian.module.tiantian.AdvertiseDetailActivity;
-import com.chris.tiantian.module.tiantian.TiantianDetailActivity;
 import com.chris.tiantian.util.CommonAdapter;
 import com.chris.tiantian.util.CommonItemViewHolder;
 import com.chris.tiantian.util.CommonUtil;

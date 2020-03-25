@@ -1,5 +1,6 @@
-package com.chris.tiantian.module.main.activity;
+package com.chris.tiantian.module.plaza.activity;
 
+import com.chris.tiantian.entity.Policy;
 import com.chris.tiantian.entity.PolicySignal;
 
 import java.util.List;
@@ -7,8 +8,8 @@ import java.util.List;
 /**
  * Created by jianjianhong on 20-1-14
  */
-public interface PolicySignalActionView {
+public interface PolicyActionView {
     void showLoading();
     void showError(String message);
-    void showData(List<PolicySignal> policySignalList);
+    void showData(List<Policy> list);
 }

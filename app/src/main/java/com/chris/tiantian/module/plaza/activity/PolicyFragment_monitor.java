@@ -1,10 +1,10 @@
-package com.chris.tiantian.module.main.activity;
+package com.chris.tiantian.module.plaza.activity;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,118 +16,71 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.anima.networkrequest.DataListCallback;
-import com.anima.networkrequest.NetworkRequest;
-import com.anima.networkrequest.entity.RequestParam;
 import com.anima.networkrequest.util.sharedprefs.UserInfoSharedPreferences;
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.Constant;
-import com.chris.tiantian.entity.NetworkDataParser;
 import com.chris.tiantian.entity.New;
 import com.chris.tiantian.entity.Policy;
+import com.chris.tiantian.entity.PolicyMessage;
+import com.chris.tiantian.module.plaza.presenter.PolicyPresenter;
+import com.chris.tiantian.module.plaza.presenter.PolicyPresenterImpl;
 import com.chris.tiantian.util.CommonAdapter;
 import com.chris.tiantian.util.CommonItemViewHolder;
-import com.chris.tiantian.util.CommonUtil;
 import com.chris.tiantian.view.DividerItemDecoration;
 import com.chris.tiantian.view.MultipleStatusView;
-import com.ut.raw.paginglistview.PagingRecycleAdapter;
-import com.ut.raw.paginglistview.PagingRecycleView;
-import com.ut.raw.paginglistview.viewholder.PagingRecycleItemViewHolder;
 
-import org.jetbrains.annotations.NotNull;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
 /**
  * Created by jianjianhong on 19-12-18
  */
-public class PolicyFragment extends Fragment{
+public class PolicyFragment_monitor extends Fragment implements PolicyActionView {
     private View rootView;
-    private PagingRecycleView recycleView;
+    private MultipleStatusView statusView;
+    private RecyclerView recycleView;
     private UserInfoSharedPreferences preferences;
+    private PolicyPresenter presenter;
+    private View refreshHintView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(rootView == null) {
-            rootView = inflater.inflate(R.layout.fragment_policy, container, false);
+            rootView = inflater.inflate(R.layout.fragment_policy_monitor, container, false);
+            statusView = rootView.findViewById(R.id.policyFragment_status_view);
             recycleView = rootView.findViewById(R.id.policyFragment_listView);
+            refreshHintView = rootView.findViewById(R.id.refresh_hint_view);
 
             preferences = UserInfoSharedPreferences.Companion.getInstance(getContext());
+            presenter = new PolicyPresenterImpl(getContext(), this);
             initListView();
-            requestDataByNetwork();
         }
+        EventBus.getDefault().register(this);
         return rootView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
+        boolean isLocalRefresh = preferences.getBooleanValue(Constant.SP_LOADING_POLICY_DATABASE, false);
+        if(isLocalRefresh) {
+            presenter.requestDataByLocal();
+        }else {
+            presenter.requestDataByNetwork();
+        }
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
     }
 
-    public void requestDataByNetwork() {
-        recycleView.bindDataSource(new PagingRecycleView.OnDataSource() {
-            @Override
-            public void loadData(int i, int i1, int i2, PagingRecycleView.LoadCallback loadCallback) {
-                String url = String.format("%s/comment/apiv2/policylist", CommonUtil.getBaseUrl());
-                new NetworkRequest<Policy>(getContext())
-                        .url(url)
-                        .method(RequestParam.Method.GET)
-                        .dataClass(Policy.class)
-                        .dataParser(new NetworkDataParser<Policy>())
-                        .getList(new DataListCallback<Policy>() {
-                            @Override
-                            public void onFailure(@NotNull String s) {
-                                loadCallback.onError(s);
-                            }
-
-                            @Override
-                            public void onSuccess(@NotNull List<? extends Policy> list) {
-                                loadCallback.onResult((List<Policy>)list);
-                            }
-                        });
-            }
-        });
-
-    }
 
     private void initListView() {
-        recycleView.setPageable(false);
-        recycleView.setItemViewHolderCreator(new PagingRecycleAdapter.OnItemViewHolderCreator() {
-            @Override
-            public PagingRecycleItemViewHolder create(View itemView) {
-                return new PolicyItemViewHolder(getContext(), itemView);
-            }
-        });
-
-        recycleView.setOnItemClickListener(new PagingRecycleAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position, Object item) {
-                Policy policy = (Policy)item;
-                UserInfoSharedPreferences sharedPreferences = UserInfoSharedPreferences.Companion.getInstance(getContext());
-                int currentPolicy = sharedPreferences.getIntValue(Constant.SP_CURRENT_POLICY, -1);
-                if(currentPolicy != policy.getId()) {
-                    if(currentPolicy == -1) {
-                        changeCurrentPolicy(sharedPreferences, policy.getId());
-                    }else {
-                        new AlertDialog.Builder(getContext())
-                                .setTitle("提示")
-                                .setMessage("是否要切换策略?")
-                                .setNegativeButton("取消", null)
-                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        changeCurrentPolicy(sharedPreferences, policy.getId());
-                                    }
-                                })
-                                .show();
-                    }
-
-                }
-            }
-        });
-/*
         CommonAdapter<New> adapter = new CommonAdapter<>(getContext(), R.layout.listview_policy_item);
         adapter.setItemViewHolderCreator(new CommonAdapter.OnItemViewHolderCreator() {
             @Override
@@ -164,8 +117,18 @@ public class PolicyFragment extends Fragment{
         recycleView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recycleView.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation(), DividerItemDecoration.DIVIDER_TYPE_INSET, layoutManager.getOrientation()));
-        recycleView.setLayoutManager(layoutManager);*/
+        recycleView.setLayoutManager(layoutManager);
 
+        recycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if(refreshHintView.getVisibility() == View.VISIBLE) {
+                    refreshHintView.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     private void changeCurrentPolicy(UserInfoSharedPreferences sharedPreferences, int id) {
@@ -175,8 +138,37 @@ public class PolicyFragment extends Fragment{
     }
 
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void policyEventBus(PolicyMessage policyMessage) {
+        refreshHintView.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable(){
+            public void run() {
+                refreshHintView.setVisibility(View.GONE);
+            }
+        }, 5000);
+        presenter.requestDataByLocal();
+    }
+    @Override
+    public void showLoading() {
+        statusView.showLoading();
+    }
 
-    class PolicyItemViewHolder extends PagingRecycleItemViewHolder<Policy> {
+    @Override
+    public void showError(String message) {
+        statusView.showError(message);
+    }
+
+    @Override
+    public void showData(List<Policy> list) {
+        if(list != null && list.size() > 0) {
+            statusView.showContent();
+            ((CommonAdapter)recycleView.getAdapter()).setData(list);
+        }else {
+            statusView.showEmpty();
+        }
+    }
+
+    class PolicyItemViewHolder extends CommonItemViewHolder<Policy> {
         View itemView;
         TextView nameView;
         TextView developerView;
@@ -187,6 +179,7 @@ public class PolicyFragment extends Fragment{
         TextView currentView;
 
         //UserInfoSharedPreferences preferences;
+
         public PolicyItemViewHolder(Context context, View itemView) {
             super(itemView);
             this.itemView = itemView;
@@ -216,16 +209,6 @@ public class PolicyFragment extends Fragment{
             marketView.setText(data.getMarket()+"");
             timeLevelView.setText(data.getTimeLevel()+"");
             accuracyView.setText(data.getAccuracy()+"%");
-        }
-
-        @Override
-        public View itemView() {
-            return null;
-        }
-
-        @Override
-        public View backgroundView() {
-            return null;
         }
     }
 }

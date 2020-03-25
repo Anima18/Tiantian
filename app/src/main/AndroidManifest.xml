@@ -35,9 +35,11 @@
         <activity android:name=".MainActivity" android:launchMode="singleTask"/>
         <activity android:name=".LoginActivity"/>
         <activity android:name=".RegisterActivity"/>
-        <activity android:name=".module.tiantian.TiantianDetailActivity"/>
-        <activity android:name=".module.tiantian.AdvertiseDetailActivity"/>
-        <activity android:name=".module.main.activity.UserGuideActivity"/>
+        <activity android:name=".module.main.activity.TiantianDetailActivity"/>
+        <activity android:name=".module.main.activity.AdvertiseDetailActivity"/>
+        <activity android:name=".module.me.activity.UserGuideActivity"/>
+        <activity android:name=".module.me.activity.MyPointsActivity"/>
+        <activity android:name=".module.me.activity.PurchasedPolicyActivity"/>
 
         <!--<service android:name=".module.main.PolicyMonitorService" android:priority="1000" />-->
 

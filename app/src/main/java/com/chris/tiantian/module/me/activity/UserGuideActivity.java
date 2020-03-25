@@ -1,4 +1,4 @@
-package com.chris.tiantian.module.main.activity;
+package com.chris.tiantian.module.me.activity;
 
 import android.content.Context;
 import android.content.Intent;

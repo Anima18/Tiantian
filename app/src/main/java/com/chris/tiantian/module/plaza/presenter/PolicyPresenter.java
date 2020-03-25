@@ -1,4 +1,4 @@
-package com.chris.tiantian.module.main.presenter;
+package com.chris.tiantian.module.plaza.presenter;
 
 /**
  * Created by jianjianhong on 20-1-14

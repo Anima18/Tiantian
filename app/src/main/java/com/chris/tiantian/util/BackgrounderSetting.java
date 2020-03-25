@@ -16,7 +16,7 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import com.anima.networkrequest.util.sharedprefs.ConfigSharedPreferences;
-import com.chris.tiantian.module.main.activity.UserGuideActivity;
+import com.chris.tiantian.module.me.activity.UserGuideActivity;
 
 import java.util.List;
 

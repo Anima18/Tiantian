@@ -13,9 +13,8 @@
         style="@style/toolbar_white"
         app:isshowbackbtn="false"
         app:menuiconcolor="@color/white"
-        app:titleplace="left">
+        app:titleplace="left"/>
 
-    </com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"

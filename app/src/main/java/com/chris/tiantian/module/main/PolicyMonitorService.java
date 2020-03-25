@@ -3,10 +3,10 @@ package com.chris.tiantian.module.main;
 import android.content.Context;
 import android.util.Log;
 
-import com.chris.tiantian.module.main.presenter.PolicyPresenter;
-import com.chris.tiantian.module.main.presenter.PolicyPresenterImpl;
-import com.chris.tiantian.module.main.presenter.PolicySignalPresenter;
-import com.chris.tiantian.module.main.presenter.PolicySignalPresenterImpl;
+import com.chris.tiantian.module.plaza.presenter.PolicyPresenter;
+import com.chris.tiantian.module.plaza.presenter.PolicyPresenterImpl;
+import com.chris.tiantian.module.signal.presenter.PolicySignalPresenter;
+import com.chris.tiantian.module.signal.presenter.PolicySignalPresenterImpl;
 import com.fanjun.keeplive.config.KeepLiveService;
 
 import java.util.Calendar;

@@ -1,4 +1,4 @@
-package com.chris.tiantian.module.main.presenter;
+package com.chris.tiantian.module.signal.presenter;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -14,7 +14,6 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
-import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.anima.eventflow.Event;
@@ -30,10 +29,9 @@ import com.chris.tiantian.base.database.DBManager;
 import com.chris.tiantian.base.database.PolicySignalManager;
 import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.NetworkDataParser;
-import com.chris.tiantian.entity.Policy;
 import com.chris.tiantian.entity.PolicySignal;
 import com.chris.tiantian.entity.PolicySignalMessage;
-import com.chris.tiantian.module.main.activity.PolicySignalActionView;
+import com.chris.tiantian.module.signal.activity.PolicySignalActionView;
 import com.chris.tiantian.util.CommonUtil;
 import com.ut.utuicomponents.common.utils.DateUtil;
 
