@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar
+        android:id="@+id/activity_toolBar"
+        style="@style/toolbar_white"
+        android:layout_height="50dp"
+        app:isshowbackbtn="true"
+        app:menuiconcolor="@color/white"
+        app:titleplace="left"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:textSize="24sp"
+        android:text="输入验证码"
+        android:textColor="@color/black"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:text="短信已发送至 +8613750034730"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="36dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingBottom="36dp">
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:lines="1"
+            android:imeOptions="actionNext"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:lines="1"
+            android:imeOptions="actionNext"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:lines="1"
+            android:imeOptions="actionNext"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:lines="1"
+            android:imeOptions="actionNext"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:lines="1"
+            android:imeOptions="actionNext"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:lines="1"
+            android:imeOptions="actionDone"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="50s后可重新获取"/>
+
+</LinearLayout>

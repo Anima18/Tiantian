@@ -1,67 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/colorPrimary">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="56dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:gravity="center_horizontal">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+    <com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar
+        android:id="@+id/activity_toolBar"
+        style="@style/toolbar_white"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        app:isshowbackbtn="true"
+        app:menuiconcolor="@color/white"
+        app:titleplace="left"
+        app:navigationIcon="@drawable/ic_close_black_24dp"/>
 
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/activity_toolBar"
+        android:paddingTop="20dp"
+        android:textSize="24sp"
+        android:text="登录天机，体验更多功能"
+        android:textColor="@color/black"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:id="@+id/input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/title"
+        android:layout_marginTop="36dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_gravity="center"
+        android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="56dp"
-            android:layout_marginBottom="24dp"
-            android:textSize="40sp"
-            android:textColor="@color/primary_text_white_color"
-            android:text="天天"/>
-
-        <com.google.android.material.textfield.TextInputLayout
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:text="+86"
+            android:drawablePadding="6dp"
+            android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"/>
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="用户名"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="密码"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
-            android:theme="@style/AppTheme.Button.Colored.primary"
-            android:text="登录"/>
-
-        <TextView android:id="@+id/link_signup"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text="没有账号? 请创建"
-            android:textColor="@color/disabled_text_dark_color"
-            android:gravity="center"
-            android:textSize="16dip"
-            android:onClick="toRegisterPage"/>
-
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:padding="16dp"
+            android:text="13750034730"/>
     </LinearLayout>
-</ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_signup"
+        android:layout_width="fill_parent"
+        android:layout_height="56dp"
+        android:layout_below="@id/input_layout"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:theme="@style/AppTheme.Button.Colored.primary"
+        android:textSize="18sp"
+        android:inputType="number"
+        android:lines="1"
+        android:text="获取验证码"
+        android:onClick="toSMSVerification"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/weixin_login"
+        android:textSize="14sp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:textColor="@color/secondary_text_dark_color"
+        android:text="其他登录方式"/>
+
+    <ImageView
+        android:id="@+id/weixin_login"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:src="@drawable/wechat"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="36dp"/>
+</RelativeLayout>

@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * Created by Chris on 2016/1/17.
  */
 public class IndexActivity extends AppCompatActivity {
-    boolean isLogined = true;
+    boolean isLogined = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
