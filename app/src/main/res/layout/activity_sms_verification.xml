@@ -107,9 +107,11 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/timeTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="50s后可重新获取"/>
+        android:textColor="@color/secondary_text_dark_color"
+        android:text=""/>
 
 </LinearLayout>
