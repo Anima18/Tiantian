@@ -9,7 +9,7 @@ import android.widget.TextView;
  */
 public class TimerTextUtil extends CountDownTimer {
     private TextView textView;
-
+    private boolean finished = true;
     public TimerTextUtil(long millisInFuture, long countDownInterval, TextView textView) {
         super(millisInFuture, countDownInterval);
         this.textView = textView;
@@ -19,16 +19,22 @@ public class TimerTextUtil extends CountDownTimer {
     public void onTick(long millisUntilFinished) {
         String time =  millisUntilFinished / 1000 + "s后可重新获取";
         setTextInfo(time, "#727272", false);
+        finished = false;
     }
 
     @Override
     public void onFinish() {
-        setTextInfo("重发短信验证码", "#1b82d2", false);
+        setTextInfo("重发短信验证码", "#1b82d2", true);
+        finished = true;
     }
 
     private void setTextInfo(String content, String color, boolean isClick) {
         textView.setText(content);
         textView.setTextColor(Color.parseColor(color));
         textView.setClickable(isClick);
+    }
+
+    public boolean isFinished() {
+        return finished;
     }
 }

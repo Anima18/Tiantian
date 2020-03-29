@@ -1,8 +1,10 @@
-package com.chris.tiantian;
+package com.chris.tiantian.module.login;
 
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.chris.tiantian.R;
 
 /**
  * Created by jianjianhong on 2016/11/25.

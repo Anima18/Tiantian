@@ -1,4 +1,4 @@
-package com.chris.tiantian;
+package com.chris.tiantian.module.login;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.chris.tiantian.R;
 import com.chris.tiantian.util.TimerTextUtil;
 
 /**

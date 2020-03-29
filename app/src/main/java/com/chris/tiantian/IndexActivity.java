@@ -6,6 +6,8 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.chris.tiantian.module.login.LoginActivity;
+
 /**
  * Created by Chris on 2016/1/17.
  */
