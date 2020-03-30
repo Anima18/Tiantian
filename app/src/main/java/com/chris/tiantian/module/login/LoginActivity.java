@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.chris.tiantian.R;
 import com.chris.tiantian.util.TimerTextUtil;
+import com.chris.tiantian.util.VisibilityAnimation;
 import com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar;
 
 
@@ -73,12 +77,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initSMSView() {
+
+        smsVerifyView.setX(getResources().getDisplayMetrics().widthPixels);
+
         smsToolbar = smsVerifyView.findViewById(R.id.activity_toolBar);
         smsToolbar.getNavigationView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginView.setVisibility(View.VISIBLE);
-                smsVerifyView.setVisibility(View.GONE);
+                VisibilityAnimation.translTo(smsVerifyView, smsVerifyView.getWidth());
             }
         });
         timerTextView = findViewById(R.id.timeTv);
@@ -106,8 +112,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showSmsVerifyView() {
-        loginView.setVisibility(View.GONE);
-        smsVerifyView.setVisibility(View.VISIBLE);
+        VisibilityAnimation.translTo(smsVerifyView, 0);
         if(timerTextUtil.isFinished()) {
             timerTextUtil.start();
         }
@@ -205,5 +210,18 @@ public class LoginActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         timerTextUtil.cancel();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(isSMSVerify()) {
+            VisibilityAnimation.translTo(smsVerifyView, smsVerifyView.getWidth());
+        }else {
+            super.onBackPressed();
+        }
+    }
+
+    private boolean isSMSVerify() {
+        return smsVerifyView.getX() == 0;
     }
 }

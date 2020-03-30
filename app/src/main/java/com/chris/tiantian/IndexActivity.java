@@ -12,7 +12,7 @@ import com.chris.tiantian.module.login.LoginActivity;
  * Created by Chris on 2016/1/17.
  */
 public class IndexActivity extends AppCompatActivity {
-    boolean isLogined = false;
+    boolean isLogined = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

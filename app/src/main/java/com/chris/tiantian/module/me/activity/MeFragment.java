@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chris.tiantian.R;
 import com.chris.tiantian.base.service.VersionUploadService;
 import com.chris.tiantian.entity.ActionMenuItem;
+import com.chris.tiantian.module.login.LoginActivity;
 import com.chris.tiantian.util.CommonUtil;
 import com.chris.tiantian.util.ProfileAdapter;
 
@@ -98,7 +99,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.toBeVip:
-                Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), LoginActivity.class));
                 break;
             case R.id.setting_my_publish:
                 Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
