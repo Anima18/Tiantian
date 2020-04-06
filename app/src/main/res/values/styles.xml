@@ -32,6 +32,12 @@
         <item name="android:minHeight">40dip</item>
     </style>
 
+    <style name="AppTheme.Button.Colored.green" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/my_point_pay</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:minHeight">40dip</item>
+    </style>
+
     <style name="Login_checkbox" parent="@android:style/Widget.Material.CompoundButton.CheckBox" >
         <item name="android:colorControlActivated">@color/white</item> //选中的颜色
         <item name="android:colorControlNormal">@color/gray</item>//默认的颜色

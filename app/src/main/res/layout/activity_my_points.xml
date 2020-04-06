@@ -3,14 +3,67 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:layout_gravity="center_horizontal">
 
     <com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar
         android:id="@+id/activity_toolBar"
         style="@style/toolbar_white"
         app:isshowbackbtn="true"
-        app:menuiconcolor="@color/white"
-        app:titleplace="left"
-        app:title="我的积分"/>
+        app:menuiconcolor="@color/black"
+        app:titleplace="left">
+        <com.ut.utuicomponents.uttoolbar.UTUiToolbarButton
+            android:id="@+id/myPointsDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:label="积分明细"/>
+    </com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar>
 
+    <ImageView
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="48dp"
+        android:tint="@color/message_error_action"
+        android:src="@drawable/money"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:textColor="@color/primary_text_dark_color"
+        android:textSize="16sp"
+        android:text="我的积分"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp">
+        <TextView
+            android:id="@+id/myPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="40dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="1000.00"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/myPoints"
+            android:textColor="@color/black"
+            android:paddingTop="6dp"
+            android:textStyle="bold"
+            android:textSize="28dp"
+            android:text="￥"
+            />
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:text="充值"
+        android:textSize="16sp"
+        android:theme="@style/AppTheme.Button.Colored.green"/>
 </LinearLayout>

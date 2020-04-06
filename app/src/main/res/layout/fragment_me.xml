@@ -19,26 +19,16 @@
              android:src="@drawable/moment_avatar_default"/>
 
          <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_toRightOf="@id/moment_avatar_imageView"
-             android:text="游客"
-             android:textSize="16sp"
-             android:paddingLeft="16dp"
-             android:textColor="#32363c"
-             android:layout_centerVertical="true"/>
-
-         <TextView
              android:id="@+id/toBeVip"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:layout_alignParentRight="true"
-             android:text="登录"
-             android:textSize="16sp"
-             android:paddingRight="36dp"
+             android:layout_toRightOf="@id/moment_avatar_imageView"
+             android:text="登陆/注册"
+             android:textSize="18sp"
+             android:paddingLeft="16dp"
              android:textColor="#32363c"
              android:layout_centerVertical="true"/>
-     </RelativeLayout>
+         </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
