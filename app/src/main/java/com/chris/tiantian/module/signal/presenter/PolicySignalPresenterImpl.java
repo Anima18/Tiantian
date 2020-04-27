@@ -25,11 +25,10 @@ import com.anima.networkrequest.entity.RequestParam;
 import com.anima.networkrequest.util.sharedprefs.UserInfoSharedPreferences;
 import com.chris.tiantian.MainActivity;
 import com.chris.tiantian.R;
-import com.chris.tiantian.base.database.DBManager;
-import com.chris.tiantian.base.database.PolicySignalManager;
+import com.chris.tiantian.base.db.dao.PolicySignalDao;
+import com.chris.tiantian.entity.PolicySignal;
 import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.NetworkDataParser;
-import com.chris.tiantian.entity.PolicySignal;
 import com.chris.tiantian.entity.PolicySignalMessage;
 import com.chris.tiantian.module.signal.activity.PolicySignalActionView;
 import com.chris.tiantian.util.CommonUtil;
@@ -59,7 +58,8 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
     private Context context;
     private PolicySignalActionView actionView;
     private UserInfoSharedPreferences preferences;
-    private PolicySignalManager manager;
+    //private PolicySignalManager manager;
+    private PolicySignalDao policySignalDao;
 
     public PolicySignalPresenterImpl(Context context) {
         this(context, null);
@@ -69,7 +69,8 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
         this.context = context;
         this.actionView = actionView;
         preferences = UserInfoSharedPreferences.Companion.getInstance(context);
-        manager = DBManager.getInstance(context).getPolicySignalManager();
+        //manager = DBManager.getInstance(context).getPolicySignalManager();
+        policySignalDao = CommonUtil.getDatabase().policySignalDao();
     }
 
     @Override
@@ -77,7 +78,7 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
         Event event1 = new Event() {
             @Override
             protected Object run() {
-                return uniqData(manager.query());
+                return uniqData(policySignalDao.query());
             }
         };
         EventFlow.create(context, event1).subscribe(new EventResult() {
@@ -134,8 +135,8 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                             Event event = new Event() {
                                 @Override
                                 protected Object run() {
-                                    manager.clear();
-                                    manager.insertList((List<PolicySignal>) list);
+                                    policySignalDao.clear();
+                                    policySignalDao.insertList((List<PolicySignal>) list);
                                     return null;
                                 }
                             };
@@ -181,7 +182,7 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                             Event event = new Event() {
                                 @Override
                                 protected Object run() {
-                                    manager.updateList((List<PolicySignal>) list);
+                                    updateList((List<PolicySignal>) list);
                                     return null;
                                 }
                             };
@@ -199,6 +200,21 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                         }
                     }
                 });
+    }
+
+    private void updateList(List<PolicySignal> policySignals){
+        if(policySignals == null || policySignals.size() == 0) {
+            return;
+        }
+        for(PolicySignal signal : policySignals) {
+            if(!isExists(signal)) {
+                policySignalDao.insert(signal);
+            }
+        }
+    }
+
+    private boolean isExists(PolicySignal policySignal) {
+        return policySignalDao.findPolicySignal(policySignal.id).size() > 0;
     }
 
     public static void showNotification(Context context) {

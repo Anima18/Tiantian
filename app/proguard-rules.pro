@@ -56,6 +56,15 @@
 -dontnote com.google.android.material.**
 -dontwarn androidx.**
 
+-dontskipnonpubliclibraryclassmembers
+-printconfiguration
+-keep,allowobfuscation @interface androidx.annotation.Keep
+
+-keep @androidx.annotation.Keep class *
+-keepclassmembers class * {
+    @androidx.annotation.Keep *;
+}
+
 #====================support包
 -dontwarn android.support.**
 -keep class android.support.** {*;}

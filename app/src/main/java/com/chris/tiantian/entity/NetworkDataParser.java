@@ -1,9 +1,11 @@
 package com.chris.tiantian.entity;
 
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.anima.networkrequest.data.okhttp.dataConvert.ParameterizedTypeImpl;
 import com.anima.networkrequest.data.okhttp.dataConvert.ResponseParser;
+import com.chris.tiantian.util.CommonUtil;
 import com.google.gson.Gson;
 
 import java.io.StringReader;

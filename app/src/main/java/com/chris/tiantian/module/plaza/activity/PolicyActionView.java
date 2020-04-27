@@ -1,7 +1,6 @@
 package com.chris.tiantian.module.plaza.activity;
 
 import com.chris.tiantian.entity.Policy;
-import com.chris.tiantian.entity.PolicySignal;
 
 import java.util.List;
 

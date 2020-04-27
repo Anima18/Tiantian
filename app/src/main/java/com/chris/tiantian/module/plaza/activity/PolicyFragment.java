@@ -3,7 +3,6 @@ package com.chris.tiantian.module.plaza.activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.anima.networkrequest.DataListCallback;
 import com.anima.networkrequest.NetworkRequest;
@@ -23,13 +20,8 @@ import com.anima.networkrequest.util.sharedprefs.UserInfoSharedPreferences;
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.NetworkDataParser;
-import com.chris.tiantian.entity.New;
 import com.chris.tiantian.entity.Policy;
-import com.chris.tiantian.util.CommonAdapter;
-import com.chris.tiantian.util.CommonItemViewHolder;
 import com.chris.tiantian.util.CommonUtil;
-import com.chris.tiantian.view.DividerItemDecoration;
-import com.chris.tiantian.view.MultipleStatusView;
 import com.ut.raw.paginglistview.PagingRecycleAdapter;
 import com.ut.raw.paginglistview.PagingRecycleView;
 import com.ut.raw.paginglistview.viewholder.PagingRecycleItemViewHolder;
@@ -76,6 +68,7 @@ public class PolicyFragment extends Fragment{
                         .method(RequestParam.Method.GET)
                         .dataClass(Policy.class)
                         .dataParser(new NetworkDataParser<Policy>())
+                        .dataFormat(RequestParam.DataFormat.LIST)
                         .getList(new DataListCallback<Policy>() {
                             @Override
                             public void onFailure(@NotNull String s) {
@@ -127,45 +120,6 @@ public class PolicyFragment extends Fragment{
                 }
             }
         });
-/*
-        CommonAdapter<New> adapter = new CommonAdapter<>(getContext(), R.layout.listview_policy_item);
-        adapter.setItemViewHolderCreator(new CommonAdapter.OnItemViewHolderCreator() {
-            @Override
-            public CommonItemViewHolder create(View itemView) {
-                return new PolicyItemViewHolder(getContext(), itemView);
-            }
-        });
-        adapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position, Object item) {
-                Policy policy = (Policy)item;
-                UserInfoSharedPreferences sharedPreferences = UserInfoSharedPreferences.Companion.getInstance(getContext());
-                int currentPolicy = sharedPreferences.getIntValue(Constant.SP_CURRENT_POLICY, -1);
-                if(currentPolicy != policy.getId()) {
-                    if(currentPolicy == -1) {
-                        changeCurrentPolicy(sharedPreferences, policy.getId());
-                    }else {
-                        new AlertDialog.Builder(getContext())
-                                .setTitle("提示")
-                                .setMessage("是否要切换策略?")
-                                .setNegativeButton("取消", null)
-                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        changeCurrentPolicy(sharedPreferences, policy.getId());
-                                    }
-                                })
-                                .show();
-                    }
-
-                }
-            }
-        });
-        recycleView.setAdapter(adapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recycleView.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation(), DividerItemDecoration.DIVIDER_TYPE_INSET, layoutManager.getOrientation()));
-        recycleView.setLayoutManager(layoutManager);*/
-
     }
 
     private void changeCurrentPolicy(UserInfoSharedPreferences sharedPreferences, int id) {

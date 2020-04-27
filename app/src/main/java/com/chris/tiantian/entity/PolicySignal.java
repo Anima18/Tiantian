@@ -1,8 +1,12 @@
 package com.chris.tiantian.entity;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 /**
  * Created by jianjianhong on 20-1-10
  */
+@Entity(tableName = PolicySignalTable.TABLE_NAME)
 public class PolicySignal {
 
     /**
@@ -19,6 +23,7 @@ public class PolicySignal {
      * policyTimeLevel : 15min
      */
 
+    @PrimaryKey
     public int id;
     public int policyId;
     public String policyName;

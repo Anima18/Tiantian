@@ -36,6 +36,7 @@ public class Policy implements Parcelable {
     public String market;
     public String timeLevel;
     public String direction;
+
     public int accuracy;
     public int profit;
     public int verifiedLevel;
@@ -240,5 +241,28 @@ public class Policy implements Parcelable {
         dest.writeInt(subscribeNumber);
         dest.writeInt(weight);
         dest.writeString(file);
+    }
+
+    @Override
+    public String toString() {
+        return "Policy{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", developerId='" + developerId + '\'' +
+                ", fileName='" + fileName + '\'' +
+                ", kind='" + kind + '\'' +
+                ", market='" + market + '\'' +
+                ", timeLevel='" + timeLevel + '\'' +
+                ", direction='" + direction + '\'' +
+                ", accuracy=" + accuracy +
+                ", profit=" + profit +
+                ", verifiedLevel=" + verifiedLevel +
+                ", price=" + price +
+                ", publishDate='" + publishDate + '\'' +
+                ", refineTimes=" + refineTimes +
+                ", subscribeNumber=" + subscribeNumber +
+                ", weight=" + weight +
+                ", file='" + file + '\'' +
+                '}';
     }
 }

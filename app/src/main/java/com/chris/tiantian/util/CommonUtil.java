@@ -1,5 +1,7 @@
 package com.chris.tiantian.util;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -10,6 +12,7 @@ import android.util.TypedValue;
 import android.view.WindowManager;
 
 import com.chris.tiantian.application.BaseApplication;
+import com.chris.tiantian.base.db.AppDatabase;
 
 import java.io.File;
 
@@ -20,6 +23,10 @@ import java.io.File;
 public class CommonUtil {
     public static Context getApplicationContext() {
         return BaseApplication.mContext;
+    }
+
+    public static AppDatabase getDatabase() {
+        return BaseApplication.appDatabase;
     }
 
     public static String getBaseUrl() {

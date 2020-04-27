@@ -3,8 +3,6 @@ package com.chris.tiantian.module.main;
 import android.content.Context;
 import android.util.Log;
 
-import com.chris.tiantian.module.plaza.presenter.PolicyPresenter;
-import com.chris.tiantian.module.plaza.presenter.PolicyPresenterImpl;
 import com.chris.tiantian.module.signal.presenter.PolicySignalPresenter;
 import com.chris.tiantian.module.signal.presenter.PolicySignalPresenterImpl;
 import com.fanjun.keeplive.config.KeepLiveService;
@@ -18,7 +16,6 @@ public class PolicyMonitorService implements KeepLiveService {
     private static final String TAG = "PolicyMonitorService";
     private static PolicyMonitorService sInstance;
 
-    private PolicyPresenter policyPresenter;
     private PolicySignalPresenter signalPresenter;
     private MonitorThread monitorThread;
     private boolean monitorFlag = true;
@@ -39,7 +36,6 @@ public class PolicyMonitorService implements KeepLiveService {
 
     private PolicyMonitorService(Context context){
         signalPresenter = new PolicySignalPresenterImpl(context);
-        policyPresenter = new PolicyPresenterImpl(context);
     }
 
     @Override
