@@ -28,7 +28,7 @@ import static com.chris.tiantian.entity.Constant.SHOW_AUTO_STARTUP_MAKER;
 public class BackgrounderSetting {
 
     public static void open(Context context) {
-        boolean isShow = ConfigSharedPreferences.Companion.getInstance(context).getBooleanValue(SHOW_AUTO_STARTUP_MAKER, false);
+        boolean isShow = PreferencesUtil.getConfigPreference().getBooleanValue(SHOW_AUTO_STARTUP_MAKER, false);
         if(!isShow) {
             new AlertDialog.Builder(context)
                     .setTitle("提示")

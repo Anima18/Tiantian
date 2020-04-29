@@ -20,7 +20,7 @@
 
          <TextView
              android:id="@+id/toBeVip"
-             android:layout_width="wrap_content"
+             android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:layout_toRightOf="@id/moment_avatar_imageView"
              android:text="登陆/注册"
@@ -28,6 +28,14 @@
              android:paddingLeft="16dp"
              android:textColor="#32363c"
              android:layout_centerVertical="true"/>
+
+         <ImageView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+             android:layout_centerVertical="true"
+             android:layout_marginRight="20dp"
+             android:src="@drawable/ic_chevron_right_black_18dp"/>
          </RelativeLayout>
 
     <TextView

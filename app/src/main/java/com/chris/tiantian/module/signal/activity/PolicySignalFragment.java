@@ -20,11 +20,12 @@ import com.chris.tiantian.R;
 import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.New;
 import com.chris.tiantian.entity.PolicySignal;
-import com.chris.tiantian.entity.PolicySignalMessage;
+import com.chris.tiantian.entity.eventmessage.PolicySignalMessage;
 import com.chris.tiantian.module.signal.presenter.PolicySignalPresenter;
 import com.chris.tiantian.module.signal.presenter.PolicySignalPresenterImpl;
 import com.chris.tiantian.util.CommonAdapter;
 import com.chris.tiantian.util.CommonItemViewHolder;
+import com.chris.tiantian.util.PreferencesUtil;
 import com.chris.tiantian.view.DividerItemDecoration;
 import com.chris.tiantian.view.MultipleStatusView;
 
@@ -55,7 +56,7 @@ public class PolicySignalFragment extends Fragment implements PolicySignalAction
             statusView = rootView.findViewById(R.id.policySignalFragment_status_view);
             recycleView = rootView.findViewById(R.id.subFragment_listView);
             refreshHintView = rootView.findViewById(R.id.refresh_hint_view);
-            preferences = UserInfoSharedPreferences.Companion.getInstance(getContext());
+            preferences = PreferencesUtil.getUserInfoPreference();
             presenter = new PolicySignalPresenterImpl(getContext(), this);
 
             intiRecycleView();

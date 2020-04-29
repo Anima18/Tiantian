@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar
+        android:id="@+id/activity_toolBar"
+        style="@style/toolbar_white"
+        android:layout_alignParentTop="true"
+        app:isshowbackbtn="true"
+        app:menuiconcolor="@color/black"
+        app:title="个人信息"
+        app:titleplace="left"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/user_info_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/activity_toolBar"
+        android:layout_above="@id/btn_logout"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_logout"
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="24dp"
+        android:layout_alignParentBottom="true"
+        android:text="登出"
+        android:textSize="18sp"
+        android:theme="@style/AppTheme.Button.Colored.primary" />
+</RelativeLayout>

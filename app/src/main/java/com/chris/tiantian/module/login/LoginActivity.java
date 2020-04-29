@@ -1,14 +1,12 @@
 package com.chris.tiantian.module.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
+import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.chris.tiantian.R;
+import com.chris.tiantian.util.StringUtil;
 import com.chris.tiantian.util.TimerTextUtil;
 import com.chris.tiantian.util.VisibilityAnimation;
 import com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar;
@@ -24,7 +23,7 @@ import com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar;
 /**
  * Created by jianjianhong on 2019/4/3.
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoginActionView {
 
     private View loginView;
     private View smsVerifyView;
@@ -33,11 +32,12 @@ public class LoginActivity extends AppCompatActivity {
     private TimerTextUtil timerTextUtil;
     private TextView timerTextView;
 
-    private EditText code1Et;
-    private EditText code2Et;
-    private EditText code3Et;
-    private EditText code4Et;
+    private TextView phoneNumberValueEt;
+    private EditText codeEt;
     private TextView areaCodeTv;
+    private TextView phoneEt;
+
+    private LoginPresenter presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         loginView = findViewById(R.id.login_layout);
         smsVerifyView = findViewById(R.id.sms_layout);
 
+        presenter = new LoginPresenterImpl(this);
         initLoginView();
         initSMSView();
     }
@@ -59,10 +60,17 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         areaCodeTv = loginView.findViewById(R.id.loginView_area_code);
+        phoneEt = loginView.findViewById(R.id.loginView_phone_input);
         areaCodeTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(LoginActivity.this, AreaCodeActivity.class), 0);
+            }
+        });
+        findViewById(R.id.btn_signup).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verifySMS(v);
             }
         });
     }
@@ -77,7 +85,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initSMSView() {
-
         smsVerifyView.setX(getResources().getDisplayMetrics().widthPixels);
 
         smsToolbar = smsVerifyView.findViewById(R.id.activity_toolBar);
@@ -85,6 +92,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 VisibilityAnimation.translTo(smsVerifyView, smsVerifyView.getWidth());
+                loginView.setVisibility(View.VISIBLE);
             }
         });
         timerTextView = findViewById(R.id.timeTv);
@@ -92,118 +100,90 @@ public class LoginActivity extends AppCompatActivity {
         timerTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                verifySMS(v);
+                if(timerTextUtil.isFinished()) {
+                    verifySMS(v);
+                }
+
             }
         });
-        onValidateCodeChanged();
+        phoneNumberValueEt = smsVerifyView.findViewById(R.id.phoneNumberValue);
+        codeEt = smsVerifyView.findViewById(R.id.validateCode);
+        findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login(v);
+            }
+        });
     }
 
     public void verifySMS(View view) {
-        if(timerTextUtil.isFinished()) {
-            //todo 请求网络后台发送短信
-            code1Et.setText("");
-            code2Et.setText("");
-            code3Et.setText("");
-            code4Et.setText("");
+        if(!timerTextUtil.isFinished()) {
             showSmsVerifyView();
-        }else {
-            showSmsVerifyView();
+            return;
         }
+
+        String phone = phoneEt.getText().toString();
+        if(!StringUtil.isPhone(phone)) {
+            actionError("请输入正确的手机号码！");
+            return;
+        }
+
+        if(timerTextUtil.isFinished()) {
+            codeEt.setText("");
+        }
+
+        presenter.requestSMSCode(phone);
+    }
+
+    public void login(View view) {
+        String smsCode = codeEt.getText().toString();
+        if(TextUtils.isEmpty(smsCode)) {
+            actionError("请输入验证码");
+        }else {
+            presenter.checkSMSCode(phoneEt.getText().toString(), smsCode);
+        }
+
     }
 
     private void showSmsVerifyView() {
         VisibilityAnimation.translTo(smsVerifyView, 0);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loginView.setVisibility(View.GONE);
+            }
+        }, 1000);
+
+        phoneNumberValueEt.setText(String.format("短信已发送至 %s%s", areaCodeTv.getText(), phoneEt.getText()));
         if(timerTextUtil.isFinished()) {
             timerTextUtil.start();
         }
     }
 
-    private void onValidateCodeChanged() {
-        code1Et = smsVerifyView.findViewById(R.id.validateCode1);
-        code2Et = smsVerifyView.findViewById(R.id.validateCode2);
-        code3Et = smsVerifyView.findViewById(R.id.validateCode3);
-        code4Et = smsVerifyView.findViewById(R.id.validateCode4);
-        code1Et.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    @Override
+    public Context getContext() {
+        return this;
+    }
 
-            }
+    @Override
+    public void requestSMSCodeSuccess() {
+        actionMessage("验证码已发送");
+        showSmsVerifyView();
+    }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (code1Et.getText().toString().length() == 1) {
-                    code2Et.setFocusable(true);//设置获取焦点可以编辑
-                    code2Et.setFocusableInTouchMode(true);
-                    code2Et.requestFocus();
-                }
-            }
+    @Override
+    public void checkSMSCodeSuccess() {
+        actionMessage("登录成功！");
+        finish();
+    }
 
-            @Override
-            public void afterTextChanged(Editable s) {
+    @Override
+    public void actionError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 
-            }
-        });
-
-        code2Et.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (code2Et.getText().toString().length() == 1) {
-                    code3Et.setFocusable(true);//设置获取焦点可以编辑
-                    code3Et.setFocusableInTouchMode(true);
-                    code3Et.requestFocus();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        code3Et.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (code3Et.getText().toString().length() == 1) {
-                    code4Et.setFocusable(true);//设置获取焦点可以编辑
-                    code4Et.setFocusableInTouchMode(true);
-                    code4Et.requestFocus();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        code4Et.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (code4Et.getText().toString().length() == 1) {
-                    Toast.makeText(LoginActivity.this, "提交验证", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+    public void actionMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -216,6 +196,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         if(isSMSVerify()) {
             VisibilityAnimation.translTo(smsVerifyView, smsVerifyView.getWidth());
+            loginView.setVisibility(View.VISIBLE);
         }else {
             super.onBackPressed();
         }

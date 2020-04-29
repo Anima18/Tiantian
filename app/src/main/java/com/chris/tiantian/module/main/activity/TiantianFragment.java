@@ -20,7 +20,7 @@ import com.anima.networkrequest.RequestStream;
 import com.anima.networkrequest.entity.RequestParam;
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.Advertise;
-import com.chris.tiantian.entity.NetworkDataParser;
+import com.chris.tiantian.entity.dataparser.ListDataParser;
 import com.chris.tiantian.entity.New;
 import com.chris.tiantian.util.CommonAdapter;
 import com.chris.tiantian.util.CommonItemViewHolder;
@@ -109,7 +109,7 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
                 .url(adUrl)
                 .method(RequestParam.Method.GET)
                 .dataClass(Advertise.class)
-                .dataParser(new NetworkDataParser<Advertise>())
+                .dataParser(new ListDataParser<Advertise>())
                 .dataFormat(RequestParam.DataFormat.LIST)
                 .create();
 
@@ -118,7 +118,7 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
                 .url(newUrl)
                 .method(RequestParam.Method.GET)
                 .dataClass(New.class)
-                .dataParser(new NetworkDataParser<New>())
+                .dataParser(new ListDataParser<New>())
                 .dataFormat(RequestParam.DataFormat.LIST)
                 .create();
 

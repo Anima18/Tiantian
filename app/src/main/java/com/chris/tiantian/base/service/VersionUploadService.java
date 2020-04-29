@@ -19,7 +19,7 @@ import com.anima.networkrequest.DataObjectCallback;
 import com.anima.networkrequest.IRequest;
 import com.anima.networkrequest.NetworkRequest;
 import com.anima.networkrequest.entity.RequestParam;
-import com.chris.tiantian.entity.NetworkDataParser;
+import com.chris.tiantian.entity.dataparser.ListDataParser;
 import com.chris.tiantian.entity.VersionInfo;
 import com.chris.tiantian.util.CommonUtil;
 
@@ -184,7 +184,7 @@ public class VersionUploadService {
                 .url(url)
                 .method(RequestParam.Method.GET)
                 .dataClass(VersionInfo.class)
-                .dataParser(new NetworkDataParser<VersionInfo>());
+                .dataParser(new ListDataParser<VersionInfo>());
         return  request;
     }
 

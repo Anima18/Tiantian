@@ -28,10 +28,11 @@ import com.chris.tiantian.R;
 import com.chris.tiantian.base.db.dao.PolicySignalDao;
 import com.chris.tiantian.entity.PolicySignal;
 import com.chris.tiantian.entity.Constant;
-import com.chris.tiantian.entity.NetworkDataParser;
-import com.chris.tiantian.entity.PolicySignalMessage;
+import com.chris.tiantian.entity.dataparser.ListDataParser;
+import com.chris.tiantian.entity.eventmessage.PolicySignalMessage;
 import com.chris.tiantian.module.signal.activity.PolicySignalActionView;
 import com.chris.tiantian.util.CommonUtil;
+import com.chris.tiantian.util.PreferencesUtil;
 import com.ut.utuicomponents.common.utils.DateUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -68,7 +69,7 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
     public PolicySignalPresenterImpl(Context context, PolicySignalActionView actionView) {
         this.context = context;
         this.actionView = actionView;
-        preferences = UserInfoSharedPreferences.Companion.getInstance(context);
+        preferences = PreferencesUtil.getUserInfoPreference();
         //manager = DBManager.getInstance(context).getPolicySignalManager();
         policySignalDao = CommonUtil.getDatabase().policySignalDao();
     }
@@ -122,7 +123,7 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                     .url(url)
                     .method(RequestParam.Method.GET)
                     .dataClass(PolicySignal.class)
-                    .dataParser(new NetworkDataParser<PolicySignal>())
+                    .dataParser(new ListDataParser<PolicySignal>())
                     .getList(new DataListCallback<PolicySignal>() {
                         @Override
                         public void onFailure(@NotNull String s) {
@@ -169,7 +170,7 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                 .url(url)
                 .method(RequestParam.Method.GET)
                 .dataClass(PolicySignal.class)
-                .dataParser(new NetworkDataParser<PolicySignal>())
+                .dataParser(new ListDataParser<PolicySignal>())
                 .getList(new DataListCallback<PolicySignal>() {
                     @Override
                     public void onFailure(@NotNull String s) {

@@ -1,4 +1,4 @@
-package com.chris.tiantian.entity;
+package com.chris.tiantian.entity.dataparser;
 
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by jianjianhong on 19-11-25
  */
-public class NetworkDataParser<T> implements ResponseParser {
+public class ListDataParser<T> implements ResponseParser {
 
     private List<T> resultData;
 

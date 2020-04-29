@@ -12,12 +12,13 @@
         style="@style/toolbar_white"
         app:isshowbackbtn="true"
         app:menuiconcolor="@color/black"
+        app:title="我的积分"
         app:titleplace="left">
-        <com.ut.utuicomponents.uttoolbar.UTUiToolbarButton
+        <!--<com.ut.utuicomponents.uttoolbar.UTUiToolbarButton
             android:id="@+id/myPointsDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:label="积分明细"/>
+            app:label="积分明细"/>-->
     </com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar>
 
     <ImageView
@@ -27,13 +28,6 @@
         android:tint="@color/message_error_action"
         android:src="@drawable/money"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:textColor="@color/primary_text_dark_color"
-        android:textSize="16sp"
-        android:text="我的积分"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,7 +40,7 @@
             android:textSize="40dp"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:text="1000.00"/>
+            android:text="0.00"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,6 +54,7 @@
     </RelativeLayout>
 
     <Button
+        android:id="@+id/pay"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="96dp"

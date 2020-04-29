@@ -19,9 +19,10 @@ import com.anima.networkrequest.entity.RequestParam;
 import com.anima.networkrequest.util.sharedprefs.UserInfoSharedPreferences;
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.Constant;
-import com.chris.tiantian.entity.NetworkDataParser;
 import com.chris.tiantian.entity.Policy;
+import com.chris.tiantian.entity.dataparser.ListDataParser;
 import com.chris.tiantian.util.CommonUtil;
+import com.chris.tiantian.util.PreferencesUtil;
 import com.ut.raw.paginglistview.PagingRecycleAdapter;
 import com.ut.raw.paginglistview.PagingRecycleView;
 import com.ut.raw.paginglistview.viewholder.PagingRecycleItemViewHolder;
@@ -45,7 +46,7 @@ public class PolicyFragment extends Fragment{
             rootView = inflater.inflate(R.layout.fragment_policy, container, false);
             recycleView = rootView.findViewById(R.id.policyFragment_listView);
 
-            preferences = UserInfoSharedPreferences.Companion.getInstance(getContext());
+            preferences = PreferencesUtil.getUserInfoPreference();
             initListView();
             requestDataByNetwork();
         }
@@ -67,7 +68,7 @@ public class PolicyFragment extends Fragment{
                         .url(url)
                         .method(RequestParam.Method.GET)
                         .dataClass(Policy.class)
-                        .dataParser(new NetworkDataParser<Policy>())
+                        .dataParser(new ListDataParser<Policy>())
                         .dataFormat(RequestParam.DataFormat.LIST)
                         .getList(new DataListCallback<Policy>() {
                             @Override
@@ -98,11 +99,11 @@ public class PolicyFragment extends Fragment{
             @Override
             public void onItemClick(View view, int position, Object item) {
                 Policy policy = (Policy)item;
-                UserInfoSharedPreferences sharedPreferences = UserInfoSharedPreferences.Companion.getInstance(getContext());
-                int currentPolicy = sharedPreferences.getIntValue(Constant.SP_CURRENT_POLICY, -1);
+                //UserInfoSharedPreferences sharedPreferences = UserInfoSharedPreferences.Companion.getInstance(getContext());
+                int currentPolicy = preferences.getIntValue(Constant.SP_CURRENT_POLICY, -1);
                 if(currentPolicy != policy.getId()) {
                     if(currentPolicy == -1) {
-                        changeCurrentPolicy(sharedPreferences, policy.getId());
+                        changeCurrentPolicy(policy.getId());
                     }else {
                         new AlertDialog.Builder(getContext())
                                 .setTitle("提示")
@@ -111,7 +112,7 @@ public class PolicyFragment extends Fragment{
                                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        changeCurrentPolicy(sharedPreferences, policy.getId());
+                                        changeCurrentPolicy(policy.getId());
                                     }
                                 })
                                 .show();
@@ -122,9 +123,9 @@ public class PolicyFragment extends Fragment{
         });
     }
 
-    private void changeCurrentPolicy(UserInfoSharedPreferences sharedPreferences, int id) {
-        sharedPreferences.putIntValue(Constant.SP_CURRENT_POLICY, id);
-        sharedPreferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, false);
+    private void changeCurrentPolicy(int id) {
+        preferences.putIntValue(Constant.SP_CURRENT_POLICY, id);
+        preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, false);
         recycleView.getAdapter().notifyDataSetChanged();
     }
 

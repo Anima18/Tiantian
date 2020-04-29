@@ -17,14 +17,14 @@ public class TimerTextUtil extends CountDownTimer {
 
     @Override
     public void onTick(long millisUntilFinished) {
-        String time =  millisUntilFinished / 1000 + "s后可重新获取";
+        String time =  millisUntilFinished / 1000 + "秒后...";
         setTextInfo(time, "#727272", false);
         finished = false;
     }
 
     @Override
     public void onFinish() {
-        setTextInfo("重发短信验证码", "#1b82d2", true);
+        setTextInfo("获取验证码", "#1b82d2", true);
         finished = true;
     }
 

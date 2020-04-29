@@ -5,6 +5,10 @@ package com.chris.tiantian.entity;
  */
 public interface Constant {
 
+    String SP_USER_DATA = "SP_USER_DATA";
+    String SP_USER_ID = "SP_USER_ID";
+    String SP_TOKEN = "SP_TOKEN";
+
     //当前策略ID
     String SP_CURRENT_POLICY = "SP_CURRENT_POLICY";
 

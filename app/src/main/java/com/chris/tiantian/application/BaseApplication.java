@@ -12,9 +12,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.anima.networkrequest.util.sharedprefs.UserInfoSharedPreferences;
 import com.chris.tiantian.R;
 import com.chris.tiantian.base.db.AppDatabase;
-import com.chris.tiantian.entity.PolicySignalTable;
 import com.chris.tiantian.entity.Constant;
+import com.chris.tiantian.entity.PolicySignalTable;
 import com.chris.tiantian.module.main.PolicyMonitorService;
+import com.chris.tiantian.util.PreferencesUtil;
 import com.fanjun.keeplive.KeepLive;
 import com.fanjun.keeplive.config.ForegroundNotification;
 import com.fanjun.keeplive.config.ForegroundNotificationClickListener;
@@ -76,7 +77,7 @@ public class BaseApplication extends Application {
             database.execSQL(DROP_TABLE_POLICY);
             database.execSQL(DROP_TABLE_POLICYACTION);
             database.execSQL(PolicySignalTable.CREATE_TABLE);
-            UserInfoSharedPreferences preferences = UserInfoSharedPreferences.Companion.getInstance(mContext);
+            UserInfoSharedPreferences preferences = PreferencesUtil.getUserInfoPreference();
             preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, false);
             preferences.putIntValue(Constant.SP_CURRENT_POLICY, -1);
         }

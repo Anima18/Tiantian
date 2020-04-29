@@ -1,4 +1,4 @@
-package com.chris.tiantian.util;
+package com.chris.tiantian.module.commom;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Created by chris on 2015/11/18
  */
-public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
+public class UserInfoAdapter extends RecyclerView.Adapter<UserInfoAdapter.ViewHolder> {
     // Store the context for later use
     private Context context;
     private List<ActionMenuItem> dList;
@@ -38,7 +38,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     }
 
     // Pass in the context and users array into the constructor
-    public ProfileAdapter(Context context, List<ActionMenuItem> dList) {
+    public UserInfoAdapter(Context context, List<ActionMenuItem> dList) {
         this.context = context;
         this.dList = dList;
     }
@@ -47,7 +47,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Inflate the custom layout
-        View itemView = LayoutInflater.from(context).inflate(R.layout.listview_profile_item, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.listview_userinfo_item, parent, false);
         // Return a new holder instance
         return new ViewHolder(context, itemView);
     }
@@ -59,27 +59,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         ActionMenuItem data = dList.get(position);
         holder.titleTv.setText(data.getTitle());
         Integer imageResId = data.getIconResId();
-        if(imageResId != null && imageResId != 0) {
-            holder.imageView.setVisibility(View.VISIBLE);
-            holder.imageView.setImageResource(data.getIconResId());
-
-            Integer imageColor = data.getIconColor();
-            if(imageColor != null && imageColor != 0) {
-                Drawable tintIcon = DrawableCompat.wrap(holder.imageView.getDrawable());
-                DrawableCompat.setTintList(tintIcon, ColorStateList.valueOf(context.getResources().getColor(imageColor)));
-                holder.imageView.setImageDrawable(tintIcon);
-            }
-
-            if(TextUtils.isEmpty(data.getValue())) {
-                holder.valueTv.setVisibility(View.GONE);
-            }else {
-                holder.valueTv.setVisibility(View.VISIBLE);
-                holder.valueTv.setText(data.getValue());
-            }
-        }else {
-            holder.imageView.setVisibility(View.GONE);
-        }
-
         if(!TextUtils.isEmpty(data.getValue())) {
             holder.valueTv.setVisibility(View.VISIBLE);
             holder.valueTv.setText(data.getValue());
@@ -102,7 +81,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView titleTv;
-        public ImageView imageView;
         public TextView valueTv;
         public ImageView indicatorView;
         public View markView;
@@ -113,7 +91,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             super(itemView);
 
             titleTv = itemView.findViewById(R.id.profileLv_title);
-            imageView = itemView.findViewById(R.id.profileLv_image);
             valueTv = itemView.findViewById(R.id.profileLv_value);
             indicatorView = itemView.findViewById(R.id.profileLv_indicator);
             markView = itemView.findViewById(R.id.profileLv_mark);
