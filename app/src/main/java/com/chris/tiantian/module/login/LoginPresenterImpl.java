@@ -66,8 +66,13 @@ public class LoginPresenterImpl implements LoginPresenter {
                 .getObject(new DataObjectCallback<User>() {
                     @Override
                     public void onSuccess(@org.jetbrains.annotations.Nullable User user) {
-                        saveUser(user);
-                        actionView.checkSMSCodeSuccess();
+                        if(user == null || "FAIL".equals(user.getMsg()) || "TIMEOUT".equals(user.getMsg())) {
+                            actionView.actionError("验证码不正确");
+                        }else {
+                            saveUser(user);
+                            actionView.checkSMSCodeSuccess();
+                        }
+
                     }
 
                     @Override

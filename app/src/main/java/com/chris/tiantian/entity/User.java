@@ -25,7 +25,7 @@ public class User {
     private String token;
     private String level;
     private int levelInt;
-    private Object msg;
+    private String msg;
 
     public int getId() {
         return id;
@@ -91,11 +91,12 @@ public class User {
         this.levelInt = levelInt;
     }
 
-    public Object getMsg() {
+
+    public String getMsg() {
         return msg;
     }
 
-    public void setMsg(Object msg) {
+    public void setMsg(String msg) {
         this.msg = msg;
     }
 }
