@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-path
+        name="camera"
+        path="DCIM/Camera"/>
+
+    <external-path
+        name="download"
+        path="Download"/>
+</paths>

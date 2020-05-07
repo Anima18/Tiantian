@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar
+    <com.anima.componentlib.toolbar.Toolbar
         android:id="@+id/activity_toolBar"
         style="@style/toolbar_white"
         app:isshowbackbtn="false"

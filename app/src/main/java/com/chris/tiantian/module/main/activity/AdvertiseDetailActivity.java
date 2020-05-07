@@ -13,10 +13,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.anima.componentlib.toolbar.Toolbar;
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.Advertise;
 import com.chris.tiantian.view.MultipleStatusView;
-import com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar;
 
 public class AdvertiseDetailActivity extends AppCompatActivity {
     public static final String ADVERTISE_DETAIL = "ADVERTISE_DETAIL";
@@ -31,7 +31,7 @@ public class AdvertiseDetailActivity extends AppCompatActivity {
 
         statusView = findViewById(R.id.adDetailAct_status_view);
         statusView.showLoading();
-        UTUiAndroidToolbar toolbar = findViewById(R.id.activity_toolBar);
+        Toolbar toolbar = findViewById(R.id.activity_toolBar);
         WebView webView = findViewById(R.id.advertise_image);
 
         toolbar.setTitle(advertise.getTitle());

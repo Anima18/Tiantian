@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-    <com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar
+    <com.anima.componentlib.toolbar.Toolbar
         android:id="@+id/activity_toolBar"
         style="@style/toolbar_white"
         android:layout_alignParentTop="true"

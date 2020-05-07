@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.anima.componentlib.toolbar.Toolbar;
 import com.chris.tiantian.module.me.activity.MeFragment;
 import com.chris.tiantian.module.plaza.activity.PlazaFragment;
 import com.chris.tiantian.module.signal.activity.PolicySignalFragment;
@@ -19,14 +20,13 @@ import com.chris.tiantian.util.BackgrounderSetting;
 import com.chris.tiantian.util.BottomNavigationViewHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tbruyelle.rxpermissions.RxPermissions;
-import com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar;
 
 import rx.functions.Action1;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private UTUiAndroidToolbar toolbar;
+    private Toolbar toolbar;
     private BottomNavigationView navigationView;
     private Fragment tiantainFragment;
     private Fragment subscriptionFragment;

@@ -6,9 +6,9 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.anima.componentlib.toolbar.Toolbar;
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.New;
-import com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar;
 
 /**
  * Created by jianjianhong on 19-12-23
@@ -24,7 +24,7 @@ public class TiantianDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tiantian_detail);
 
         newData = getIntent().getParcelableExtra(NEW_DATA);
-        UTUiAndroidToolbar toolbar = findViewById(R.id.activity_toolBar);
+        Toolbar toolbar = findViewById(R.id.activity_toolBar);
         TextView titleView = findViewById(R.id.detailAct_new_title);
         TextView comeFromView = findViewById(R.id.detailAct_new_comeForm);
         TextView timeView = findViewById(R.id.detailAct_new_time);

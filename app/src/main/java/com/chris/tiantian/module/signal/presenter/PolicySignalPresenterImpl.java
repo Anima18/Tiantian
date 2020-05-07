@@ -32,8 +32,8 @@ import com.chris.tiantian.entity.dataparser.ListDataParser;
 import com.chris.tiantian.entity.eventmessage.PolicySignalMessage;
 import com.chris.tiantian.module.signal.activity.PolicySignalActionView;
 import com.chris.tiantian.util.CommonUtil;
+import com.chris.tiantian.util.DateUtil;
 import com.chris.tiantian.util.PreferencesUtil;
-import com.ut.utuicomponents.common.utils.DateUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;

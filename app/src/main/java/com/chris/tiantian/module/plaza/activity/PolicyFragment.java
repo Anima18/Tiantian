@@ -13,6 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.anima.componentlib.paginglistview.PagingRecycleAdapter;
+import com.anima.componentlib.paginglistview.PagingRecycleView;
+import com.anima.componentlib.paginglistview.viewholder.PagingRecycleItemViewHolder;
 import com.anima.networkrequest.DataListCallback;
 import com.anima.networkrequest.NetworkRequest;
 import com.anima.networkrequest.entity.RequestParam;
@@ -23,9 +26,6 @@ import com.chris.tiantian.entity.Policy;
 import com.chris.tiantian.entity.dataparser.ListDataParser;
 import com.chris.tiantian.util.CommonUtil;
 import com.chris.tiantian.util.PreferencesUtil;
-import com.ut.raw.paginglistview.PagingRecycleAdapter;
-import com.ut.raw.paginglistview.PagingRecycleView;
-import com.ut.raw.paginglistview.viewholder.PagingRecycleItemViewHolder;
 
 import org.jetbrains.annotations.NotNull;
 

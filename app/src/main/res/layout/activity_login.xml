@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar
+        <com.anima.componentlib.toolbar.Toolbar
             android:id="@+id/activity_login_toolBar"
             style="@style/toolbar_white"
             android:layout_height="50dp"
@@ -106,7 +106,7 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar
+        <com.anima.componentlib.toolbar.Toolbar
             android:id="@+id/activity_toolBar"
             style="@style/toolbar_white"
             android:layout_height="50dp"

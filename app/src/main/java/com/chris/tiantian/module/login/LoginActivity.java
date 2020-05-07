@@ -13,11 +13,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.anima.componentlib.toolbar.Toolbar;
 import com.chris.tiantian.R;
 import com.chris.tiantian.util.StringUtil;
 import com.chris.tiantian.util.TimerTextUtil;
 import com.chris.tiantian.util.VisibilityAnimation;
-import com.ut.utuicomponents.uttoolbar.UTUiAndroidToolbar;
 
 
 /**
@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActionView 
     private View loginView;
     private View smsVerifyView;
 
-    private UTUiAndroidToolbar smsToolbar;
+    private Toolbar smsToolbar;
     private TimerTextUtil timerTextUtil;
     private TextView timerTextView;
 
