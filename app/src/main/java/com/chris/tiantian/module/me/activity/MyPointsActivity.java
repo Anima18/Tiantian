@@ -8,11 +8,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.anima.networkrequest.DataObjectCallback;
 import com.anima.networkrequest.NetworkRequest;
+import com.anima.networkrequest.callback.DataObjectCallback;
 import com.anima.networkrequest.entity.RequestParam;
 import com.chris.tiantian.R;
-import com.chris.tiantian.entity.User;
 import com.chris.tiantian.entity.UserPoint;
 import com.chris.tiantian.entity.dataparser.ObjectDataParser;
 import com.chris.tiantian.util.CommonUtil;

@@ -16,8 +16,9 @@ import androidx.fragment.app.Fragment;
 import com.anima.componentlib.paginglistview.PagingRecycleAdapter;
 import com.anima.componentlib.paginglistview.PagingRecycleView;
 import com.anima.componentlib.paginglistview.viewholder.PagingRecycleItemViewHolder;
-import com.anima.networkrequest.DataListCallback;
+
 import com.anima.networkrequest.NetworkRequest;
+import com.anima.networkrequest.callback.DataListCallback;
 import com.anima.networkrequest.entity.RequestParam;
 import com.anima.networkrequest.util.sharedprefs.UserInfoSharedPreferences;
 import com.chris.tiantian.R;
