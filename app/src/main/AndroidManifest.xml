@@ -42,7 +42,14 @@
         <activity android:name=".module.me.activity.MyPointsActivity"/>
         <activity android:name=".module.me.activity.PurchasedPolicyActivity"/>
         <activity android:name=".module.me.activity.UserInfoActivity"/>
-        <!--<service android:name=".module.main.PolicyMonitorService" android:priority="1000" />-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:exported="true"
+            android:taskAffinity="com.chris.tiantian"
+            android:launchMode="singleTask">
+        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

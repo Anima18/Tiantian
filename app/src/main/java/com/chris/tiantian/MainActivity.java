@@ -1,7 +1,10 @@
 package com.chris.tiantian;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -20,8 +23,13 @@ import com.chris.tiantian.util.BackgrounderSetting;
 import com.chris.tiantian.util.BottomNavigationViewHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import rx.functions.Action1;
+
+import static com.chris.tiantian.entity.Constant.WX_APP_ID;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -64,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         }else {
             BackgrounderSetting.open(this);
         }
+
+        regToWx();
     }
 
     @Override
@@ -136,5 +146,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("KEY_PAGE_INDEX", currentPageIndex);
+    }
+
+    private void regToWx() {
+        IWXAPI iwxapi = WXAPIFactory.createWXAPI(this, WX_APP_ID, true);
+        iwxapi.registerApp(WX_APP_ID);
     }
 }

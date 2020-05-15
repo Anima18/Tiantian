@@ -5,6 +5,9 @@ package com.chris.tiantian.entity;
  */
 public interface Constant {
 
+    String WX_APP_ID = "wx5b3645c2d251e349";
+    String WX_APP_SECRET = "4aaa89f771236e985ff99f072f0aefc0";
+
     String SP_USER_DATA = "SP_USER_DATA";
     String SP_USER_ID = "SP_USER_ID";
     String SP_TOKEN = "SP_TOKEN";

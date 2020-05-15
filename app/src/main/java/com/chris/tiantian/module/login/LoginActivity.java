@@ -18,6 +18,11 @@ import com.chris.tiantian.R;
 import com.chris.tiantian.util.StringUtil;
 import com.chris.tiantian.util.TimerTextUtil;
 import com.chris.tiantian.util.VisibilityAnimation;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import static com.chris.tiantian.entity.Constant.WX_APP_ID;
 
 
 /**
@@ -38,6 +43,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActionView 
     private TextView phoneEt;
 
     private LoginPresenter presenter;
+    private IWXAPI iwxapi;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +53,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActionView 
         smsVerifyView = findViewById(R.id.sms_layout);
 
         presenter = new LoginPresenterImpl(this);
+        iwxapi = WXAPIFactory.createWXAPI(this, WX_APP_ID, true);
         initLoginView();
         initSMSView();
     }
@@ -56,6 +63,10 @@ public class LoginActivity extends AppCompatActivity implements LoginActionView 
             @Override
             public void onClick(View v) {
                 Toast.makeText(LoginActivity.this, "敬请期待", Toast.LENGTH_SHORT).show();
+                final SendAuth.Req req = new SendAuth.Req();
+                req.scope = "snsapi_userinfo";
+                req.state = "wechat_sdk_demo_test";
+                iwxapi.sendReq(req);
             }
         });
 

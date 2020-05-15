@@ -1,6 +1,7 @@
 package com.chris.tiantian.entity.dataparser;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.anima.networkrequest.data.okhttp.dataConvert.ResponseParser;
 import com.google.gson.Gson;
@@ -40,8 +41,7 @@ public class ObjectDataParser<T> implements ResponseParser {
     @Override
     public ResponseParser parser(String s, Class<?> aClass) {
         try {
-            //Type type = new ParameterizedTypeImpl(List.class, new Class[]{aClass});
-            resultData = (T)new Gson().fromJson(s, aClass);
+            resultData = (T)new Gson().fromJson(s.toString(), aClass);
         } catch (Exception e) {
             errorMessage = e.getMessage();
         }
