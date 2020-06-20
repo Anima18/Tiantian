@@ -3,11 +3,12 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.chris.tiantian"
+        applicationId "com.chris.tiantian.test"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 11
-        versionName "1.1.1"
+        versionCode 12
+        versionName "1.1.2"
+        flavorDimensions "default"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -15,6 +16,29 @@ android {
                 arguments = [
                         "room.schemaLocation":"$projectDir/schemas".toString()]
             }
+        }
+
+        manifestPlaceholders = [
+                app_name           : "@string/app_name_test",
+                url :"http://114.67.204.96:8080"
+        ]
+    }
+
+    productFlavors {
+
+        real {
+            applicationId "com.chris.tiantian"
+            manifestPlaceholders = [
+                    app_name : "@string/app_name",
+                    url :"http://114.67.65.199:8080"
+            ]
+        }
+        beta {
+            applicationId "com.chris.tiantian.test"
+            manifestPlaceholders = [
+                    app_name : "@string/app_name_test",
+                    url :"http://114.67.204.96:8080"
+            ]
         }
     }
     signingConfigs {
@@ -48,6 +72,11 @@ android {
         flatDir {
             dirs 'libs'
         }
+    }
+    lintOptions {
+
+        checkReleaseBuilds false
+
     }
 }
 

@@ -87,7 +87,8 @@
             android:gravity="center"
             android:text="其他登录方式"
             android:textColor="@color/secondary_text_dark_color"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/weixin_login"
@@ -96,7 +97,8 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="36dp"
-            android:src="@drawable/wechat" />
+            android:src="@drawable/wechat"
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <LinearLayout

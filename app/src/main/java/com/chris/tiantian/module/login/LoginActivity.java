@@ -72,12 +72,12 @@ public class LoginActivity extends AppCompatActivity implements LoginActionView 
 
         areaCodeTv = loginView.findViewById(R.id.loginView_area_code);
         phoneEt = loginView.findViewById(R.id.loginView_phone_input);
-        areaCodeTv.setOnClickListener(new View.OnClickListener() {
+        /*areaCodeTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(LoginActivity.this, AreaCodeActivity.class), 0);
             }
-        });
+        });*/
         findViewById(R.id.btn_signup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

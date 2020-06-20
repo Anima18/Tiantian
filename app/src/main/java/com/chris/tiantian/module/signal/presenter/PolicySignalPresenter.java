@@ -7,4 +7,5 @@ public interface PolicySignalPresenter {
     void requestDataByLocal();
     void requestDataByNetwork();
     void monitorPolicySignal();
+    void refreshPolicySignal(boolean isShowResultMessage);
 }

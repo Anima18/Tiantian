@@ -3,6 +3,7 @@ package com.chris.tiantian.util;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -31,10 +32,19 @@ public class CommonUtil {
 
     public static String getBaseUrl() {
         //真实环境IP
-        return "http://114.67.65.199:8080";
+        //return "http://114.67.65.199:8080";
 
         //测试环境IP
         //return "http://114.67.204.96:8080";
+        Context context = getApplicationContext();
+        try {
+            ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            String url = appInfo.metaData.getString("URL");
+            return url;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     public static String getDownloadDirPath() {

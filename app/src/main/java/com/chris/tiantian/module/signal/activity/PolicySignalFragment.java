@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.anima.networkrequest.util.sharedprefs.UserInfoSharedPreferences;
 import com.chris.tiantian.R;
@@ -21,10 +22,12 @@ import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.New;
 import com.chris.tiantian.entity.PolicySignal;
 import com.chris.tiantian.entity.eventmessage.PolicySignalMessage;
+import com.chris.tiantian.entity.eventmessage.PolicySignalNoDataMessage;
 import com.chris.tiantian.module.signal.presenter.PolicySignalPresenter;
 import com.chris.tiantian.module.signal.presenter.PolicySignalPresenterImpl;
 import com.chris.tiantian.util.CommonAdapter;
 import com.chris.tiantian.util.CommonItemViewHolder;
+import com.chris.tiantian.util.LocationLog;
 import com.chris.tiantian.util.PreferencesUtil;
 import com.chris.tiantian.view.DividerItemDecoration;
 import com.chris.tiantian.view.MultipleStatusView;
@@ -42,9 +45,10 @@ public class PolicySignalFragment extends Fragment implements PolicySignalAction
     private static final String TAG = "PolicySignal";
     private View rootView;
     private MultipleStatusView statusView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recycleView;
     private UserInfoSharedPreferences preferences;
-    private View refreshHintView;
+    private TextView refreshHintView;
 
     private PolicySignalPresenter presenter;
     private int currentPolicy = -1;
@@ -54,12 +58,26 @@ public class PolicySignalFragment extends Fragment implements PolicySignalAction
         if(rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_policy_signal2, container, false);
             statusView = rootView.findViewById(R.id.policySignalFragment_status_view);
+            swipeRefreshLayout = rootView.findViewById(R.id.view_swipe_refresh_layout);
             recycleView = rootView.findViewById(R.id.subFragment_listView);
             refreshHintView = rootView.findViewById(R.id.refresh_hint_view);
             preferences = PreferencesUtil.getUserInfoPreference();
             presenter = new PolicySignalPresenterImpl(getContext(), this);
 
+
+            swipeRefreshLayout.setColorSchemeColors(getResources().getColor(android.R.color.holo_orange_light),
+                    getResources().getColor(android.R.color.holo_red_light),
+                    getResources().getColor(android.R.color.holo_blue_light),
+                    getResources().getColor(android.R.color.holo_green_light));
             intiRecycleView();
+
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    swipeRefreshLayout.setRefreshing(false);
+                    presenter.refreshPolicySignal(true);
+                }
+            });
         }
 
         return rootView;
@@ -89,7 +107,21 @@ public class PolicySignalFragment extends Fragment implements PolicySignalAction
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void policySignalEventBus(PolicySignalMessage message) {
+        LocationLog.getInstance().i("PolicyMonitorService show data");
         refreshHintView.setVisibility(View.VISIBLE);
+        refreshHintView.setText("有新数据");
+        new Handler().postDelayed(new Runnable(){
+            public void run() {
+                refreshHintView.setVisibility(View.GONE);
+            }
+        }, 5000);
+        presenter.requestDataByLocal();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void policySignalNoDataEventBus(PolicySignalNoDataMessage message) {
+        refreshHintView.setVisibility(View.VISIBLE);
+        refreshHintView.setText("没有最新数据");
         new Handler().postDelayed(new Runnable(){
             public void run() {
                 refreshHintView.setVisibility(View.GONE);

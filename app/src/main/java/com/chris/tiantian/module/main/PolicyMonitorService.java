@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.chris.tiantian.module.signal.presenter.PolicySignalPresenter;
 import com.chris.tiantian.module.signal.presenter.PolicySignalPresenterImpl;
+import com.chris.tiantian.util.LocationLog;
 import com.fanjun.keeplive.config.KeepLiveService;
 
 import java.util.Calendar;
@@ -35,6 +36,7 @@ public class PolicyMonitorService implements KeepLiveService {
     }
 
     private PolicyMonitorService(Context context){
+        LocationLog.getInstance().i("PolicyMonitorService create");
         signalPresenter = new PolicySignalPresenterImpl(context);
     }
 
@@ -45,7 +47,7 @@ public class PolicyMonitorService implements KeepLiveService {
             monitorThread = null;
             monitorFlag = false;
         }
-        Log.i("PolicyMonitorService", "onWorking");
+        LocationLog.getInstance().i("PolicyMonitorService onWorking");
         monitorThread = new MonitorThread();
         monitorFlag = true;
         monitorThread.start();
@@ -55,6 +57,7 @@ public class PolicyMonitorService implements KeepLiveService {
     public void onStop() {
         monitorThread.interrupt();
         monitorFlag = false;
+        LocationLog.getInstance().i("PolicyMonitorService onStop");
     }
 
     private class MonitorThread extends Thread {
@@ -66,10 +69,9 @@ public class PolicyMonitorService implements KeepLiveService {
         @Override
         public void run() {
             while (monitorFlag) {
-               // Log.i(TAG, "Monitor...");
                 try {
                     Thread.sleep(15000);
-                    //policyPresenter.monitorPolicy();
+                    LocationLog.getInstance().i("PolicyMonitorService monitorPolicySignal");
                     signalPresenter.monitorPolicySignal();
                 } catch (InterruptedException e) {
                     e.printStackTrace();

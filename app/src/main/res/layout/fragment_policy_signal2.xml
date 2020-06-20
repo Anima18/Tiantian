@@ -15,6 +15,10 @@
         android:orientation="vertical"
         android:background="#f7f8fa">
 
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/view_swipe_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/subFragment_listView"
             android:layout_width="match_parent"
@@ -23,6 +27,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="3dp"
             android:layout_alignParentBottom="true" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <TextView
             android:id="@+id/refresh_hint_view"

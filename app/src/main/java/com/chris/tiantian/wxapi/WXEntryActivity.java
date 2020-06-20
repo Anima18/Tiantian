@@ -114,6 +114,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     @Override
                     public void onSuccess(@org.jetbrains.annotations.Nullable WXUserInfo data) {
                         Log.i("WXEntryActivity", data.toString());
+                        Toast.makeText(WXEntryActivity.this, data.toString(), Toast.LENGTH_LONG).show();
                     }
 
                     @Override

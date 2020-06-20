@@ -30,9 +30,11 @@ import com.chris.tiantian.entity.PolicySignal;
 import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.dataparser.ListDataParser;
 import com.chris.tiantian.entity.eventmessage.PolicySignalMessage;
+import com.chris.tiantian.entity.eventmessage.PolicySignalNoDataMessage;
 import com.chris.tiantian.module.signal.activity.PolicySignalActionView;
 import com.chris.tiantian.util.CommonUtil;
 import com.chris.tiantian.util.DateUtil;
+import com.chris.tiantian.util.LocationLog;
 import com.chris.tiantian.util.PreferencesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -157,13 +159,17 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
 
     @Override
     public void monitorPolicySignal() {
-        Log.i("PolicyMonitorService", "monitorPolicySignal");
+        refreshPolicySignal(false);
+    }
+
+    @Override
+    public void refreshPolicySignal(boolean isShowResultMessage) {
         String lastTime = preferences.getStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, "");
         int currentPolicy = preferences.getIntValue(Constant.SP_CURRENT_POLICY, -1);
         if(currentPolicy == -1 || TextUtils.isEmpty(lastTime)) {
             return;
         }
-
+        LocationLog.getInstance().i("PolicyMonitorService request policySignal at "+lastTime);
         lastTime = Base64.encodeToString(lastTime.getBytes(), Base64.DEFAULT);
         String url = String.format("%s/comment/apiv2/policysignallist/%s/%s", CommonUtil.getBaseUrl(), currentPolicy+"", lastTime);
         new NetworkRequest<PolicySignal>(context)
@@ -174,12 +180,14 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                 .getList(new DataListCallback<PolicySignal>() {
                     @Override
                     public void onFailure(@NotNull String s) {
-
+                        LocationLog.getInstance().i("PolicyMonitorService request error: "+s);
                     }
 
                     @Override
                     public void onSuccess(@NotNull List<? extends PolicySignal> list) {
+                        LocationLog.getInstance().i("PolicyMonitorService request success");
                         if(list != null && list.size() > 0) {
+                            LocationLog.getInstance().i("PolicyMonitorService data size: "+ list.size());
                             Event event = new Event() {
                                 @Override
                                 protected Object run() {
@@ -193,17 +201,22 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                                     preferences.putStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
                                     preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, true);
                                     EventBus.getDefault().post(new PolicySignalMessage());
-                                    Log.i("PolicyMonitorService", "showNotification");
+                                    LocationLog.getInstance().i("PolicyMonitorService showNotification");
                                     showNotification(context);
                                 }
                             });
-
+                        }else {
+                            if(isShowResultMessage) {
+                                EventBus.getDefault().post(new PolicySignalNoDataMessage());
+                            }
+                            LocationLog.getInstance().i("PolicyMonitorService no data");
                         }
                     }
                 });
     }
 
     private void updateList(List<PolicySignal> policySignals){
+        LocationLog.getInstance().i("PolicyMonitorService insert data");
         if(policySignals == null || policySignals.size() == 0) {
             return;
         }
