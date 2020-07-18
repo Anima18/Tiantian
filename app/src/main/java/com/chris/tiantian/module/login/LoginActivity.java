@@ -62,7 +62,6 @@ public class LoginActivity extends AppCompatActivity implements LoginActionView 
         loginView.findViewById(R.id.weixin_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginActivity.this, "敬请期待", Toast.LENGTH_SHORT).show();
                 final SendAuth.Req req = new SendAuth.Req();
                 req.scope = "snsapi_userinfo";
                 req.state = "wechat_sdk_demo_test";
@@ -151,7 +150,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActionView 
         if(TextUtils.isEmpty(smsCode)) {
             actionError("请输入验证码");
         }else {
-            presenter.checkSMSCode(phoneEt.getText().toString(), smsCode);
+            presenter.loginByPhoneNumber(phoneEt.getText().toString(), smsCode);
         }
 
     }
@@ -183,7 +182,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActionView 
     }
 
     @Override
-    public void checkSMSCodeSuccess() {
+    public void loginSuccess() {
         actionMessage("登录成功！");
         finish();
     }

@@ -50,7 +50,7 @@
         <item name="titlesize">18sp</item>
         <item name="backgroundcolor">@color/white</item>
         <item name="menuiconcolor">@color/white</item>
-        <item name="titleplace">center</item>
+        <item name="titleplace">left</item>
         <item name="titlecolor">#0a0909</item>
     </style>
 

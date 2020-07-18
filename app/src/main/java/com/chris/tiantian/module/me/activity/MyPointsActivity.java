@@ -2,6 +2,7 @@ package com.chris.tiantian.module.me.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,9 +13,11 @@ import com.anima.networkrequest.NetworkRequest;
 import com.anima.networkrequest.callback.DataObjectCallback;
 import com.anima.networkrequest.entity.RequestParam;
 import com.chris.tiantian.R;
+import com.chris.tiantian.entity.TestResult;
 import com.chris.tiantian.entity.UserPoint;
 import com.chris.tiantian.entity.dataparser.ObjectDataParser;
 import com.chris.tiantian.util.CommonUtil;
+import com.chris.tiantian.util.DeviceUtil;
 import com.chris.tiantian.util.UserUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -67,6 +70,33 @@ public class MyPointsActivity extends Activity {
     }
 
     public void pay(View view) {
-        Toast.makeText(this, "暂未实现", Toast.LENGTH_SHORT).show();
+        String ip = DeviceUtil.getIPAddress();
+        Log.i("ddddddd", ip);
+        /*String url = String.format("%s/comment/apiv2/wxUnifiedOrder", CommonUtil.getBaseUrl());
+        new NetworkRequest<TestResult>(this)
+                .url(url)
+                .method(RequestParam.Method.POST)
+                .params(wxData)
+                .loadingMessage("正在绑定...")
+                .asJson(true)
+                .dataClass(TestResult.class)
+                .dataParser(new ObjectDataParser<TestResult>())
+                .getObject(new DataObjectCallback<TestResult>() {
+                    @Override
+                    public void onSuccess(@org.jetbrains.annotations.Nullable TestResult result) {
+                        if(result.getErrCode() == 0) {
+                            //saveUser(user);
+                            actionView.loginSuccess();
+                        }else {
+                            actionView.actionError(result.getErrMsg());
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull String s) {
+                        actionView.actionError(s);
+                    }
+                });*/
     }
 }

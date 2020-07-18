@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.chris.tiantian.test"
+        applicationId "com.chris.tiantian"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 12
@@ -34,7 +34,8 @@ android {
             ]
         }
         beta {
-            applicationId "com.chris.tiantian.test"
+            //applicationId "com.chris.tiantian.test"
+            applicationId "com.chris.tiantian"
             manifestPlaceholders = [
                     app_name : "@string/app_name_test",
                     url :"http://114.67.204.96:8080"
@@ -110,7 +111,7 @@ dependencies {
     implementation 'io.reactivex:rxandroid:1.2.0'
     implementation 'io.reactivex:rxjava:1.1.5'
 
-    implementation(name:'networkrequest-2.0.7', ext:'aar')
+    implementation(name:'networkrequest-2.0.8', ext:'aar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.71"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2"

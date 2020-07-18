@@ -17,6 +17,7 @@ import com.anima.networkrequest.entity.RequestParam;
 import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.dataparser.ObjectDataParser;
 import com.chris.tiantian.entity.dataparser.StringDataParser;
+import com.chris.tiantian.module.login.BindPhoneNumberActivity;
 import com.chris.tiantian.util.CommonUtil;
 import com.chris.tiantian.util.jsonParse.UTJsonFactory;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
@@ -113,8 +114,15 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 .getObject(new DataObjectCallback<WXUserInfo>() {
                     @Override
                     public void onSuccess(@org.jetbrains.annotations.Nullable WXUserInfo data) {
-                        Log.i("WXEntryActivity", data.toString());
-                        Toast.makeText(WXEntryActivity.this, data.toString(), Toast.LENGTH_LONG).show();
+                        /*Log.i("WXEntryActivity", data.toString());
+                        Toast.makeText(WXEntryActivity.this, data.toString(), Toast.LENGTH_LONG).show();*/
+                        Toast.makeText(WXEntryActivity.this, "微信登录成功，请绑定手机号", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(WXEntryActivity.this, BindPhoneNumberActivity.class);
+                        intent.putExtra("openid", data.getOpenid());
+                        intent.putExtra("nickname", data.getNickname());
+                        intent.putExtra("unionid", data.getUnionid());
+                        startActivity(intent);
+                        WXEntryActivity.this.finish();
                     }
 
                     @Override

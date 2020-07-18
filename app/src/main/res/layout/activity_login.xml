@@ -97,8 +97,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="36dp"
-            android:src="@drawable/wechat"
-            android:visibility="gone"/>
+            android:src="@drawable/wechat"/>
     </RelativeLayout>
 
     <LinearLayout

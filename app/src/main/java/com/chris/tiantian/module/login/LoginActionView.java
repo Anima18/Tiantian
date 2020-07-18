@@ -8,6 +8,6 @@ import android.content.Context;
 public interface LoginActionView {
     Context getContext();
     void requestSMSCodeSuccess();
-    void checkSMSCodeSuccess();
+    void loginSuccess();
     void actionError(String message);
 }
