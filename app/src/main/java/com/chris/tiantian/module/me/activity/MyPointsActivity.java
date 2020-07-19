@@ -13,14 +13,19 @@ import com.anima.networkrequest.NetworkRequest;
 import com.anima.networkrequest.callback.DataObjectCallback;
 import com.anima.networkrequest.entity.RequestParam;
 import com.chris.tiantian.R;
+import com.chris.tiantian.entity.Order;
 import com.chris.tiantian.entity.TestResult;
 import com.chris.tiantian.entity.UserPoint;
 import com.chris.tiantian.entity.dataparser.ObjectDataParser;
+import com.chris.tiantian.entity.dataparser.ObjectStatusDataParser;
 import com.chris.tiantian.util.CommonUtil;
 import com.chris.tiantian.util.DeviceUtil;
 import com.chris.tiantian.util.UserUtil;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by jianjianhong on 20-3-25
@@ -72,31 +77,50 @@ public class MyPointsActivity extends Activity {
     public void pay(View view) {
         String ip = DeviceUtil.getIPAddress();
         Log.i("ddddddd", ip);
-        /*String url = String.format("%s/comment/apiv2/wxUnifiedOrder", CommonUtil.getBaseUrl());
-        new NetworkRequest<TestResult>(this)
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("body", "天机APP-购买测试");
+        paramMap.put("attach", "支付测试");
+        paramMap.put("total_fee", "100");
+        paramMap.put("spbill_create_ip", ip);
+        paramMap.put("trade_type", "APP");
+
+        String url = String.format("%s/comment/apiv2/wxUnifiedOrder", CommonUtil.getBaseUrl());
+        new NetworkRequest<Order>(this)
                 .url(url)
                 .method(RequestParam.Method.POST)
-                .params(wxData)
-                .loadingMessage("正在绑定...")
+                .params(paramMap)
+                .loadingMessage("请求订单中...")
                 .asJson(true)
-                .dataClass(TestResult.class)
-                .dataParser(new ObjectDataParser<TestResult>())
-                .getObject(new DataObjectCallback<TestResult>() {
+                .dataClass(Order.class)
+                .dataParser(new ObjectStatusDataParser<Order>())
+                .getObject(new DataObjectCallback<Order>() {
                     @Override
-                    public void onSuccess(@org.jetbrains.annotations.Nullable TestResult result) {
-                        if(result.getErrCode() == 0) {
-                            //saveUser(user);
-                            actionView.loginSuccess();
+                    public void onSuccess(@org.jetbrains.annotations.Nullable Order order) {
+                        if("SUCCESS".equals(order.getReturn_code())) {
+                            if("SUCCESS".equals(order.getResult_code())) {
+                                requestWxPlayPage(order);
+                            }else {
+                                showMessage(order.getErr_code_des());
+                            }
                         }else {
-                            actionView.actionError(result.getErrMsg());
+                            showMessage(order.getReturn_msg());
                         }
 
                     }
 
                     @Override
                     public void onFailure(@NotNull String s) {
-                        actionView.actionError(s);
+                        showMessage(s);
                     }
-                });*/
+                });
     }
+
+    private void requestWxPlayPage(Order order) {
+        showMessage("ddddddd");
+    }
+
+    private void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
 }

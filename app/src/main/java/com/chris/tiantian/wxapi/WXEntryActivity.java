@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -15,9 +16,13 @@ import com.anima.networkrequest.NetworkRequest;
 import com.anima.networkrequest.callback.DataObjectCallback;
 import com.anima.networkrequest.entity.RequestParam;
 import com.chris.tiantian.entity.Constant;
+import com.chris.tiantian.entity.User;
+import com.chris.tiantian.entity.UserData;
 import com.chris.tiantian.entity.dataparser.ObjectDataParser;
+import com.chris.tiantian.entity.dataparser.ObjectStatusDataParser;
 import com.chris.tiantian.entity.dataparser.StringDataParser;
 import com.chris.tiantian.module.login.BindPhoneNumberActivity;
+import com.chris.tiantian.module.login.LoginPresenterImpl;
 import com.chris.tiantian.util.CommonUtil;
 import com.chris.tiantian.util.jsonParse.UTJsonFactory;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
@@ -97,11 +102,11 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                         @Override
                         public void onFailure(@NotNull String s) {
                             Toast.makeText(WXEntryActivity.this, s, Toast.LENGTH_SHORT).show();
+                            hide();
                         }
                     });
 
         }
-        finish();
     }
 
     private void requestWXUser(WXAccessData data) {
@@ -114,21 +119,52 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 .getObject(new DataObjectCallback<WXUserInfo>() {
                     @Override
                     public void onSuccess(@org.jetbrains.annotations.Nullable WXUserInfo data) {
-                        /*Log.i("WXEntryActivity", data.toString());
-                        Toast.makeText(WXEntryActivity.this, data.toString(), Toast.LENGTH_LONG).show();*/
-                        Toast.makeText(WXEntryActivity.this, "微信登录成功，请绑定手机号", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(WXEntryActivity.this, BindPhoneNumberActivity.class);
-                        intent.putExtra("openid", data.getOpenid());
-                        intent.putExtra("nickname", data.getNickname());
-                        intent.putExtra("unionid", data.getUnionid());
-                        startActivity(intent);
-                        WXEntryActivity.this.finish();
+                        hasUserBind(data);
                     }
 
                     @Override
                     public void onFailure(@NotNull String s) {
                         Toast.makeText(WXEntryActivity.this, s, Toast.LENGTH_SHORT).show();
+                        hide();
                     }
                 });
     }
+
+    private void hasUserBind(WXUserInfo userInfo) {
+        String url = String.format("%s/comment/apiv2/checkHasWxuserBinded/%s", CommonUtil.getBaseUrl(), userInfo.getOpenid());
+        new NetworkRequest<UserData>(this)
+                .url(url)
+                .method(RequestParam.Method.GET)
+                .dataClass(WXUserInfo.class)
+                .dataParser(new ObjectStatusDataParser<UserData>())
+                .getObject(new DataObjectCallback<UserData>() {
+                    @Override
+                    public void onSuccess(@org.jetbrains.annotations.Nullable UserData data) {
+                        if(data.getErr_code() == 0 && data.getUser() != null &&!TextUtils.isEmpty(data.getUser().getPhoneNumber())) {
+                            new LoginPresenterImpl(null).saveUser(data.getUser());
+                            Toast.makeText(WXEntryActivity.this, "微信登录成功", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(WXEntryActivity.this, "微信登录成功，请绑定手机号", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(WXEntryActivity.this, BindPhoneNumberActivity.class);
+                            intent.putExtra("openid", userInfo.getOpenid());
+                            intent.putExtra("nickname", userInfo.getNickname());
+                            intent.putExtra("unionid", userInfo.getUnionid());
+                            startActivity(intent);
+
+                        }
+                        hide();
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull String s) {
+                        Toast.makeText(WXEntryActivity.this, s, Toast.LENGTH_SHORT).show();
+                        hide();
+                    }
+                });
+    }
+
+    private void hide() {
+        WXEntryActivity.this.finish();
+    }
+
 }

@@ -29,9 +29,11 @@ public class LoginPresenterImpl implements LoginPresenter {
     private LoginActionView actionView;
     private Context context;
 
-    public LoginPresenterImpl(@NonNull LoginActionView actionView) {
+    public LoginPresenterImpl(LoginActionView actionView) {
         this.actionView = actionView;
-        this.context = actionView.getContext();
+        if(actionView != null) {
+            this.context = actionView.getContext();
+        }
     }
 
     @Override
@@ -114,7 +116,7 @@ public class LoginPresenterImpl implements LoginPresenter {
                 });
     }
 
-    private void saveUser(User user) {
+    public void saveUser(User user) {
         UTJson utJson = UTJsonFactory.createJson();
         String userData = utJson.toJson(user);
         int userId = user.getId();
