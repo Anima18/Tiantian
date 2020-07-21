@@ -3,12 +3,9 @@ package com.chris.tiantian.wxapi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 
@@ -16,15 +13,12 @@ import com.anima.networkrequest.NetworkRequest;
 import com.anima.networkrequest.callback.DataObjectCallback;
 import com.anima.networkrequest.entity.RequestParam;
 import com.chris.tiantian.entity.Constant;
-import com.chris.tiantian.entity.User;
 import com.chris.tiantian.entity.UserData;
 import com.chris.tiantian.entity.dataparser.ObjectDataParser;
 import com.chris.tiantian.entity.dataparser.ObjectStatusDataParser;
-import com.chris.tiantian.entity.dataparser.StringDataParser;
 import com.chris.tiantian.module.login.BindPhoneNumberActivity;
 import com.chris.tiantian.module.login.LoginPresenterImpl;
 import com.chris.tiantian.util.CommonUtil;
-import com.chris.tiantian.util.jsonParse.UTJsonFactory;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -34,10 +28,6 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.ref.WeakReference;
 
 /**
  * Created by jianjianhong on 20-5-14
@@ -51,13 +41,14 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        api = WXAPIFactory.createWXAPI(this, Constant.WX_APP_ID, false);
+        api = WXAPIFactory.createWXAPI(this, Constant.APP_ID, false);
         try {
             Intent intent = getIntent();
             api.handleIntent(intent, this);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -86,7 +77,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             SendAuth.Resp authResp = (SendAuth.Resp)resp;
             final String code = authResp.code;
             String url = String.format("https://api.weixin.qq.com/sns/oauth2/access_token?" +
-                            "appid=%s&secret=%s&code=%s&grant_type=authorization_code", Constant.WX_APP_ID, Constant.WX_APP_SECRET, code);
+                            "appid=%s&secret=%s&code=%s&grant_type=authorization_code", Constant.APP_ID, Constant.APP_SECRET, code);
             new NetworkRequest<WXAccessData>(this)
                     .url(url)
                     .method(RequestParam.Method.GET)
@@ -135,11 +126,12 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         new NetworkRequest<UserData>(this)
                 .url(url)
                 .method(RequestParam.Method.GET)
-                .dataClass(WXUserInfo.class)
+                .dataClass(UserData.class)
                 .dataParser(new ObjectStatusDataParser<UserData>())
                 .getObject(new DataObjectCallback<UserData>() {
                     @Override
                     public void onSuccess(@org.jetbrains.annotations.Nullable UserData data) {
+                        Log.i("dddddddd","ccccccccccccc");
                         if(data.getErr_code() == 0 && data.getUser() != null &&!TextUtils.isEmpty(data.getUser().getPhoneNumber())) {
                             new LoginPresenterImpl(null).saveUser(data.getUser());
                             Toast.makeText(WXEntryActivity.this, "微信登录成功", Toast.LENGTH_SHORT).show();

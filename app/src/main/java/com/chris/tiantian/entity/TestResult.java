@@ -7,6 +7,7 @@ public class TestResult {
     private int errCode;
     private String errMsg;
 
+
     public int getErrCode() {
         return errCode;
     }

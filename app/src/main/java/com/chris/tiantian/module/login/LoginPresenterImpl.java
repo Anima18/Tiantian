@@ -11,7 +11,9 @@ import com.anima.networkrequest.util.sharedprefs.UserInfoSharedPreferences;
 import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.TestResult;
 import com.chris.tiantian.entity.User;
+import com.chris.tiantian.entity.UserData;
 import com.chris.tiantian.entity.dataparser.ObjectDataParser;
+import com.chris.tiantian.entity.dataparser.ObjectStatusDataParser;
 import com.chris.tiantian.entity.dataparser.StringDataParser;
 import com.chris.tiantian.util.CommonUtil;
 import com.chris.tiantian.util.PreferencesUtil;
@@ -89,22 +91,22 @@ public class LoginPresenterImpl implements LoginPresenter {
     @Override
     public void loginByWx(Map<String, String> wxData) {
         String url = String.format("%s/comment/apiv2/wxuserBindPhonenumber", CommonUtil.getBaseUrl());
-        new NetworkRequest<TestResult>(context)
+        new NetworkRequest<UserData>(context)
                 .url(url)
                 .method(RequestParam.Method.POST)
                 .params(wxData)
                 .loadingMessage("正在绑定...")
                 .asJson(true)
-                .dataClass(TestResult.class)
-                .dataParser(new ObjectDataParser<TestResult>())
-                .getObject(new DataObjectCallback<TestResult>() {
+                .dataClass(UserData.class)
+                .dataParser(new ObjectStatusDataParser<UserData>())
+                .getObject(new DataObjectCallback<UserData>() {
                     @Override
-                    public void onSuccess(@org.jetbrains.annotations.Nullable TestResult result) {
-                        if(result.getErrCode() == 0) {
-                            //saveUser(user);
+                    public void onSuccess(@org.jetbrains.annotations.Nullable UserData result) {
+                        if(result.getErr_code() == 0) {
+                            saveUser(result.getUser());
                             actionView.loginSuccess();
                         }else {
-                            actionView.actionError(result.getErrMsg());
+                            actionView.actionError(result.getErr_msg());
                         }
 
                     }

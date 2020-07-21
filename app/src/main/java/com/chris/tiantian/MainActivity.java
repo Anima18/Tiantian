@@ -1,10 +1,7 @@
 package com.chris.tiantian;
 
 import android.Manifest;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,21 +12,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.anima.componentlib.toolbar.Toolbar;
+import com.chris.tiantian.module.main.activity.TiantianFragment;
 import com.chris.tiantian.module.me.activity.MeFragment;
 import com.chris.tiantian.module.plaza.activity.PlazaFragment;
 import com.chris.tiantian.module.signal.activity.PolicySignalFragment;
-import com.chris.tiantian.module.main.activity.TiantianFragment;
 import com.chris.tiantian.util.BackgrounderSetting;
 import com.chris.tiantian.util.BottomNavigationViewHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tbruyelle.rxpermissions.RxPermissions;
-import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import rx.functions.Action1;
 
-import static com.chris.tiantian.entity.Constant.WX_APP_ID;
+import static com.chris.tiantian.entity.Constant.APP_ID;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -149,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void regToWx() {
-        IWXAPI iwxapi = WXAPIFactory.createWXAPI(this, WX_APP_ID, true);
-        iwxapi.registerApp(WX_APP_ID);
+        IWXAPI iwxapi = WXAPIFactory.createWXAPI(this, APP_ID, true);
+        iwxapi.registerApp(APP_ID);
     }
 }

@@ -22,7 +22,7 @@ import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import static com.chris.tiantian.entity.Constant.WX_APP_ID;
+import static com.chris.tiantian.entity.Constant.APP_ID;
 
 
 /**
@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActionView 
         smsVerifyView = findViewById(R.id.sms_layout);
 
         presenter = new LoginPresenterImpl(this);
-        iwxapi = WXAPIFactory.createWXAPI(this, WX_APP_ID, true);
+        iwxapi = WXAPIFactory.createWXAPI(this, APP_ID, true);
         initLoginView();
         initSMSView();
     }

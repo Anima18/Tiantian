@@ -11,6 +11,15 @@ public class Order {
     private String err_code_des;
     private String trade_type;
     private String prepay_id;
+    private String sign;
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
 
     public String getReturn_code() {
         return return_code;

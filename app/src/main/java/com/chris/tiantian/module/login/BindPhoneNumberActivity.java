@@ -87,7 +87,7 @@ public class BindPhoneNumberActivity extends AppCompatActivity implements LoginA
                 dataMap.put("openid", openid);
                 dataMap.put("nickname", nickname);
                 dataMap.put("id", "0");
-                dataMap.put("userid", code);
+                dataMap.put("smscode", code);
                 dataMap.put("userphonenumber", phone);
                 presenter.loginByWx(dataMap);
             }
@@ -114,4 +114,5 @@ public class BindPhoneNumberActivity extends AppCompatActivity implements LoginA
         actionError("绑定成功！");
         finish();
     }
+
 }
