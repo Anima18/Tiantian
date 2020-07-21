@@ -12,6 +12,24 @@ public class Order {
     private String trade_type;
     private String prepay_id;
     private String sign;
+    private String req_sign;
+    private String nonce_str;
+
+    public String getNonce_str() {
+        return nonce_str;
+    }
+
+    public void setNonce_str(String nonce_str) {
+        this.nonce_str = nonce_str;
+    }
+
+    public String getReq_sign() {
+        return req_sign;
+    }
+
+    public void setReq_sign(String req_sign) {
+        this.req_sign = req_sign;
+    }
 
     public String getSign() {
         return sign;

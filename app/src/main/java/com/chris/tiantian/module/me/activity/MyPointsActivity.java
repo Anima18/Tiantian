@@ -1,7 +1,6 @@
 package com.chris.tiantian.module.me.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.anima.networkrequest.entity.RequestParam;
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.Order;
-import com.chris.tiantian.entity.TestResult;
 import com.chris.tiantian.entity.UserPoint;
 import com.chris.tiantian.entity.dataparser.ObjectDataParser;
 import com.chris.tiantian.entity.dataparser.ObjectStatusDataParser;
@@ -123,18 +121,18 @@ public class MyPointsActivity extends Activity {
 
     private void requestWxPlayPage(Order order) {
         try {
-            String nonceStr = StringUtil.createNonceStr();
+            //String nonceStr = StringUtil.createNonceStr();
             Map<String, String> params = new HashMap<>();
             params.put("appid", Constant.APP_ID);
             params.put("mch_id", Constant.PARTNER_ID);
-            params.put("nonce_str", nonceStr);
+  /*          params.put("nonce_str", order.getNonce_str());
             params.put("body", "天机APP-购买测试");
             params.put("attach", "支付测试");
             params.put("out_trade_no", "20150806125346");
             params.put("total_fee", "100");
             params.put("spbill_create_ip", DeviceUtil.getIPAddress());
             params.put("notify_url", "http://wxpay.wxutil.com/pub_v2/pay/notify.v2.php");
-            params.put("trade_type", "APP");
+            params.put("trade_type", "APP");*/
             String sign = WXPayUtil.generateSignature(params, Constant.wx_pay_key);
 
             IWXAPI api = WXAPIFactory.createWXAPI(this, Constant.APP_ID, false);
@@ -143,7 +141,7 @@ public class MyPointsActivity extends Activity {
             request.partnerId = Constant.PARTNER_ID;
             request.prepayId=  order.getPrepay_id();
             request.packageValue = "Sign=WXPay";
-            request.nonceStr= nonceStr;
+            request.nonceStr= order.getNonce_str();
             request.timeStamp= StringUtil.createTimestamp();
             request.sign = sign;
             api.sendReq(request);

@@ -66,6 +66,13 @@ public class LoginActivity extends AppCompatActivity implements LoginActionView 
                 req.scope = "snsapi_userinfo";
                 req.state = "wechat_sdk_demo_test";
                 iwxapi.sendReq(req);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        LoginActivity.this.finish();
+                    }
+                }, 500);
+
             }
         });
 
