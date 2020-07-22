@@ -13,14 +13,23 @@ public class Order {
     private String prepay_id;
     private String sign;
     private String req_sign;
-    private String nonce_str;
+    private String req_nonce_str;
+    private String resp_nonce_str;
 
-    public String getNonce_str() {
-        return nonce_str;
+    public String getReq_nonce_str() {
+        return req_nonce_str;
     }
 
-    public void setNonce_str(String nonce_str) {
-        this.nonce_str = nonce_str;
+    public void setReq_nonce_str(String req_nonce_str) {
+        this.req_nonce_str = req_nonce_str;
+    }
+
+    public String getResp_nonce_str() {
+        return resp_nonce_str;
+    }
+
+    public void setResp_nonce_str(String resp_nonce_str) {
+        this.resp_nonce_str = resp_nonce_str;
     }
 
     public String getReq_sign() {

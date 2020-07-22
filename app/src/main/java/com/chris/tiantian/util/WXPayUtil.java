@@ -31,7 +31,7 @@ public class WXPayUtil {
      * @return 签名
      */
     public static String generateSignature(final Map<String, String> data, String key) throws Exception {
-        return generateSignature(data, key, WXPayConstants.SignType.MD5);
+        return generateSignature(data, key, WXPayConstants.SignType.HMACSHA256);
     }
 
     /**

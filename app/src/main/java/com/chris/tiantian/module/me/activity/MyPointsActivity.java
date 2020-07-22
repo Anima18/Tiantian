@@ -85,7 +85,7 @@ public class MyPointsActivity extends Activity {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("body", "天机APP-购买测试");
         paramMap.put("attach", "支付测试");
-        paramMap.put("total_fee", "100");
+        paramMap.put("total_fee", "1");
         paramMap.put("spbill_create_ip", ip);
         paramMap.put("trade_type", "APP");
 
@@ -132,7 +132,7 @@ public class MyPointsActivity extends Activity {
             params.put("timestamp", timestamp);
             String sign = WXPayUtil.generateSignature(params, Constant.wx_pay_key);
 
-            IWXAPI api = WXAPIFactory.createWXAPI(this, Constant.APP_ID, false);
+            IWXAPI api = WXAPIFactory.createWXAPI(this, Constant.APP_ID, true);
             PayReq request = new PayReq();
             request.appId = Constant.APP_ID;
             request.partnerId = Constant.PARTNER_ID;
