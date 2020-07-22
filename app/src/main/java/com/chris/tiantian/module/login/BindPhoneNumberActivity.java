@@ -112,6 +112,7 @@ public class BindPhoneNumberActivity extends AppCompatActivity implements LoginA
     @Override
     public void loginSuccess() {
         actionError("绑定成功！");
+        LoginActivity.finishActivity();
         finish();
     }
 

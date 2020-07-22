@@ -128,7 +128,7 @@ public class MyPointsActivity extends Activity {
             params.put("partnerid", Constant.PARTNER_ID);
             params.put("prepayid", order.getPrepay_id());
             params.put("package", "Sign=WXPay");
-            params.put("noncestr", order.getNonce_str());
+            params.put("noncestr", nonceStr);
             params.put("timestamp", timestamp);
             String sign = WXPayUtil.generateSignature(params, Constant.wx_pay_key);
 
@@ -138,7 +138,7 @@ public class MyPointsActivity extends Activity {
             request.partnerId = Constant.PARTNER_ID;
             request.prepayId= order.getPrepay_id();
             request.packageValue = "Sign=WXPay";
-            request.nonceStr= order.getNonce_str();
+            request.nonceStr= nonceStr;
             request.timeStamp= timestamp;
             request.sign = sign;
             api.sendReq(request);

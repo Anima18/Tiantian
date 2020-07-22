@@ -17,6 +17,7 @@ import com.chris.tiantian.entity.UserData;
 import com.chris.tiantian.entity.dataparser.ObjectDataParser;
 import com.chris.tiantian.entity.dataparser.ObjectStatusDataParser;
 import com.chris.tiantian.module.login.BindPhoneNumberActivity;
+import com.chris.tiantian.module.login.LoginActivity;
 import com.chris.tiantian.module.login.LoginPresenterImpl;
 import com.chris.tiantian.util.CommonUtil;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
@@ -64,9 +65,11 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:
                 Toast.makeText(WXEntryActivity.this, "用户取消", Toast.LENGTH_SHORT).show();
+                hide();
                 break;
             case BaseResp.ErrCode.ERR_AUTH_DENIED:
                 Toast.makeText(WXEntryActivity.this, "用户拒绝授权", Toast.LENGTH_SHORT).show();
+                hide();
                 break;
         }
 
@@ -134,6 +137,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                         Log.i("dddddddd","ccccccccccccc");
                         if(data.getErr_code() == 0 && data.getUser() != null &&!TextUtils.isEmpty(data.getUser().getPhoneNumber())) {
                             new LoginPresenterImpl(null).saveUser(data.getUser());
+                            LoginActivity.finishActivity();
                             Toast.makeText(WXEntryActivity.this, "微信登录成功", Toast.LENGTH_SHORT).show();
                         }else {
                             Toast.makeText(WXEntryActivity.this, "微信登录成功，请绑定手机号", Toast.LENGTH_SHORT).show();

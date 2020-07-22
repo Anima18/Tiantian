@@ -18,9 +18,12 @@ import com.chris.tiantian.R;
 import com.chris.tiantian.util.StringUtil;
 import com.chris.tiantian.util.TimerTextUtil;
 import com.chris.tiantian.util.VisibilityAnimation;
+import com.chris.tiantian.util.WXPayUtil;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import java.lang.ref.WeakReference;
 
 import static com.chris.tiantian.entity.Constant.APP_ID;
 
@@ -45,10 +48,20 @@ public class LoginActivity extends AppCompatActivity implements LoginActionView 
     private LoginPresenter presenter;
     private IWXAPI iwxapi;
 
+    private static WeakReference<LoginActivity> loginActivityRef;
+
+    public static void finishActivity() {
+        if (loginActivityRef != null && loginActivityRef.get() != null) {
+            loginActivityRef.get().finish();
+        }
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        loginActivityRef = new WeakReference<>(this);
+
         loginView = findViewById(R.id.login_layout);
         smsVerifyView = findViewById(R.id.sms_layout);
 
@@ -62,17 +75,14 @@ public class LoginActivity extends AppCompatActivity implements LoginActionView 
         loginView.findViewById(R.id.weixin_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final SendAuth.Req req = new SendAuth.Req();
-                req.scope = "snsapi_userinfo";
-                req.state = "wechat_sdk_demo_test";
-                iwxapi.sendReq(req);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        LoginActivity.this.finish();
-                    }
-                }, 500);
-
+                if(WXPayUtil.isWeixinAvilible(LoginActivity.this)) {
+                    final SendAuth.Req req = new SendAuth.Req();
+                    req.scope = "snsapi_userinfo";
+                    req.state = "wechat_sdk_demo_test";
+                    iwxapi.sendReq(req);
+                }else {
+                    Toast.makeText(LoginActivity.this, "你没有安装微信！", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
