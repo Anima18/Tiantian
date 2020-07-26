@@ -2,14 +2,13 @@ package com.chris.tiantian.wxapi;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.Constant;
+import com.chris.tiantian.util.CommonUtil;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -48,10 +47,14 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 		//Log.d(TAG, "onPayFinish, errCode = " + resp.errCode);
 
 		if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle(R.string.app_tip);
-			builder.setMessage(getString(R.string.pay_result_callback_msg, String.valueOf(resp.errCode)));
-			builder.show();
+			if(0 == resp.errCode) {
+				Toast.makeText(CommonUtil.getApplicationContext(), "支付成功", Toast.LENGTH_SHORT).show();
+			}else if(-1 == resp.errCode) {
+				Toast.makeText(CommonUtil.getApplicationContext(), "支付失败，"+resp.errStr, Toast.LENGTH_SHORT).show();
+			}else if(-2 == resp.errCode) {
+				Toast.makeText(CommonUtil.getApplicationContext(), "你取消了支付", Toast.LENGTH_SHORT).show();
+			}
+			WXPayEntryActivity.this.finish();
 		}
 	}
 }

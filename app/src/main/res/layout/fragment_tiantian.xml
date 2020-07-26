@@ -8,7 +8,7 @@
     app:emptyView="@layout/layout_empty_view"
     app:errorView="@layout/layout_error_view"
     app:noNetworkView="@layout/layout_no_network_view">
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/ttFragment_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,8 +47,30 @@
                 android:textColor="#c2c2c2"
                 android:layout_alignRight="@+id/ttFragment_banner"
                 android:layout_alignBottom="@+id/ttFragment_banner"/>
+            <com.chris.tiantian.module.main.activity.NewHotView
+                android:id="@+id/ttFragment_hot_new"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:layout_below="@id/ttFragment_banner"/>
 
-            <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@id/ttFragment_hot_new">
+                <com.chris.tiantian.view.SlidingTabLayout
+                    android:id="@+id/mainFrm_slidingTabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/tool_bar_height"
+                    />
+
+                <com.chris.tiantian.module.main.activity.TestViewPager
+                    android:id="@+id/mainFrm_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <!--<TextView
                 android:id="@+id/ttFragment_title_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -66,9 +88,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ttFragment_title_view"
-                android:layout_alignParentBottom="true" />
+                android:layout_alignParentBottom="true" />-->
         </RelativeLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </com.chris.tiantian.view.MultipleStatusView>
 
 

@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+
+import com.chris.tiantian.module.main.activity.WeekLeaderboardFragment;
 import com.chris.tiantian.module.plaza.adapter.ViewPagerAdapter;
 
 import com.chris.tiantian.R;
@@ -45,7 +47,7 @@ public class PlazaFragment extends Fragment {
             fragmentList = new ArrayList<>();
             fragmetNameList = new ArrayList<>();
             fragmentList.add(new PolicyFragment());
-            fragmentList.add(new LeaderboardFragment());
+            fragmentList.add(new WeekLeaderboardFragment());
             fragmentList.add(new AuctionFragment());
             fragmetNameList.add("广场");
             fragmetNameList.add("排行榜");

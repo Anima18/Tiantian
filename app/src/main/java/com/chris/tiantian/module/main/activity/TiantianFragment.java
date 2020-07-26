@@ -14,20 +14,24 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.anima.networkrequest.NetworkRequest;
 import com.anima.networkrequest.RequestStream;
 import com.anima.networkrequest.entity.RequestParam;
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.Advertise;
-import com.chris.tiantian.entity.dataparser.ListDataParser;
 import com.chris.tiantian.entity.New;
+import com.chris.tiantian.entity.dataparser.ListDataParser;
+import com.chris.tiantian.module.plaza.activity.AuctionFragment;
+import com.chris.tiantian.module.plaza.adapter.ViewPagerAdapter;
 import com.chris.tiantian.util.CommonAdapter;
 import com.chris.tiantian.util.CommonItemViewHolder;
 import com.chris.tiantian.util.CommonUtil;
 import com.chris.tiantian.util.GlideImageLoader;
 import com.chris.tiantian.view.DividerItemDecoration;
 import com.chris.tiantian.view.MultipleStatusView;
+import com.chris.tiantian.view.SlidingTabLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -45,6 +49,11 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
     private MultipleStatusView statusView;
     private RecyclerView recyclerView;
 
+    private SlidingTabLayout mSlidingTabLayout;
+    private TestViewPager mViewPager;
+    private List<Fragment> fragmentList;
+    private List<String> fragmetNameList;
+
     private List<Advertise> advertises = new ArrayList<>();
 
     @Nullable
@@ -54,8 +63,13 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
             rootView = inflater.inflate(R.layout.fragment_tiantian, container, false);
             banner = rootView.findViewById(R.id.ttFragment_banner);
             statusView = rootView.findViewById(R.id.ttFragment_status_view);
-            recyclerView = rootView.findViewById(R.id.content_listView);
-            initNewsListView();
+
+            mSlidingTabLayout = rootView.findViewById(R.id.mainFrm_slidingTabLayout);
+            mViewPager = rootView.findViewById(R.id.mainFrm_viewpager);
+            initTabView();
+
+            //recyclerView = rootView.findViewById(R.id.content_listView);
+            //initNewsListView();
             requestData();
             statusView.setOnRetryClickListener(new View.OnClickListener() {
                 @Override
@@ -72,6 +86,62 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
         }
 
         return rootView;
+    }
+
+    public void initTabView() {
+        if(fragmentList == null) {
+            fragmentList = new ArrayList<>();
+            fragmetNameList = new ArrayList<>();
+            fragmentList.add(new WeekLeaderboardFragment());
+            fragmentList.add(new WeekLeaderboardFragment());
+            fragmentList.add(new AuctionFragment());
+            fragmentList.add(new AuctionFragment());
+            fragmetNameList.add("周排行");
+            fragmetNameList.add("月排行");
+            fragmetNameList.add("新策略");
+            fragmetNameList.add("新教材");
+        }
+
+        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragmentList, fragmetNameList));
+        mSlidingTabLayout.setViewPager(mViewPager);
+        mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.colorPrimary);
+            }
+        });
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mViewPager.resetHeight(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        /*mScrollView.setOnScrollBottomListener(new TestScrollView.OnScrollBottomListener() {
+            @Override
+            public void onScrollBottom() {
+                if (mTabLayout.getSelectedTabPosition() == 0) {
+                    ((PersonalCourseFragment) fragmentList.get(0)).loadData();
+                } else if (mTabLayout.getSelectedTabPosition() == 1) {
+                    ((PersonalNewsFragment) fragmentList.get(1)).loadData();
+                } else if (mTabLayout.getSelectedTabPosition() == 2) {
+                    ((PersonalIssueAnswerFragment) fragmentList.get(2)).loadData();
+                }
+            }
+        });*/
+
     }
 
     private void initNewsListView() {
@@ -134,7 +204,7 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
                 List<Advertise> advertises = (List<Advertise>) list.get(0);
                 List<New> news = (List<New>)list.get(1);
                 showBanner(advertises);
-                showNews(news);
+                //showNews(news);
             }
         });
     }

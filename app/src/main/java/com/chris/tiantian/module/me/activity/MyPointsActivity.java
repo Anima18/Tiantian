@@ -85,7 +85,7 @@ public class MyPointsActivity extends Activity {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("body", "天机APP-购买测试");
         paramMap.put("attach", "支付测试");
-        paramMap.put("total_fee", "1");
+        paramMap.put("total_fee", "100");
         paramMap.put("spbill_create_ip", ip);
         paramMap.put("trade_type", "APP");
 
