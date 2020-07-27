@@ -22,7 +22,7 @@
             <com.youth.banner.Banner
                 android:id="@+id/ttFragment_banner"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="120dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="9dp"
                 android:layout_marginLeft="11dp"
@@ -51,7 +51,8 @@
                 android:id="@+id/ttFragment_hot_new"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 android:layout_below="@id/ttFragment_banner"/>
 
             <LinearLayout
@@ -59,11 +60,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_below="@id/ttFragment_hot_new">
-                <com.chris.tiantian.view.SlidingTabLayout
-                    android:id="@+id/mainFrm_slidingTabLayout"
+                <com.google.android.material.tabs.TabLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/tool_bar_height"
-                    />
+                    android:layout_height="wrap_content"
+                    android:id="@+id/mainFrm_slidingTabLayout"
+                    app:tabMode="fixed"/>
 
                 <com.chris.tiantian.module.main.activity.TestViewPager
                     android:id="@+id/mainFrm_viewpager"

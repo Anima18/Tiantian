@@ -32,6 +32,7 @@ import com.chris.tiantian.util.GlideImageLoader;
 import com.chris.tiantian.view.DividerItemDecoration;
 import com.chris.tiantian.view.MultipleStatusView;
 import com.chris.tiantian.view.SlidingTabLayout;
+import com.google.android.material.tabs.TabLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -49,7 +50,7 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
     private MultipleStatusView statusView;
     private RecyclerView recyclerView;
 
-    private SlidingTabLayout mSlidingTabLayout;
+    private TabLayout mSlidingTabLayout;
     private TestViewPager mViewPager;
     private List<Fragment> fragmentList;
     private List<String> fragmetNameList;
@@ -104,13 +105,7 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
 
         mViewPager.setOffscreenPageLimit(4);
         mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragmentList, fragmetNameList));
-        mSlidingTabLayout.setViewPager(mViewPager);
-        mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-            @Override
-            public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.colorPrimary);
-            }
-        });
+        mSlidingTabLayout.setupWithViewPager(mViewPager);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

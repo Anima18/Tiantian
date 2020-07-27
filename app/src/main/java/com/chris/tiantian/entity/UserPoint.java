@@ -13,7 +13,8 @@ public class UserPoint {
 
     private int userId;
     private int id;
-    private int points;
+    private int freedomPoints;
+    private int lockedPoints;
 
     public int getUserId() {
         return userId;
@@ -31,11 +32,19 @@ public class UserPoint {
         this.id = id;
     }
 
-    public int getPoints() {
-        return points;
+    public int getFreedomPoints() {
+        return freedomPoints;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
+    public void setFreedomPoints(int freedomPoints) {
+        this.freedomPoints = freedomPoints;
+    }
+
+    public int getLockedPoints() {
+        return lockedPoints;
+    }
+
+    public void setLockedPoints(int lockedPoints) {
+        this.lockedPoints = lockedPoints;
     }
 }

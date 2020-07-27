@@ -4,10 +4,14 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.anima.networkrequest.NetworkRequest;
 import com.anima.networkrequest.callback.DataObjectCallback;
@@ -19,8 +23,10 @@ import com.chris.tiantian.entity.UserPoint;
 import com.chris.tiantian.entity.dataparser.ObjectDataParser;
 import com.chris.tiantian.entity.dataparser.ObjectStatusDataParser;
 import com.chris.tiantian.util.CommonUtil;
+import com.chris.tiantian.util.DensityUtil;
 import com.chris.tiantian.util.DeviceUtil;
 import com.chris.tiantian.util.StringUtil;
+import com.chris.tiantian.util.UIAdapter;
 import com.chris.tiantian.util.UserUtil;
 import com.chris.tiantian.util.WXPayUtil;
 import com.tencent.mm.opensdk.modelpay.PayReq;
@@ -29,7 +35,9 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,13 +45,23 @@ import java.util.Map;
  */
 public class MyPointsActivity extends Activity {
 
-    private TextView myPoint;
+    private TextView freedomPoint;
+    private TextView lockedPoint;
+    private RecyclerView freedomPointListView;
+    private LinearLayout lockedPointListView;
+
+    private List<PointData> pointDataList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_points);
-        myPoint = findViewById(R.id.myPoints);
+        freedomPoint = findViewById(R.id.freedom_points);
+        lockedPoint = findViewById(R.id.locked_points);
+        freedomPointListView = findViewById(R.id.buy_freedom_point_listView);
+        lockedPointListView = findViewById(R.id.buy_locked_point_listView);
+
+        initView();
         initData();
 
         findViewById(R.id.pay).setOnClickListener(new View.OnClickListener() {
@@ -52,6 +70,32 @@ public class MyPointsActivity extends Activity {
                 pay(v);
             }
         });
+    }
+
+    private void initView() {
+        pointDataList = new ArrayList<>();
+        pointDataList.add(new PointData(10));
+        pointDataList.add(new PointData(50));
+        pointDataList.add(new PointData(100));
+        pointDataList.add(new PointData(200));
+        pointDataList.add(new PointData(500));
+        pointDataList.add(new PointData(1000));
+
+        freedomPointListView.setNestedScrollingEnabled(false);
+        FreedomPointAdapter adapter = new FreedomPointAdapter(this,pointDataList);
+        freedomPointListView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new FreedomPointAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                for(PointData pointData : pointDataList) {
+                    pointData.selected = false;
+                }
+                pointDataList.get(position).selected = true;
+                adapter.notifyDataSetChanged();
+            }
+        });
+        freedomPointListView.setLayoutManager(new GridLayoutManager(this, 3));
+        freedomPointListView.addItemDecoration(new SpaceItemDecoration(DensityUtil.dpToPx(16)));
     }
 
     private void initData() {
@@ -64,12 +108,8 @@ public class MyPointsActivity extends Activity {
                 .getObject(new DataObjectCallback<UserPoint>() {
                     @Override
                     public void onSuccess(@org.jetbrains.annotations.Nullable UserPoint userPoint) {
-                        if(userPoint == null) {
-                            myPoint.setText("0.00");
-                        }else {
-                            myPoint.setText(userPoint.getPoints()+"");
-                        }
-
+                        freedomPoint.setText(userPoint.getFreedomPoints()+"");
+                        lockedPoint.setText(userPoint.getLockedPoints()+"");
                     }
 
                     @Override
@@ -81,7 +121,6 @@ public class MyPointsActivity extends Activity {
 
     public void pay(View view) {
         String ip = DeviceUtil.getIPAddress();
-        Log.i("ddddddd", ip);
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("body", "天机APP-购买测试");
         paramMap.put("attach", "支付测试");
@@ -152,4 +191,12 @@ public class MyPointsActivity extends Activity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    public class PointData {
+        int point;
+        boolean selected;
+
+        public PointData(int point) {
+            this.point = point;
+        }
+    }
 }
