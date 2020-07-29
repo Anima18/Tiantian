@@ -16,6 +16,7 @@ import com.chris.tiantian.module.main.activity.TiantianFragment;
 import com.chris.tiantian.module.me.activity.MeFragment;
 import com.chris.tiantian.module.plaza.activity.PlazaFragment;
 import com.chris.tiantian.module.signal.activity.PolicySignalFragment;
+import com.chris.tiantian.module.strategy.StrategyFragment;
 import com.chris.tiantian.util.BackgrounderSetting;
 import com.chris.tiantian.util.BottomNavigationViewHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,6 +31,7 @@ import static com.chris.tiantian.entity.Constant.APP_ID;
 
 public class MainActivity extends AppCompatActivity {
 
+    private View toolbarLayout;
     private Toolbar toolbar;
     private BottomNavigationView navigationView;
     private Fragment tiantainFragment;
@@ -49,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
             currentPageIndex = getIntent().getIntExtra("KEY_PAGE_INDEX", currentPageIndex);
         }
 
+        toolbarLayout = findViewById(R.id.activity_toolBar_layout);
         toolbar = findViewById(R.id.activity_toolBar);
+        toolbar.setShowbackbtn(false);
         navigationView = findViewById(R.id.bottom_nav);
         initNavigationView();
 
@@ -94,17 +98,17 @@ public class MainActivity extends AppCompatActivity {
                             tiantainFragment = new TiantianFragment();
                         }
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, tiantainFragment).commitAllowingStateLoss();
-                        toolbar.setTitle((String) item.getTitle());
-                        toolbar.setVisibility(View.VISIBLE);
+                        toolbarLayout.setVisibility(View.GONE);
                         currentPageIndex = 0;
                         break;
                     case R.id.bottom_nav_role:
                         if(subscriptionFragment == null) {
-                            subscriptionFragment = new PolicySignalFragment();
+                            //subscriptionFragment = new PolicySignalFragment();
+                            subscriptionFragment = new StrategyFragment();
                         }
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, subscriptionFragment).commitAllowingStateLoss();
                         toolbar.setTitle((String) item.getTitle());
-                        toolbar.setVisibility(View.VISIBLE);
+                        toolbarLayout.setVisibility(View.VISIBLE);
                         currentPageIndex = 1;
                         break;
                     case R.id.bottom_nav_message:
@@ -113,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, plazaFragment).commitAllowingStateLoss();
                         toolbar.setTitle((String)item.getTitle());
-                        toolbar.setVisibility(View.GONE);
+                        toolbarLayout.setVisibility(View.VISIBLE);
                         currentPageIndex = 2;
                         break;
                     case R.id.bottom_nav_me:
@@ -122,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, meFragment).commitAllowingStateLoss();
                         toolbar.setTitle((String) item.getTitle());
-                        toolbar.setVisibility(View.VISIBLE);
+                        toolbarLayout.setVisibility(View.VISIBLE);
                         currentPageIndex = 3;
                         break;
                 }

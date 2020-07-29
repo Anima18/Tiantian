@@ -2,22 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
-    <com.anima.componentlib.toolbar.Toolbar
-        android:id="@+id/activity_toolBar"
-        style="@style/toolbar_white"
-        android:layout_alignParentTop="true"
-        app:isshowbackbtn="true"
-        app:menuiconcolor="@color/black"
-        app:title="个人信息"
-        app:titleplace="left"/>
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <include android:id="@+id/activity_toolBar_layout" layout="@layout/view_toolbar_common"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/user_info_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/activity_toolBar"
+        android:layout_below="@id/activity_toolBar_layout"
         android:layout_above="@id/btn_logout"
         />
 

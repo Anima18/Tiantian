@@ -1,14 +1,21 @@
 package com.chris.tiantian.module.me.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.anima.componentlib.toolbar.Toolbar;
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.ActionMenuItem;
 import com.chris.tiantian.entity.User;
@@ -25,10 +32,14 @@ import java.util.List;
  */
 public class UserInfoActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
+
+        toolbar = findViewById(R.id.activity_toolBar);
+        toolbar.setTitle("个人信息");
         recyclerView = findViewById(R.id.user_info_list);
         initData();
 

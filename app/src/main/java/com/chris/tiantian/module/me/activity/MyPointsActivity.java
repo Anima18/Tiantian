@@ -2,8 +2,10 @@ package com.chris.tiantian.module.me.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,13 +46,22 @@ import java.util.Map;
  * Created by jianjianhong on 20-3-25
  */
 public class MyPointsActivity extends Activity {
+    private final int DEFAUlT_LOCKED_POINT = 3000;
 
     private TextView freedomPoint;
     private TextView lockedPoint;
     private RecyclerView freedomPointListView;
     private LinearLayout lockedPointListView;
+    private ImageView lockedPointImage;
+    private TextView lockedPointValue;
 
+    private LinearLayout payView;
+    private TextView totalView;
+
+    private FreedomPointAdapter freedomAdapter;
     private List<PointData> pointDataList;
+    private int buyFreedomPoint;
+    private int buyLockedPoint;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,16 +71,19 @@ public class MyPointsActivity extends Activity {
         lockedPoint = findViewById(R.id.locked_points);
         freedomPointListView = findViewById(R.id.buy_freedom_point_listView);
         lockedPointListView = findViewById(R.id.buy_locked_point_listView);
+        lockedPointImage = findViewById(R.id.locked_pointImage);
+        lockedPointValue = findViewById(R.id.locked_pointValue);
+        lockedPointValue.setText(DEFAUlT_LOCKED_POINT+"");
+        payView = findViewById(R.id.pay_point);
+        totalView = findViewById(R.id.pay_total);
 
         initView();
-        initData();
+    }
 
-        findViewById(R.id.pay).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pay(v);
-            }
-        });
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
     }
 
     private void initView() {
@@ -82,20 +96,65 @@ public class MyPointsActivity extends Activity {
         pointDataList.add(new PointData(1000));
 
         freedomPointListView.setNestedScrollingEnabled(false);
-        FreedomPointAdapter adapter = new FreedomPointAdapter(this,pointDataList);
-        freedomPointListView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new FreedomPointAdapter.OnItemClickListener() {
+        freedomAdapter = new FreedomPointAdapter(this,pointDataList);
+        freedomPointListView.setAdapter(freedomAdapter);
+        freedomAdapter.setOnItemClickListener(new FreedomPointAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
                 for(PointData pointData : pointDataList) {
                     pointData.selected = false;
                 }
-                pointDataList.get(position).selected = true;
-                adapter.notifyDataSetChanged();
+                PointData selectedPoint = pointDataList.get(position);
+                if(selectedPoint.point != buyFreedomPoint) {
+                    selectedPoint.selected = true;
+                    buyFreedomPoint = selectedPoint.point;
+                }else {
+                    buyFreedomPoint = 0;
+                }
+                freedomAdapter.notifyDataSetChanged();
+                showPayButton();
             }
         });
         freedomPointListView.setLayoutManager(new GridLayoutManager(this, 3));
         freedomPointListView.addItemDecoration(new SpaceItemDecoration(DensityUtil.dpToPx(16)));
+
+        lockedPointListView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(buyLockedPoint != DEFAUlT_LOCKED_POINT) {
+                    lockedPointListView.setSelected(true);
+                    buyLockedPoint = DEFAUlT_LOCKED_POINT;
+
+                    lockedPointImage.setColorFilter(getResources().getColor(R.color.app_blue));
+                    lockedPointValue.setTextColor(getResources().getColor(R.color.app_blue));
+                }else {
+                    lockedPointListView.setSelected(false);
+                    buyLockedPoint = 0;
+                    lockedPointImage.setColorFilter(getResources().getColor(R.color.secondary_text_dark_color));
+                    lockedPointValue.setTextColor(getResources().getColor(R.color.secondary_text_dark_color));
+                }
+                showPayButton();
+            }
+        });
+
+        payView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pay(v);
+            }
+        });
+    }
+
+    private void showPayButton(){
+        lockedPointListView.setEnabled(buyFreedomPoint == 0);
+        for(PointData pointData : pointDataList) {
+            pointData.enabled = buyLockedPoint == 0? true : false;
+        }
+        freedomAdapter.notifyDataSetChanged();
+
+        int total = buyFreedomPoint *2 + buyLockedPoint;
+        payView.setVisibility(total>0 ? View.VISIBLE : View.GONE);
+        totalView.setText(String.format("总计：%s元", total+""));
     }
 
     private void initData() {
@@ -108,8 +167,10 @@ public class MyPointsActivity extends Activity {
                 .getObject(new DataObjectCallback<UserPoint>() {
                     @Override
                     public void onSuccess(@org.jetbrains.annotations.Nullable UserPoint userPoint) {
-                        freedomPoint.setText(userPoint.getFreedomPoints()+"");
-                        lockedPoint.setText(userPoint.getLockedPoints()+"");
+                        if(userPoint != null) {
+                            freedomPoint.setText(userPoint.getFreedomPoints()+"");
+                            lockedPoint.setText(userPoint.getLockedPoints()+"");
+                        }
                     }
 
                     @Override
@@ -121,10 +182,20 @@ public class MyPointsActivity extends Activity {
 
     public void pay(View view) {
         String ip = DeviceUtil.getIPAddress();
+        String attach = "";
+        if(buyFreedomPoint != 0) {
+            attach = String.format("消费积分#%d#%d#%d", Constant.FREEDOM_POINT_PRICE, buyFreedomPoint, Constant.FREEDOM_POINT_PRICE*buyFreedomPoint);
+        }
+        if(buyLockedPoint != 0) {
+            attach = String.format("定投积分#%d#%d#%d", Constant.LOCKED_POINT_PRICE, buyLockedPoint, Constant.LOCKED_POINT_PRICE*buyLockedPoint);
+        }
+        if(TextUtils.isEmpty(attach)) {
+            return;
+        }
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("body", "天机APP-购买测试");
-        paramMap.put("attach", "支付测试");
-        paramMap.put("total_fee", "100");
+        paramMap.put("attach", attach);
+        paramMap.put("total_fee", "1");
         paramMap.put("spbill_create_ip", ip);
         paramMap.put("trade_type", "APP");
 
@@ -194,6 +265,7 @@ public class MyPointsActivity extends Activity {
     public class PointData {
         int point;
         boolean selected;
+        boolean enabled = true;
 
         public PointData(int point) {
             this.point = point;

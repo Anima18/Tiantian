@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.chris.tiantian.module.main.activity.WeekLeaderboardFragment;
+import com.chris.tiantian.module.main.activity.fragment.WeekLeaderboardFragment;
 import com.chris.tiantian.module.plaza.adapter.ViewPagerAdapter;
 
 import com.chris.tiantian.R;

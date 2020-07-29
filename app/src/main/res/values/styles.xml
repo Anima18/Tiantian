@@ -5,6 +5,16 @@
         <item name="windowNoTitle">true</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+
+    </style>
+
+    <style name="AppTheme_toolbar" parent="AppTheme">
+        <!-- 隐藏标题栏和设置状态栏透明 -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <!-- Base application theme. -->
@@ -13,7 +23,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowActionModeOverlay">true</item>
         <item name="android:textColorPrimary">@color/black</item>
@@ -33,7 +43,7 @@
     </style>
 
     <style name="AppTheme.Button.Colored.green" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/my_point_pay</item>
+        <item name="colorButtonNormal">@color/app_blue</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:minHeight">40dip</item>
     </style>

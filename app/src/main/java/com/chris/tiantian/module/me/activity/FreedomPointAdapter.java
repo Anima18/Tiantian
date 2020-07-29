@@ -60,9 +60,10 @@ public class FreedomPointAdapter extends RecyclerView.Adapter<FreedomPointAdapte
             holder.pointImage.setColorFilter(context.getResources().getColor(R.color.white));
             holder.pointValue.setTextColor(context.getResources().getColor(R.color.white));
         }else {
-            holder.pointImage.setColorFilter(context.getResources().getColor(R.color.primary_text_dark_color));
-            holder.pointValue.setTextColor(context.getResources().getColor(R.color.primary_text_dark_color));
+            holder.pointImage.setColorFilter(context.getResources().getColor(R.color.secondary_text_dark_color));
+            holder.pointValue.setTextColor(context.getResources().getColor(R.color.secondary_text_dark_color));
         }
+        holder.itemView.setEnabled(pointData.enabled);
 
     }
 

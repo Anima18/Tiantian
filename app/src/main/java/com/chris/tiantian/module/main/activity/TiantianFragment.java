@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +24,10 @@ import com.chris.tiantian.R;
 import com.chris.tiantian.entity.Advertise;
 import com.chris.tiantian.entity.New;
 import com.chris.tiantian.entity.dataparser.ListDataParser;
+import com.chris.tiantian.module.main.activity.fragment.MonthLeaderboardFragment;
+import com.chris.tiantian.module.main.activity.fragment.NewStrategyFragment;
+import com.chris.tiantian.module.main.activity.fragment.NewTeachingFragment;
+import com.chris.tiantian.module.main.activity.fragment.WeekLeaderboardFragment;
 import com.chris.tiantian.module.plaza.activity.AuctionFragment;
 import com.chris.tiantian.module.plaza.adapter.ViewPagerAdapter;
 import com.chris.tiantian.util.CommonAdapter;
@@ -31,7 +36,6 @@ import com.chris.tiantian.util.CommonUtil;
 import com.chris.tiantian.util.GlideImageLoader;
 import com.chris.tiantian.view.DividerItemDecoration;
 import com.chris.tiantian.view.MultipleStatusView;
-import com.chris.tiantian.view.SlidingTabLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
@@ -62,6 +66,8 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_tiantian, container, false);
+            View toolbar = rootView.findViewById(R.id.activity_toolBar);
+            toolbar.setVisibility(View.GONE);
             banner = rootView.findViewById(R.id.ttFragment_banner);
             statusView = rootView.findViewById(R.id.ttFragment_status_view);
 
@@ -94,9 +100,9 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
             fragmentList = new ArrayList<>();
             fragmetNameList = new ArrayList<>();
             fragmentList.add(new WeekLeaderboardFragment());
-            fragmentList.add(new WeekLeaderboardFragment());
-            fragmentList.add(new AuctionFragment());
-            fragmentList.add(new AuctionFragment());
+            fragmentList.add(new MonthLeaderboardFragment());
+            fragmentList.add(new NewStrategyFragment());
+            fragmentList.add(new NewTeachingFragment());
             fragmetNameList.add("周排行");
             fragmetNameList.add("月排行");
             fragmetNameList.add("新策略");

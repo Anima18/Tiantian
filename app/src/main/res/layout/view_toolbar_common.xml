@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/activity_toolBar_layout"
+    android:layout_width="match_parent"
+    android:layout_height="74dp"
+    android:layout_alignParentTop="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/star"
+        android:scaleType="centerCrop"/>
+    <com.anima.componentlib.toolbar.Toolbar
+        android:id="@+id/activity_toolBar"
+        style="@style/toolbar_white"
+        android:layout_marginTop="24dp"
+        android:layout_alignParentTop="true"
+        app:backgroundcolor="@android:color/transparent"
+        app:titlecolor="@color/black"
+        app:isshowbackbtn="true"
+        app:menuiconcolor="@color/black"
+        app:titleplace="center"/>
+</RelativeLayout>

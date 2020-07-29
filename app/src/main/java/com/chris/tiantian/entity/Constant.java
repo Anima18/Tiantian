@@ -10,6 +10,10 @@ public interface Constant {
     String PARTNER_ID = "1592531701";
     String wx_pay_key= "wMHwrjyr4vzuRajr2X5hB1coGDQryFVm";
 
+    int FREEDOM_POINT_PRICE = 2;
+    int LOCKED_POINT_PRICE = 1;
+
+
     String SP_USER_DATA = "SP_USER_DATA";
     String SP_USER_ID = "SP_USER_ID";
     String SP_TOKEN = "SP_TOKEN";

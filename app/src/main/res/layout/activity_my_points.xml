@@ -38,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="10000"
+                    android:text="0"
                     android:textSize="22sp"
                     android:textColor="@color/primary_text_dark_color"/>
                 <TextView
@@ -58,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="20000"
+                    android:text="0"
                     android:textSize="22sp"
                     android:textColor="@color/primary_text_dark_color"/>
                 <TextView
@@ -74,10 +74,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/primary_text_dark_color"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:paddingTop="16dp"
             android:gravity="center_horizontal"
-            android:text="购买天机积分"/>
+            android:text="天机积分"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/buy_freedom_point_listView"
@@ -89,9 +89,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/primary_text_dark_color"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:gravity="center_horizontal"
-            android:text="购买锁定积分"/>
+            android:text="锁定积分"/>
 
         <LinearLayout
             android:id="@+id/buy_locked_point_listView"
@@ -104,21 +104,22 @@
             android:paddingLeft="24dp"
             android:paddingRight="16dp"
             android:gravity="center_vertical"
-            android:background="@drawable/buy_point_background">
+            android:background="@drawable/buy_locked_point_background">
 
             <ImageView
-                android:id="@+id/pointImage"
+                android:id="@+id/locked_pointImage"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
-                android:src="@drawable/points"/>
+                android:src="@drawable/points"
+                android:tint="@color/secondary_text_dark_color"/>
 
             <TextView
-                android:id="@+id/pointValue"
+                android:id="@+id/locked_pointValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:text="3000"
-                android:textColor="@color/primary_text_dark_color"
+                android:textColor="@color/secondary_text_dark_color"
                 android:textSize="18sp"/>
 
             <TextView
@@ -129,15 +130,60 @@
                 android:text="锁定积分不可流通"/>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/pay"
-            android:layout_width="200dp"
+        <LinearLayout
+            android:id="@+id/pay_point"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="36dp"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:background="@drawable/pay_point_background">
+
+            <TextView
+                android:id="@+id/pay_total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:text="总计：200元"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/wx_pay"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="微信支付"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="充值"
-            android:textSize="16sp"
-            android:theme="@style/AppTheme.Button.Colored.green"/>
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="16dp"
+            android:padding="16dp"
+            android:background="#f7f7f7"
+            android:text="1天机积分=2元\n\n1锁定积分=1元"/>
+
     </LinearLayout>
-
-
 </androidx.core.widget.NestedScrollView>

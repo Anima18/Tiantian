@@ -5,15 +5,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_bottom_nav"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
-    <com.anima.componentlib.toolbar.Toolbar
+    <!--<com.anima.componentlib.toolbar.Toolbar
         android:id="@+id/activity_toolBar"
         style="@style/toolbar_white"
         app:isshowbackbtn="false"
         app:menuiconcolor="@color/white"
-        app:titleplace="left"/>
+        app:titleplace="left"/>-->
+
+    <include android:id="@+id/activity_toolBar_layout" layout="@layout/view_toolbar_common"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
@@ -30,7 +31,7 @@
 
     <FrameLayout
         android:id="@+id/content_frame"
-        android:layout_below="@id/activity_toolBar"
+        android:layout_below="@id/activity_toolBar_layout"
         android:layout_above="@id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
