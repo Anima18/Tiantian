@@ -13,15 +13,15 @@
         <ImageView
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:src="@drawable/settings_ic_vip_center"/>
+            android:src="@drawable/ic_new"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="22dp"
             android:textColor="@color/primary_text_dark_color"
             android:gravity="center_vertical"
             android:paddingLeft="8dp"
-            android:textSize="16sp"
-            android:text="量化理论"/>
+            android:textSize="18sp"
+            android:text="头条新闻"/>
     </LinearLayout>
 
     <LinearLayout

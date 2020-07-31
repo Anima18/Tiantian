@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#DDDDDD" >
+
+    <item android:id="@android:id/mask"
+        android:drawable="@color/transparent_background" />
+
+    <item android:drawable="@drawable/radio_selected">
+    </item>
+</ripple>

@@ -84,10 +84,10 @@
                         android:layout_height="1dp"
                         android:background="@color/windowBackground"/>
 
-                    <com.chris.tiantian.module.main.activity.TestViewPager
+                    <androidx.viewpager.widget.ViewPager
                         android:id="@+id/mainFrm_viewpager"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="450dp"/>
                 </LinearLayout>
                 <!--<TextView
                     android:id="@+id/ttFragment_title_view"

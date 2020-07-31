@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/view_toolbar_common"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="16dp"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_title_decorate"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/primary_text_dark_color"
+                    android:text="策略设计原理"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_title_decorate"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:padding="16dp"
+                android:background="@color/windowBackground"
+                android:textColor="@color/secondary_text_dark_color"
+                android:text="
+币市 2020 年最大的看点，毫无疑问是 Filecoin。\n
+
+这个逆势募资 2.57 亿美元的项目被公认为是行业里的下一个蓝海，三年前早有人布局矿机、交易期货、预售云算力、建设机房……\n
+
+当前，全球云服务市场正在迅猛增长，有数据预计到 2024 年，全球云服务市场规模将增长至 2840 亿美元，约合人民币 2 万亿元。这时，有人做了这样一个假设，如若 IPFS 的市值未来能等同于这 2 万亿元的云服务市场，Filecoin 总共发行的 20 亿 FIL，每个 FIL 的未来价值可能会有 1000 元。\n
+
+当然，这一切都要建立在分布式存储完全替代云存储的前提下。如今主网尚未上线，参与者们却早已蓄势待发，只待枪响一刻，冲上前享受这顿饕餮大餐。\n
+
+不过，最新的消息是，多次推迟的主网上线前夕，400 万枚 FIL 大矿工激励计划或再次遭遇推迟，但很多的人持积极态度，因为这代表着可以更充分的准备去获取更多的奖励币。如同狂欢派对的前菜，IPFS/Filecoin 一定是所有币市从业者不容错过的一出好戏。\n"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_title_decorate"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/primary_text_dark_color"
+                    android:text="策略运行原理"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_title_decorate"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:padding="16dp"
+                android:background="@color/windowBackground"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondary_text_dark_color"
+                    android:maxLines="10"
+                    android:text="
+币市 2020 年最大的看点，毫无疑问是 Filecoin。\n
+
+这个逆势募资 2.57 亿美元的项目被公认为是行业里的下一个蓝海，三年前早有人布局矿机、交易期货、预售云算力、建设机房……\n
+
+当前，全球云服务市场正在迅猛增长，有数据预计到 2024 年，全球云服务市场规模将增长至 2840 亿美元，约合人民币 2 万亿元。这时，有人做了这样一个假设，如若 IPFS 的市值未来能等同于这 2 万亿元的云服务市场，Filecoin 总共发行的 20 亿 FIL，每个 FIL 的未来价值可能会有 1000 元。\n
+
+当然，这一切都要建立在分布式存储完全替代云存储的前提下。如今主网尚未上线，参与者们却早已蓄势待发，只待枪响一刻，冲上前享受这顿饕餮大餐。\n
+
+不过，最新的消息是，多次推迟的主网上线前夕，400 万枚 FIL 大矿工激励计划或再次遭遇推迟，但很多的人持积极态度，因为这代表着可以更充分的准备去获取更多的奖励币。如同狂欢派对的前菜，IPFS/Filecoin 一定是所有币市从业者不容错过的一出好戏。\n"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/app_blue"
+                    android:text="剩余内容需积分查看..."/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="10dp"
+                    android:text="10天机积分查看"
+                    android:textColor="@color/app_blue"
+                    android:background="@drawable/use_freedom_point_background"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_title_decorate"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/primary_text_dark_color"
+                    android:text="历史评论"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_title_decorate"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="24dp"
+                android:padding="16dp"
+                android:background="@color/windowBackground"
+                android:textColor="@color/secondary_text_dark_color"
+                android:text="暂无评论"/>
+        </LinearLayout>
+        </ScrollView>
+</LinearLayout>

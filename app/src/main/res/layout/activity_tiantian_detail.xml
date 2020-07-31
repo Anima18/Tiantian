@@ -4,12 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.anima.componentlib.toolbar.Toolbar
-        android:id="@+id/activity_toolBar"
-        style="@style/toolbar_white"
-        app:isshowbackbtn="true"
-        app:menuiconcolor="@color/white"
-        app:titleplace="left"/>
+    <include layout="@layout/view_toolbar_common"/>
 
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"

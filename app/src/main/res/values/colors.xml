@@ -40,7 +40,7 @@
     <color name="message_default_action">#03DAC6</color>
 
     <!-- text color -->
-    <color name="primary_text_dark_color">#212121</color>
+    <color name="primary_text_dark_color">#000000</color>
     <color name="secondary_text_dark_color">#727272</color>
     <color name="disabled_text_dark_color">#B8B8B8</color>
     <color name="divider_text_dark_color">#DADADA</color>

@@ -4,13 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.anima.componentlib.toolbar.Toolbar
-        android:id="@+id/activity_toolBar"
-        style="@style/toolbar_white"
-        app:isshowbackbtn="true"
-        app:menuiconcolor="@color/white"
-        app:titleplace="left"
-        app:title="使用教程"/>
+    <include layout="@layout/view_toolbar_common"/>
 
     <ScrollView
         android:layout_width="match_parent"

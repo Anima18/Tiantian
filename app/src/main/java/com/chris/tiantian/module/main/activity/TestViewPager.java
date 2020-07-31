@@ -2,6 +2,7 @@ package com.chris.tiantian.module.main.activity;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -36,11 +37,11 @@ public class TestViewPager extends ViewPager {
             int h = child.getMeasuredHeight();
             maps.put(i, h);
         }
+
         if (getChildCount() > 0) {
             height = getChildAt(position).getMeasuredHeight();
         }
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height,
-                MeasureSpec.EXACTLY);
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
@@ -50,6 +51,7 @@ public class TestViewPager extends ViewPager {
     public void resetHeight(int position) {
         this.position = position;
         if (maps.size() > position) {
+            Log.i("ddddddddddddd", "========="+position+"======="+maps.get(position));
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) getLayoutParams();
             if (layoutParams == null) {
                 layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, maps.get(position));
@@ -59,4 +61,5 @@ public class TestViewPager extends ViewPager {
             setLayoutParams(layoutParams);
         }
     }
+
 }

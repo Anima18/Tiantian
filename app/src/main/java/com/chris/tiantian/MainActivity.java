@@ -12,8 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.anima.componentlib.toolbar.Toolbar;
+import com.chris.tiantian.module.main.activity.TestViewPager;
 import com.chris.tiantian.module.main.activity.TiantianFragment;
 import com.chris.tiantian.module.me.activity.MeFragment;
+import com.chris.tiantian.module.message.MessageFragment;
 import com.chris.tiantian.module.plaza.activity.PlazaFragment;
 import com.chris.tiantian.module.signal.activity.PolicySignalFragment;
 import com.chris.tiantian.module.strategy.StrategyFragment;
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private View toolbarLayout;
     private Toolbar toolbar;
     private BottomNavigationView navigationView;
-    private Fragment tiantainFragment;
+    private TiantianFragment tiantainFragment;
     private Fragment subscriptionFragment;
     private Fragment plazaFragment;
     private Fragment meFragment;
@@ -113,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.bottom_nav_message:
                         if(plazaFragment == null) {
-                            plazaFragment = new PlazaFragment();
+                            plazaFragment = new MessageFragment();
                         }
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, plazaFragment).commitAllowingStateLoss();
                         toolbar.setTitle((String)item.getTitle());

@@ -60,12 +60,13 @@
         app:tabMode="fixed"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:background="@color/windowBackground"/>
+        android:layout_height="1dp"
+        android:background="@color/divider_text_dark_color"/>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/strategy_setting_viewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"/>
+        android:background="@color/white"
+        android:paddingTop="8dp"/>
 </LinearLayout>

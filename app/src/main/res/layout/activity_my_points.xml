@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout android:id="@+id/activity_toolBar_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:layout_gravity="center_horizontal">
+        android:layout_height="74dp"
+        android:layout_alignParentTop="true">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/toolbar_background"
+            android:scaleType="centerCrop"/>
         <com.anima.componentlib.toolbar.Toolbar
             android:id="@+id/activity_toolBar"
             style="@style/toolbar_white"
+            android:layout_marginTop="24dp"
+            android:layout_alignParentTop="true"
+            app:backgroundcolor="@android:color/transparent"
+            app:titlecolor="@color/black"
             app:isshowbackbtn="true"
-            app:menuiconcolor="@color/black"
             app:title="我的积分"
+            app:menuiconcolor="@color/white"
             app:titleplace="center">
             <com.anima.componentlib.toolbar.UTUiToolbarButton
                 android:id="@+id/myPointsDetail"
@@ -22,168 +30,188 @@
                 android:layout_height="wrap_content"
                 app:label="积分明细"/>
         </com.anima.componentlib.toolbar.Toolbar>
-
+    </RelativeLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:orientation="horizontal">
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-                <TextView
-                    android:id="@+id/freedom_points"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="0"
-                    android:textSize="22sp"
-                    android:textColor="@color/primary_text_dark_color"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/freedom_points"
-                    android:layout_centerHorizontal="true"
-                    android:text="我的天机积分"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-                <TextView
-                    android:id="@+id/locked_points"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="0"
-                    android:textSize="22sp"
-                    android:textColor="@color/primary_text_dark_color"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/locked_points"
-                    android:layout_centerHorizontal="true"
-                    android:text="我的锁定积分"/>
-            </RelativeLayout>
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/primary_text_dark_color"
-            android:textSize="16sp"
-            android:paddingTop="16dp"
+            android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:text="天机积分"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/buy_freedom_point_listView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/primary_text_dark_color"
-            android:textSize="16sp"
-            android:gravity="center_horizontal"
-            android:text="锁定积分"/>
-
-        <LinearLayout
-            android:id="@+id/buy_locked_point_listView"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:orientation="horizontal"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:paddingLeft="24dp"
-            android:paddingRight="16dp"
-            android:gravity="center_vertical"
-            android:background="@drawable/buy_locked_point_background">
-
-            <ImageView
-                android:id="@+id/locked_pointImage"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/points"
-                android:tint="@color/secondary_text_dark_color"/>
-
-            <TextView
-                android:id="@+id/locked_pointValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:text="3000"
-                android:textColor="@color/secondary_text_dark_color"
-                android:textSize="18sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAlignment="textEnd"
-                android:text="锁定积分不可流通"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/pay_point"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:orientation="horizontal"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="36dp"
-            android:gravity="center_vertical"
-            android:visibility="gone"
-            android:background="@drawable/pay_point_background">
-
-            <TextView
-                android:id="@+id/pay_total"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/white"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                android:text="总计：200元"/>
-
+            android:layout_gravity="center_horizontal">
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:background="@color/white"
                 android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/wx_pay"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="微信支付"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"/>
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/freedom_points"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="0"
+                        android:textSize="22sp"
+                        android:textColor="@color/primary_text_dark_color"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/freedom_points"
+                        android:layout_centerHorizontal="true"
+                        android:text="我的天机积分"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/locked_points"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="0"
+                        android:textSize="22sp"
+                        android:textColor="@color/primary_text_dark_color"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/locked_points"
+                        android:layout_centerHorizontal="true"
+                        android:text="我的锁定积分"/>
+                </RelativeLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_margin="8dp"
+                android:background="@color/white">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primary_text_dark_color"
+                    android:textSize="16sp"
+                    android:paddingTop="16dp"
+                    android:gravity="center_horizontal"
+                    android:text="天机积分"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/buy_freedom_point_listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primary_text_dark_color"
+                    android:textSize="16sp"
+                    android:gravity="center_horizontal"
+                    android:text="锁定积分"/>
+
+                <LinearLayout
+                    android:id="@+id/buy_locked_point_listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="16dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/buy_point_background">
+
+                    <ImageView
+                        android:id="@+id/locked_pointImage"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/points"
+                        android:tint="@color/secondary_text_dark_color"/>
+
+                    <TextView
+                        android:id="@+id/locked_pointValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="3000"
+                        android:textColor="@color/secondary_text_dark_color"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAlignment="textEnd"
+                        android:text="锁定积分不可流通"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/pay_point"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="36dp"
+                    android:gravity="center_vertical"
+                    android:visibility="gone"
+                    android:background="@drawable/pay_point_background">
+
+                    <TextView
+                        android:id="@+id/pay_total"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        android:text="总计：200元"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/wx_pay"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="微信支付"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:padding="16dp"
+                    android:background="#f7f7f7"
+                    android:text="1天机积分=2元\n\n1锁定积分=1元"/>
+            </LinearLayout>
+
+
+
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginBottom="16dp"
-            android:padding="16dp"
-            android:background="#f7f7f7"
-            android:text="1天机积分=2元\n\n1锁定积分=1元"/>
-
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

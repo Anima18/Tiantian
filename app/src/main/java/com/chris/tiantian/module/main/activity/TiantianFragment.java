@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,7 +27,6 @@ import com.chris.tiantian.module.main.activity.fragment.MonthLeaderboardFragment
 import com.chris.tiantian.module.main.activity.fragment.NewStrategyFragment;
 import com.chris.tiantian.module.main.activity.fragment.NewTeachingFragment;
 import com.chris.tiantian.module.main.activity.fragment.WeekLeaderboardFragment;
-import com.chris.tiantian.module.plaza.activity.AuctionFragment;
 import com.chris.tiantian.module.plaza.adapter.ViewPagerAdapter;
 import com.chris.tiantian.util.CommonAdapter;
 import com.chris.tiantian.util.CommonItemViewHolder;
@@ -55,7 +53,7 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
     private RecyclerView recyclerView;
 
     private TabLayout mSlidingTabLayout;
-    private TestViewPager mViewPager;
+    private ViewPager mViewPager;
     private List<Fragment> fragmentList;
     private List<String> fragmetNameList;
 
@@ -73,6 +71,7 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
 
             mSlidingTabLayout = rootView.findViewById(R.id.mainFrm_slidingTabLayout);
             mViewPager = rootView.findViewById(R.id.mainFrm_viewpager);
+
             initTabView();
 
             //recyclerView = rootView.findViewById(R.id.content_listView);
@@ -113,7 +112,7 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
         mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragmentList, fragmetNameList));
         mSlidingTabLayout.setupWithViewPager(mViewPager);
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        /*mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -127,19 +126,6 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
             @Override
             public void onPageScrollStateChanged(int state) {
 
-            }
-        });
-
-        /*mScrollView.setOnScrollBottomListener(new TestScrollView.OnScrollBottomListener() {
-            @Override
-            public void onScrollBottom() {
-                if (mTabLayout.getSelectedTabPosition() == 0) {
-                    ((PersonalCourseFragment) fragmentList.get(0)).loadData();
-                } else if (mTabLayout.getSelectedTabPosition() == 1) {
-                    ((PersonalNewsFragment) fragmentList.get(1)).loadData();
-                } else if (mTabLayout.getSelectedTabPosition() == 2) {
-                    ((PersonalIssueAnswerFragment) fragmentList.get(2)).loadData();
-                }
             }
         });*/
 

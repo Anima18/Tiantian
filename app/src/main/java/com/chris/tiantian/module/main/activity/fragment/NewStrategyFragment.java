@@ -20,13 +20,13 @@ import com.chris.tiantian.view.DividerItemDecoration;
  */
 public class NewStrategyFragment extends Fragment {
     private View rootView;
-
+    private  RecyclerView listView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_leader_board, container, false);
-            RecyclerView listView = rootView.findViewById(R.id.testListView);
+            listView = rootView.findViewById(R.id.testListView);
             listView.setNestedScrollingEnabled(false);
             UIAdapter adapter = new UIAdapter(getContext(), R.layout.listview_new_strategy_item, 5);
             listView.setAdapter(adapter);
@@ -35,6 +35,6 @@ public class NewStrategyFragment extends Fragment {
             listView.setLayoutManager(layoutManager);
         }
         return rootView;
-
     }
+
 }

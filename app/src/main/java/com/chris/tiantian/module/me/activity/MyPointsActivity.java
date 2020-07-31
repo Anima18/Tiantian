@@ -105,12 +105,9 @@ public class MyPointsActivity extends Activity {
                     pointData.selected = false;
                 }
                 PointData selectedPoint = pointDataList.get(position);
-                if(selectedPoint.point != buyFreedomPoint) {
-                    selectedPoint.selected = true;
-                    buyFreedomPoint = selectedPoint.point;
-                }else {
-                    buyFreedomPoint = 0;
-                }
+                selectedPoint.selected = true;
+                buyFreedomPoint = selectedPoint.point;
+                buyLockedPoint = 0;
                 freedomAdapter.notifyDataSetChanged();
                 showPayButton();
             }
@@ -121,18 +118,12 @@ public class MyPointsActivity extends Activity {
         lockedPointListView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(buyLockedPoint != DEFAUlT_LOCKED_POINT) {
-                    lockedPointListView.setSelected(true);
-                    buyLockedPoint = DEFAUlT_LOCKED_POINT;
+                lockedPointListView.setSelected(true);
+                lockedPointImage.setColorFilter(getResources().getColor(R.color.white));
+                lockedPointValue.setTextColor(getResources().getColor(R.color.white));
 
-                    lockedPointImage.setColorFilter(getResources().getColor(R.color.app_blue));
-                    lockedPointValue.setTextColor(getResources().getColor(R.color.app_blue));
-                }else {
-                    lockedPointListView.setSelected(false);
-                    buyLockedPoint = 0;
-                    lockedPointImage.setColorFilter(getResources().getColor(R.color.secondary_text_dark_color));
-                    lockedPointValue.setTextColor(getResources().getColor(R.color.secondary_text_dark_color));
-                }
+                buyLockedPoint = DEFAUlT_LOCKED_POINT;
+                buyFreedomPoint = 0;
                 showPayButton();
             }
         });
@@ -146,11 +137,17 @@ public class MyPointsActivity extends Activity {
     }
 
     private void showPayButton(){
-        lockedPointListView.setEnabled(buyFreedomPoint == 0);
-        for(PointData pointData : pointDataList) {
-            pointData.enabled = buyLockedPoint == 0? true : false;
+        if(buyFreedomPoint == 0) {
+            for(PointData pointData : pointDataList) {
+                pointData.selected = false;
+            }
+            freedomAdapter.notifyDataSetChanged();
         }
-        freedomAdapter.notifyDataSetChanged();
+        if(buyLockedPoint == 0) {
+            lockedPointListView.setSelected(false);
+            lockedPointImage.setColorFilter(getResources().getColor(R.color.secondary_text_dark_color));
+            lockedPointValue.setTextColor(getResources().getColor(R.color.secondary_text_dark_color));
+        }
 
         int total = buyFreedomPoint *2 + buyLockedPoint;
         payView.setVisibility(total>0 ? View.VISIBLE : View.GONE);

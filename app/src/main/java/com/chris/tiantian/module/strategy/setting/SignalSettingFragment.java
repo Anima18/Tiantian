@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chris.tiantian.R;
 import com.chris.tiantian.util.UIAdapter;
-import com.chris.tiantian.view.DividerItemDecoration;
 
 /**
  * Created by jianjianhong on 20-3-25
@@ -28,11 +27,10 @@ public class SignalSettingFragment extends Fragment {
             rootView = inflater.inflate(R.layout.fragment_leader_board, container, false);
             RecyclerView listView = rootView.findViewById(R.id.testListView);
             listView.setNestedScrollingEnabled(false);
-            UIAdapter adapter = new UIAdapter(getContext(), R.layout.listview_leader_board_item, 5);
+            UIAdapter adapter = new UIAdapter(getContext(), R.layout.listview_signal_setting_item, 5);
             listView.setAdapter(adapter);
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-            listView.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation(), DividerItemDecoration.DIVIDER_TYPE_INSET, layoutManager.getOrientation()));
-            listView.setLayoutManager(layoutManager);
+           listView.setLayoutManager(layoutManager);
         }
         return rootView;
 

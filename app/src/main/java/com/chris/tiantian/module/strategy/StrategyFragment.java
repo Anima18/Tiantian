@@ -46,7 +46,7 @@ public class StrategyFragment extends Fragment {
                 @Override
                 public void onItemClick(View itemView, int position) {
                     Strategy strategy = strategyList.get(position);
-                    Toast.makeText(getContext(), strategy.getName(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), strategy.getName(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getContext(), StrategySettingActivity.class);
                     intent.putExtra(strategy_data, strategy);
                     startActivity(intent);
@@ -65,11 +65,11 @@ public class StrategyFragment extends Fragment {
         strategyList.add(new Strategy("BTC", "BTC", R.drawable.ic_btc));
         strategyList.add(new Strategy("LTC", "LTC", R.drawable.ic_ltc));
         strategyList.add(new Strategy("ETH", "ETH", R.drawable.ic_eth));
-        strategyList.add(new Strategy("EOS", "EOS", R.drawable.ic_btc));
+        strategyList.add(new Strategy("EOS", "EOS", R.drawable.ic_eos));
         strategyList.add(new Strategy("ETC", "ETC", R.drawable.ic_etc));
         strategyList.add(new Strategy("BCH", "BCH", R.drawable.ic_bch));
-        strategyList.add(new Strategy("BSV", "BSV", R.drawable.ic_btc));
-        strategyList.add(new Strategy("XPR", "XPR", R.drawable.ic_btc));
+        strategyList.add(new Strategy("BSV", "BSV", R.drawable.ic_bsv));
+        strategyList.add(new Strategy("XPR", "XPR", R.drawable.ic_xpr));
         return strategyList;
     }
 

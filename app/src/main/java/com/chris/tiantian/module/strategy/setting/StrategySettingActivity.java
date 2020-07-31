@@ -10,10 +10,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.anima.componentlib.toolbar.Toolbar;
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.Strategy;
-import com.chris.tiantian.module.main.activity.fragment.MonthLeaderboardFragment;
-import com.chris.tiantian.module.main.activity.fragment.NewStrategyFragment;
-import com.chris.tiantian.module.main.activity.fragment.NewTeachingFragment;
-import com.chris.tiantian.module.main.activity.fragment.WeekLeaderboardFragment;
 import com.chris.tiantian.module.plaza.adapter.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -52,7 +48,7 @@ public class StrategySettingActivity extends AppCompatActivity {
         fragmentList = new ArrayList<>();
         fragmentNameList = new ArrayList<>();
         fragmentList.add(new StrategySettingFragment());
-        fragmentList.add(new MonthLeaderboardFragment());
+        fragmentList.add(new SignalSettingFragment());
         fragmentNameList.add("策略选择");
         fragmentNameList.add("信号选择");
 
