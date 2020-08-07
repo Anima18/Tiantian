@@ -48,7 +48,7 @@
         <activity android:name=".module.me.activity.MyPointsActivity"/>
         <activity android:name=".module.me.activity.PurchasedPolicyActivity"/>
         <activity android:name=".module.me.activity.UserInfoActivity" />
-        <activity android:name=".module.login.BindPhoneNumberActivity"/>
+        <activity android:name=".module.login.BindPhoneNumberActivity" android:theme="@style/AppTheme"/>
         <activity android:name=".module.strategy.setting.StrategySettingActivity"/>
         <activity android:name=".module.strategy.setting.StrategyDetailActivity"/>
 

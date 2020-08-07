@@ -20,7 +20,7 @@
             android:textColor="@color/primary_text_dark_color"
             android:gravity="center_vertical"
             android:paddingLeft="8dp"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:text="头条新闻"/>
     </LinearLayout>
 
@@ -29,11 +29,14 @@
         android:layout_height="90dp"
         android:orientation="horizontal">
         <RelativeLayout
+            android:id="@+id/firstNew_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
             android:layout_weight="1">
 
             <com.shehuan.niv.NiceImageView
+                android:id="@+id/firstNew_imageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
@@ -56,6 +59,7 @@
                     android:background="@android:color/holo_red_light"
                     />
                 <TextView
+                    android:id="@+id/firstNew_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="8dp"
@@ -75,9 +79,11 @@
             android:layout_weight="1">
 
             <RelativeLayout
+                android:id="@+id/secondNew_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:gravity="center_vertical"
+                android:background="?android:attr/selectableItemBackground"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="wrap_content"
@@ -91,7 +97,7 @@
                     android:background="@android:color/holo_red_light"
                     />
                 <TextView
-                    android:id="@+id/hot_new2"
+                    android:id="@+id/secondNew_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -101,9 +107,11 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/threeNew_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:gravity="center_vertical"
+                android:background="?android:attr/selectableItemBackground"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="wrap_content"
@@ -117,6 +125,7 @@
                     android:background="@android:color/holo_red_light"
                     />
                 <TextView
+                    android:id="@+id/threeNew_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"

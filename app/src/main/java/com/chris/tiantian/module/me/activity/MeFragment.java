@@ -134,11 +134,12 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.setting_my_buy:
-                if(UserUtil.isLogin()) {
+                /*if(UserUtil.isLogin()) {
                     startActivity(new Intent(getContext(), PurchasedPolicyActivity.class));
                 }else {
                     showMustLogin();
-                }
+                }*/
+                Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.settings_alert_set:
                 Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();

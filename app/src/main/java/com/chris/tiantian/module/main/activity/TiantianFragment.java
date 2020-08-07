@@ -12,8 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.anima.networkrequest.NetworkRequest;
@@ -28,11 +26,9 @@ import com.chris.tiantian.module.main.activity.fragment.NewStrategyFragment;
 import com.chris.tiantian.module.main.activity.fragment.NewTeachingFragment;
 import com.chris.tiantian.module.main.activity.fragment.WeekLeaderboardFragment;
 import com.chris.tiantian.module.plaza.adapter.ViewPagerAdapter;
-import com.chris.tiantian.util.CommonAdapter;
 import com.chris.tiantian.util.CommonItemViewHolder;
 import com.chris.tiantian.util.CommonUtil;
 import com.chris.tiantian.util.GlideImageLoader;
-import com.chris.tiantian.view.DividerItemDecoration;
 import com.chris.tiantian.view.MultipleStatusView;
 import com.google.android.material.tabs.TabLayout;
 import com.youth.banner.Banner;
@@ -50,7 +46,7 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
     private View rootView;
     private Banner banner;
     private MultipleStatusView statusView;
-    private RecyclerView recyclerView;
+    private NewHotView newHotView;
 
     private TabLayout mSlidingTabLayout;
     private ViewPager mViewPager;
@@ -68,6 +64,7 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
             toolbar.setVisibility(View.GONE);
             banner = rootView.findViewById(R.id.ttFragment_banner);
             statusView = rootView.findViewById(R.id.ttFragment_status_view);
+            newHotView = rootView.findViewById(R.id.ttFragment_hot_new);
 
             mSlidingTabLayout = rootView.findViewById(R.id.mainFrm_slidingTabLayout);
             mViewPager = rootView.findViewById(R.id.mainFrm_viewpager);
@@ -131,7 +128,7 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
 
     }
 
-    private void initNewsListView() {
+    /*private void initNewsListView() {
         CommonAdapter<New> adapter = new CommonAdapter<>(getContext(), R.layout.listview_new_item);
         adapter.setItemViewHolderCreator(new CommonAdapter.OnItemViewHolderCreator() {
             @Override
@@ -157,7 +154,7 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
         };
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation(), DividerItemDecoration.DIVIDER_TYPE_INSET, layoutManager.getOrientation()));
         recyclerView.setLayoutManager(layoutManager);
-    }
+    }*/
 
     private void requestData() {
         statusView.showLoading();
@@ -191,7 +188,7 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
                 List<Advertise> advertises = (List<Advertise>) list.get(0);
                 List<New> news = (List<New>)list.get(1);
                 showBanner(advertises);
-                //showNews(news);
+                showNews(news);
             }
         });
     }
@@ -222,7 +219,7 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
     }
 
     private void showNews(List<New> news) {
-        ((CommonAdapter)recyclerView.getAdapter()).setData(news);
+        newHotView.setDataList(news);
     }
 
     @Override
