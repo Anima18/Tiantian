@@ -51,6 +51,8 @@
         <activity android:name=".module.login.BindPhoneNumberActivity" android:theme="@style/AppTheme"/>
         <activity android:name=".module.strategy.setting.StrategySettingActivity"/>
         <activity android:name=".module.strategy.setting.StrategyDetailActivity"/>
+        <activity android:name=".module.me.activity.MyPointDetailActivity"/>
+        <activity android:name=".module.me.activity.SmsSettingActivity"/>
 
 
         <activity

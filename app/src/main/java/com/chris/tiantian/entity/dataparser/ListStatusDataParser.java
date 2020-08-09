@@ -13,9 +13,9 @@ import java.util.List;
 /**
  * Created by jianjianhong on 19-11-25
  */
-public class ObjectStatusDataParser<T> implements ResponseParser {
+public class ListStatusDataParser<T> implements ResponseParser {
 
-    private T resultData;
+    private List<T> resultData;
 
     private String errorMessage;
 
@@ -27,13 +27,13 @@ public class ObjectStatusDataParser<T> implements ResponseParser {
 
     
     @Override
-    public T getResult() {
+    public List<T> getResult() {
         return resultData;
     }
 
     @Override
     public int getTotal() {
-        return 1;
+        return resultData != null ? resultData.size() : 0;
     }
 
     @Override
@@ -45,10 +45,11 @@ public class ObjectStatusDataParser<T> implements ResponseParser {
     @Override
     public ResponseParser parser(String s, Class<?> aClass) {
         try {
-            Type type = new ParameterizedTypeImpl(ObjectStatusData.class, new Class[]{aClass});
-            ObjectStatusData statusData = new Gson().fromJson(new StringReader(s), type);;
+            Type ListType = new ParameterizedTypeImpl(List.class, new Class[]{aClass});
+            Type type = new ParameterizedTypeImpl(ListStatusData.class, new Class[]{ListType.getClass()});
+            ListStatusData statusData = new Gson().fromJson(new StringReader(s), type);;
             if(statusData.getCode() == 0) {
-                resultData = (T)statusData.getData();
+                resultData = (List<T>)statusData.getData();
             }else {
                 errorMessage = statusData.getMsg();
             }

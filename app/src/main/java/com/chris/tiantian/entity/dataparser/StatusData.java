@@ -3,10 +3,10 @@ package com.chris.tiantian.entity.dataparser;
 /**
  * Created by jianjianhong on 20-7-19
  */
-public class StatusData<T> {
+public class StatusData {
     private int code;
     private String msg;
-    private T data;
+
 
     public int getCode() {
         return code;
@@ -22,13 +22,5 @@ public class StatusData<T> {
 
     public void setMsg(String msg) {
         this.msg = msg;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
     }
 }

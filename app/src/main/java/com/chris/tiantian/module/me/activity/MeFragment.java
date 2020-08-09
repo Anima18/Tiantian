@@ -20,6 +20,7 @@ import com.chris.tiantian.base.service.VersionUploadService;
 import com.chris.tiantian.entity.ActionMenuItem;
 import com.chris.tiantian.entity.User;
 import com.chris.tiantian.module.login.LoginActivity;
+import com.chris.tiantian.module.strategy.setting.StrategySettingActivity;
 import com.chris.tiantian.util.CommonUtil;
 import com.chris.tiantian.module.commom.ActionAdapter;
 import com.chris.tiantian.util.UserUtil;
@@ -129,25 +130,27 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.setting_my_publish:
-                Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.setting_my_buy:
-                /*if(UserUtil.isLogin()) {
-                    startActivity(new Intent(getContext(), PurchasedPolicyActivity.class));
-                }else {
-                    showMustLogin();
-                }*/
-                Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.settings_alert_set:
-                Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.settings_vip_center:
-                Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
-                break;
+        if(UserUtil.isLogin()) {
+
+            switch (v.getId()) {
+                case R.id.setting_my_publish:
+                    Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.setting_my_buy:
+                    //startActivity(new Intent(getContext(), PurchasedPolicyActivity.class));
+                    Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.settings_alert_set:
+                    startActivity(new Intent(getContext(), SmsSettingActivity.class));
+                    break;
+                case R.id.settings_vip_center:
+                    Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }else {
+            showMustLogin();
         }
+
     }
 
     private void hasNewVersion() {

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.chris.tiantian.R;
+import com.chris.tiantian.entity.PointData;
 import com.chris.tiantian.util.UIAdapter;
 import com.chris.tiantian.util.UIViewHolder;
 
@@ -22,7 +23,7 @@ import java.util.List;
 public class FreedomPointAdapter extends RecyclerView.Adapter<FreedomPointAdapter.FreedomPointViewHolder> {
 
     private Context context;
-    private List<MyPointsActivity.PointData> pointList;
+    private List<PointData> pointList;
 
     private OnItemClickListener listener;
     // Define the listener interface
@@ -36,7 +37,7 @@ public class FreedomPointAdapter extends RecyclerView.Adapter<FreedomPointAdapte
     }
 
     // Pass in the context and users array into the constructor
-    public FreedomPointAdapter(Context context, List<MyPointsActivity.PointData> pointList) {
+    public FreedomPointAdapter(Context context, List<PointData> pointList) {
         this.context = context;
         this.pointList = pointList;
     }
@@ -53,7 +54,7 @@ public class FreedomPointAdapter extends RecyclerView.Adapter<FreedomPointAdapte
     // Involves populating data into the item through holder
     @Override
     public void onBindViewHolder(FreedomPointViewHolder holder, int position) {
-        MyPointsActivity.PointData pointData = pointList.get(position);
+        PointData pointData = pointList.get(position);
         holder.pointValue.setText(pointData.point+"");
         holder.itemView.setSelected(pointData.selected);
         if(pointData.selected) {

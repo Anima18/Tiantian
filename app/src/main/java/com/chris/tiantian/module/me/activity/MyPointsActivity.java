@@ -1,6 +1,7 @@
 package com.chris.tiantian.module.me.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.anima.networkrequest.entity.RequestParam;
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.Order;
+import com.chris.tiantian.entity.PointData;
 import com.chris.tiantian.entity.UserPoint;
 import com.chris.tiantian.entity.dataparser.ObjectDataParser;
 import com.chris.tiantian.entity.dataparser.ObjectStatusDataParser;
@@ -78,6 +80,13 @@ public class MyPointsActivity extends Activity {
         totalView = findViewById(R.id.pay_total);
 
         initView();
+
+        findViewById(R.id.myPointsDetail_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyPointsActivity.this, MyPointDetailActivity.class));
+            }
+        });
     }
 
     @Override
@@ -257,15 +266,5 @@ public class MyPointsActivity extends Activity {
 
     private void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    public class PointData {
-        int point;
-        boolean selected;
-        boolean enabled = true;
-
-        public PointData(int point) {
-            this.point = point;
-        }
     }
 }

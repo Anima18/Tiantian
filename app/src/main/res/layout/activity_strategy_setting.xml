@@ -9,6 +9,7 @@
     <include layout="@layout/view_toolbar_common"/>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/sms_setting_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -16,7 +17,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         card_view:cardCornerRadius="5dp"
         card_view:cardElevation="2dp"
         android:foreground="?android:attr/selectableItemBackground"
@@ -34,18 +35,20 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:text="启动短信定制"/>
-            <Switch
-                android:id="@+id/sms_setting_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/sms_setting_result"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/sms_setting_switch"
-                android:paddingTop="4dp"
-                android:text="每10条扣1积分，不足10条按1积分计算"/>
+                android:layout_alignParentRight="true"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:background="@drawable/sms_setting_background"
+                android:text="设置"/>
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

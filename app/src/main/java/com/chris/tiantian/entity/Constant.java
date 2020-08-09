@@ -12,6 +12,7 @@ public interface Constant {
 
     int FREEDOM_POINT_PRICE = 2;
     int LOCKED_POINT_PRICE = 1;
+    double SMS_PRICE = 0.1;
 
 
     String SP_USER_DATA = "SP_USER_DATA";
