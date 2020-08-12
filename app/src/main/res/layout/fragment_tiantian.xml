@@ -87,7 +87,7 @@
                     <androidx.viewpager.widget.ViewPager
                         android:id="@+id/mainFrm_viewpager"
                         android:layout_width="match_parent"
-                        android:layout_height="450dp"/>
+                        android:layout_height="410dp"/>
                 </LinearLayout>
                 <!--<TextView
                     android:id="@+id/ttFragment_title_view"

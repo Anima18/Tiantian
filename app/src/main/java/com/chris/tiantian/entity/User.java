@@ -26,6 +26,15 @@ public class User {
     private String level;
     private int levelInt;
     private String msg;
+    private String openId;
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
 
     public int getId() {
         return id;

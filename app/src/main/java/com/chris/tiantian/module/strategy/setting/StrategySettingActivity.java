@@ -65,7 +65,12 @@ public class StrategySettingActivity extends AppCompatActivity {
         findViewById(R.id.sms_setting_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(StrategySettingActivity.this, SmsSettingActivity.class));
+                if(UserUtil.getUser() == null) {
+                    Toast.makeText(StrategySettingActivity.this, "请先登录！", Toast.LENGTH_SHORT).show();
+                }else {
+                    startActivity(new Intent(StrategySettingActivity.this, SmsSettingActivity.class));
+                }
+
             }
         });
         smsSettingResult = findViewById(R.id.sms_setting_result);

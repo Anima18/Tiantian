@@ -1,6 +1,7 @@
 package com.chris.tiantian.module.login;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
@@ -89,7 +90,7 @@ public class LoginPresenterImpl implements LoginPresenter {
     }
 
     @Override
-    public void loginByWx(Map<String, String> wxData) {
+    public void loginByWx(Map<String, String> wxData,String openId) {
         String url = String.format("%s/comment/apiv2/wxuserBindPhonenumber", CommonUtil.getBaseUrl());
         new NetworkRequest<UserData>(context)
                 .url(url)
@@ -103,6 +104,8 @@ public class LoginPresenterImpl implements LoginPresenter {
                     @Override
                     public void onSuccess(@org.jetbrains.annotations.Nullable UserData result) {
                         if(result.getErr_code() == 0) {
+                            User user = result.getUser();
+                            user.setOpenId(openId);
                             saveUser(result.getUser());
                             actionView.loginSuccess();
                         }else {
@@ -127,5 +130,8 @@ public class LoginPresenterImpl implements LoginPresenter {
         preferences.putStringValue(Constant.SP_USER_DATA, userData);
         preferences.putIntValue(Constant.SP_USER_ID, userId);
         preferences.putStringValue(Constant.SP_TOKEN, user.getToken());
+        if(!TextUtils.isEmpty(user.getOpenId())) {
+            preferences.putStringValue(Constant.SP_OPENID, user.getOpenId());
+        }
     }
 }

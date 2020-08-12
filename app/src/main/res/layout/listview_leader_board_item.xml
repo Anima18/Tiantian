@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="80dp"
     android:gravity="center_vertical"
     android:background="?android:attr/selectableItemBackground">
 
     <TextView
+        android:id="@+id/rank_index_tv"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginLeft="16dp"
         android:layout_centerVertical="true"
         android:gravity="center"
         android:textColor="#ffb430"
-        android:background="#fff7e1"
+        android:background="@drawable/rank_index1_background"
         android:textSize="18sp"
         android:text="01" />
 
@@ -29,13 +30,14 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/list_title_tv"
+                android:id="@+id/rank_title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="标准差算法策略"
                 android:textColor="@color/primary_text_dark_color"
                 android:textSize="16sp" />
             <TextView
+                android:id="@+id/rank_time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="8dp"
@@ -66,6 +68,7 @@
                     android:text="一周内出现次数: "/>
 
                 <TextView
+                    android:id="@+id/rank_count_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
@@ -86,6 +89,7 @@
                     android:text="周盈利率: "/>
 
                 <TextView
+                    android:id="@+id/rank_percent_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"

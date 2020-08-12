@@ -45,9 +45,8 @@ public class ListStatusDataParser<T> implements ResponseParser {
     @Override
     public ResponseParser parser(String s, Class<?> aClass) {
         try {
-            Type ListType = new ParameterizedTypeImpl(List.class, new Class[]{aClass});
-            Type type = new ParameterizedTypeImpl(ListStatusData.class, new Class[]{ListType.getClass()});
-            ListStatusData statusData = new Gson().fromJson(new StringReader(s), type);;
+            Type type = new ParameterizedTypeImpl(ListStatusData.class, new Class[]{aClass});
+            ListStatusData statusData = (ListStatusData<T>)new Gson().fromJson(new StringReader(s), type);;
             if(statusData.getCode() == 0) {
                 resultData = (List<T>)statusData.getData();
             }else {

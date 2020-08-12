@@ -29,6 +29,7 @@ import com.chris.tiantian.entity.dataparser.ObjectStatusDataParser;
 import com.chris.tiantian.util.CommonUtil;
 import com.chris.tiantian.util.DensityUtil;
 import com.chris.tiantian.util.DeviceUtil;
+import com.chris.tiantian.util.PreferencesUtil;
 import com.chris.tiantian.util.StringUtil;
 import com.chris.tiantian.util.UIAdapter;
 import com.chris.tiantian.util.UserUtil;
@@ -187,6 +188,12 @@ public class MyPointsActivity extends Activity {
     }
 
     public void pay(View view) {
+        String openId = PreferencesUtil.getUserInfoPreference().getStringValue(Constant.SP_OPENID, "");
+        if(TextUtils.isEmpty(openId)) {
+            Toast.makeText(MyPointsActivity.this, "你还没有绑定微信，请登出用微信登录！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String ip = DeviceUtil.getIPAddress();
         String attach = "";
         if(buyFreedomPoint != 0) {
@@ -204,6 +211,8 @@ public class MyPointsActivity extends Activity {
         paramMap.put("total_fee", "1");
         paramMap.put("spbill_create_ip", ip);
         paramMap.put("trade_type", "APP");
+        paramMap.put("userId", UserUtil.getUserId()+"");
+        paramMap.put("openId", openId);
 
         String url = String.format("%s/comment/apiv2/wxUnifiedOrder", CommonUtil.getBaseUrl());
         new NetworkRequest<Order>(this)

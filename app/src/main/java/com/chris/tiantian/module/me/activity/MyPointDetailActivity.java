@@ -34,6 +34,8 @@ import com.chris.tiantian.view.MultipleStatusView;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -90,6 +92,7 @@ public class MyPointDetailActivity extends AppCompatActivity {
                         if(list == null || list.size() == 0) {
                             statusView.showEmpty();
                         }else {
+                            Collections.sort(list);
                             statusView.showContent();
                             userPointLogs.clear();
                             userPointLogs.addAll(list);
@@ -134,7 +137,12 @@ public class MyPointDetailActivity extends AppCompatActivity {
         public void onBindViewHolder(ViewHolder holder, int position) {
             UserPointLog log = userPointLogs.get(position);
             holder.contentView.setText(String.format("%s - %s", log.getBody(), log.getTarget()));
-            holder.countView.setText(log.getCount());
+            if(log.getCount() > 0) {
+                holder.countView.setText("+"+log.getCount());
+            }else {
+                holder.countView.setText(log.getCount()+"");
+            }
+
             holder.timeView.setText(log.getTime());
         }
 

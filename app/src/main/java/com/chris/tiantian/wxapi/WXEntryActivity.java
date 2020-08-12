@@ -13,6 +13,7 @@ import com.anima.networkrequest.NetworkRequest;
 import com.anima.networkrequest.callback.DataObjectCallback;
 import com.anima.networkrequest.entity.RequestParam;
 import com.chris.tiantian.entity.Constant;
+import com.chris.tiantian.entity.User;
 import com.chris.tiantian.entity.UserData;
 import com.chris.tiantian.entity.dataparser.ObjectDataParser;
 import com.chris.tiantian.entity.dataparser.ObjectStatusDataParser;
@@ -136,7 +137,9 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     public void onSuccess(@org.jetbrains.annotations.Nullable UserData data) {
                         Log.i("dddddddd","ccccccccccccc");
                         if(data.getErr_code() == 0 && data.getUser() != null &&!TextUtils.isEmpty(data.getUser().getPhoneNumber())) {
-                            new LoginPresenterImpl(null).saveUser(data.getUser());
+                            User user = data.getUser();
+                            user.setOpenId(userInfo.getOpenid());
+                            new LoginPresenterImpl(null).saveUser(user);
                             LoginActivity.finishActivity();
                             Toast.makeText(WXEntryActivity.this, "微信登录成功", Toast.LENGTH_SHORT).show();
                         }else {

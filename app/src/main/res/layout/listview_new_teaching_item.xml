@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="80dp"
     android:gravity="center_vertical"
     android:background="?android:attr/selectableItemBackground">
 
     <ImageView
+        android:id="@+id/book_imageView"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginLeft="16dp"
@@ -20,7 +21,7 @@
         android:gravity="center_vertical"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/list_title_tv"
+            android:id="@+id/book_title_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
@@ -28,6 +29,7 @@
             android:text="标准差算法策略"/>
 
         <TextView
+            android:id="@+id/book_author_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/list_title_tv"

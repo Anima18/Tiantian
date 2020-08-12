@@ -37,5 +37,6 @@ public class UserUtil {
         preferences.remove(Constant.SP_USER_ID);
         preferences.remove(Constant.SP_USER_DATA);
         preferences.remove(Constant.SP_TOKEN);
+        preferences.remove(Constant.SP_OPENID);
     }
 }

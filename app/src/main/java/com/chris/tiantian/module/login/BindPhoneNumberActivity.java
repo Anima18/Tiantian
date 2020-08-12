@@ -89,7 +89,7 @@ public class BindPhoneNumberActivity extends AppCompatActivity implements LoginA
                 dataMap.put("id", "0");
                 dataMap.put("smscode", code);
                 dataMap.put("userphonenumber", phone);
-                presenter.loginByWx(dataMap);
+                presenter.loginByWx(dataMap, openid);
             }
         });
     }

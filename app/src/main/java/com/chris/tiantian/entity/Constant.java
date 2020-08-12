@@ -18,6 +18,7 @@ public interface Constant {
     String SP_USER_DATA = "SP_USER_DATA";
     String SP_USER_ID = "SP_USER_ID";
     String SP_TOKEN = "SP_TOKEN";
+    String SP_OPENID = "SP_OPENID";
 
     //当前策略ID
     String SP_CURRENT_POLICY = "SP_CURRENT_POLICY";

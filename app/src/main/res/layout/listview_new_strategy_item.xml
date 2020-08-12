@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="88dp"
+    android:layout_height="80dp"
     android:orientation="vertical"
     android:paddingRight="16dp"
     android:paddingLeft="16dp"
@@ -9,7 +9,7 @@
     android:background="?android:attr/selectableItemBackground">
 
     <TextView
-        android:id="@+id/list_title_tv"
+        android:id="@+id/strategy_title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="标准差算法策略"
@@ -19,7 +19,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="4dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
@@ -29,11 +28,12 @@
             android:text="回测准确率: "/>
 
         <TextView
+            android:id="@+id/strategy_percent_tv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:layout_height="23dp"
+            android:text="75%"
             android:textColor="@color/app_green"
-            android:text="75%"/>
+            android:textSize="14sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,6 +44,7 @@
             android:text="设计者："/>
 
         <TextView
+            android:id="@+id/strategy_developer_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
@@ -54,7 +55,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="4dp"
+
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
@@ -64,6 +65,7 @@
             android:text="上架时间："/>
 
         <TextView
+            android:id="@+id/strategy_launchTime_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"

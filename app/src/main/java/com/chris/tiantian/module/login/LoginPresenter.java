@@ -8,5 +8,5 @@ import java.util.Map;
 public interface LoginPresenter {
     void requestSMSCode(String phoneNumber);
     void loginByPhoneNumber(String phoneNumber, String smsCode);
-    void loginByWx(Map<String, String> wxData);
+    void loginByWx(Map<String, String> wxData, String openId);
 }

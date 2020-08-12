@@ -68,6 +68,10 @@ public class FreedomPointAdapter extends RecyclerView.Adapter<FreedomPointAdapte
 
     }
 
+    public void setPointList(List<PointData> pointList) {
+        this.pointList = pointList;
+    }
+
     // Return the total count of items
     @Override
     public int getItemCount() {

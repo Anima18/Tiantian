@@ -1,5 +1,6 @@
 package com.chris.tiantian.module.me.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -24,6 +25,7 @@ import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.New;
 import com.chris.tiantian.entity.Order;
 import com.chris.tiantian.entity.PointData;
+import com.chris.tiantian.entity.User;
 import com.chris.tiantian.entity.dataparser.ObjectStatusDataParser;
 import com.chris.tiantian.module.strategy.setting.StrategySettingActivity;
 import com.chris.tiantian.util.CommonUtil;
@@ -126,7 +128,16 @@ public class SmsSettingActivity extends AppCompatActivity {
                 .dataClass(Boolean.class)
                 .dataParser(new ObjectStatusDataParser<Boolean>())
                 .create();
-        RequestStream.Companion.create(this).parallel(settingRequest).collect(new RequestStream.OnCollectListener() {
+
+        String countUrl = String.format("%s/comment/apiv2/smsNotifyCount/%s", CommonUtil.getBaseUrl(), UserUtil.getUserId());
+        NetworkRequest countRequest = new NetworkRequest<Integer>(this)
+                .url(countUrl)
+                .method(RequestParam.Method.GET)
+                .dataClass(Integer.class)
+                .dataParser(new ObjectStatusDataParser<Integer>())
+                .create();
+
+        RequestStream.Companion.create(this).parallel(settingRequest,countRequest).collect(new RequestStream.OnCollectListener() {
             @Override
             public void onFailure(@NotNull String s) {
                 Toast.makeText(SmsSettingActivity.this, s, Toast.LENGTH_SHORT).show();
@@ -138,6 +149,9 @@ public class SmsSettingActivity extends AppCompatActivity {
                 Boolean setting = (Boolean) list.get(0);
                 smsSettingSwitch.setChecked(setting);
                 loaded = true;
+
+                Integer count = (Integer)list.get(1);
+                smsCountTextView.setText(count+"");
             }
         });
     }
@@ -199,6 +213,12 @@ public class SmsSettingActivity extends AppCompatActivity {
                         if(0 == result.getErr_code()) {
                             showMessage("购买成功");
                             initData();
+                            for(PointData pointData : pointDataList) {
+                                pointData.selected = false;
+                            }
+                            freedomAdapter.notifyDataSetChanged();
+                            bySmsCount = 0;
+                            showPayButton();
                         }else if(1000 == result.getErr_code()) {
                             showMessage("积分不足,购买失败,请充值！");
                         }else if(1001 == result.getErr_code()) {

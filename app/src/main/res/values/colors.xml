@@ -53,4 +53,11 @@
     <color name="listview_item_selected">#d2dff9</color>
     <color name="banner_indicator_normal_color">#BBBBBB</color>
     <color name="banner_indicator_selected_color">#FFFFFF</color>
+
+    <color name="index1_background">#fff7e1</color>
+    <color name="index1_textColor">#ffab19</color>
+    <color name="index2_background">#f1f3f8</color>
+    <color name="index2_textColor">#a1a1a0</color>
+    <color name="index3_background">#e9e8e7</color>
+    <color name="index3_textColor">#b08a6a</color>
 </resources>
