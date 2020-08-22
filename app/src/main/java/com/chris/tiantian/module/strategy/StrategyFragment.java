@@ -3,6 +3,7 @@ package com.chris.tiantian.module.strategy;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,26 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.anima.networkrequest.NetworkRequest;
+import com.anima.networkrequest.callback.DataListCallback;
+import com.anima.networkrequest.entity.RequestParam;
+import com.anima.networkrequest.util.sharedprefs.ConfigSharedPreferences;
+import com.bumptech.glide.Glide;
 import com.chris.tiantian.R;
+import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.Strategy;
+import com.chris.tiantian.entity.UserPointLog;
+import com.chris.tiantian.entity.dataparser.ListStatusDataParser;
 import com.chris.tiantian.module.strategy.setting.StrategySettingActivity;
+import com.chris.tiantian.util.CommonUtil;
+import com.chris.tiantian.util.StringUtil;
+import com.chris.tiantian.util.UserUtil;
+import com.chris.tiantian.view.MultipleStatusView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.chris.tiantian.module.strategy.setting.StrategySettingActivity.strategy_data;
@@ -30,18 +46,19 @@ import static com.chris.tiantian.module.strategy.setting.StrategySettingActivity
  */
 public class StrategyFragment extends Fragment {
     private View rootView;
-
-    private List<Strategy> strategyList;
+    private MultipleStatusView statusView;
+    private StrategyAdapter adapter;
+    private List<Strategy> strategyList = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_strategy, container, false);
-
-            strategyList = initData();
+            statusView = rootView.findViewById(R.id.strategyFragment_status_view);
             RecyclerView listView = rootView.findViewById(R.id.strategyListView);
-            StrategyAdapter adapter = new StrategyAdapter(getContext(), strategyList);
+
+            adapter = new StrategyAdapter(getContext(), strategyList);
             adapter.setOnItemClickListener(new StrategyAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View itemView, int position) {
@@ -56,21 +73,54 @@ public class StrategyFragment extends Fragment {
 
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
             listView.setLayoutManager(layoutManager);
+
+            statusView.setOnRetryClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    initData();
+                }
+            });
         }
         return rootView;
     }
 
-    private List<Strategy> initData() {
-        List<Strategy> strategyList = new ArrayList<>();
-        strategyList.add(new Strategy("BTC", "BTC", R.drawable.ic_btc));
-        strategyList.add(new Strategy("LTC", "LTC", R.drawable.ic_ltc));
-        strategyList.add(new Strategy("ETH", "ETH", R.drawable.ic_eth));
-        strategyList.add(new Strategy("EOS", "EOS", R.drawable.ic_eos));
-        strategyList.add(new Strategy("ETC", "ETC", R.drawable.ic_etc));
-        strategyList.add(new Strategy("BCH", "BCH", R.drawable.ic_bch));
-        strategyList.add(new Strategy("BSV", "BSV", R.drawable.ic_bsv));
-        strategyList.add(new Strategy("XPR", "XPR", R.drawable.ic_xpr));
-        return strategyList;
+    @Override
+    public void onResume() {
+        super.onResume();
+        boolean loadingStrategy = ConfigSharedPreferences.Companion.getInstance(getContext()).getBooleanValue(Constant.SP_STRATEGY_LOADED, true);
+        if (loadingStrategy) {
+            initData();
+        }
+    }
+
+    private void initData() {
+        statusView.showLoading();
+        String url = String.format("%s/comment/apiv2/policySquare/%s", CommonUtil.getBaseUrl(), UserUtil.getUserId());
+        new NetworkRequest<Strategy>(getContext())
+                .url(url)
+                .method(RequestParam.Method.GET)
+                .asJson(true)
+                .dataClass(Strategy.class)
+                .dataParser(new ListStatusDataParser<Strategy>())
+                .getList(new DataListCallback<Strategy>() {
+                    @Override
+                    public void onFailure(@NotNull String s) {
+                        statusView.showError(s);
+                    }
+
+                    @Override
+                    public void onSuccess(@org.jetbrains.annotations.Nullable List<? extends Strategy> list) {
+                        ConfigSharedPreferences.Companion.getInstance(getContext()).putBooleanValue(Constant.SP_STRATEGY_LOADED, false);
+                        if(list == null || list.size() == 0) {
+                            statusView.showEmpty();
+                        }else {
+                            statusView.showContent();
+                            strategyList.clear();
+                            strategyList.addAll(list);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                });
     }
 
 
@@ -110,8 +160,18 @@ public class StrategyFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             Strategy strategy = strategyList.get(position);
-            holder.iconView.setImageResource(strategy.getImageRes());
-            holder.nameView.setText(strategy.getName());
+            Glide.with(context).load(strategy.getMarketIconUrl()).placeholder(R.drawable.ic_broken_image_black_24dp).into(holder.iconView);
+            holder.nameView.setText(strategy.getMarket());
+
+            String type = "";
+            if(!TextUtils.isEmpty(strategy.getPolicyChoosed())) {
+                type += strategy.getPolicyChoosed();
+            }
+            if(!TextUtils.isEmpty(strategy.getSignalChoosed())) {
+                type += "、";
+                type += strategy.getSignalChoosed();
+            }
+            holder.typeView.setText(type);
         }
 
         // Return the total count of items

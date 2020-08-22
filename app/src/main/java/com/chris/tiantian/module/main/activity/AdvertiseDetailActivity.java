@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.anima.componentlib.toolbar.Toolbar;
 import com.chris.tiantian.R;
-import com.chris.tiantian.entity.Advertise;
+import com.chris.tiantian.entity.ImageDetail;
 import com.chris.tiantian.view.MultipleStatusView;
 
 public class AdvertiseDetailActivity extends AppCompatActivity {
@@ -27,7 +27,7 @@ public class AdvertiseDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_advertise_detail);
-        Advertise advertise = getIntent().getParcelableExtra(ADVERTISE_DETAIL);
+        ImageDetail advertise = getIntent().getParcelableExtra(ADVERTISE_DETAIL);
 
         statusView = findViewById(R.id.adDetailAct_status_view);
         statusView.showLoading();
@@ -80,27 +80,5 @@ public class AdvertiseDetailActivity extends AppCompatActivity {
             }
         });
 
-        /*webView.setWebChromeClient(new WebChromeClient() {
-            public void onProgressChanged(WebView view, int progress) {
-                if (progress == 100) {
-                    statusView.showContent();
-                }else {
-                    statusView.showError("显示出错");
-                }
-            }
-        });*/
-        /*Glide.with(this).asBitmap().load(advertise.getDetail()).into(new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                statusView.showContent();
-                imageView.setImage(resource);
-            }
-
-            @Override
-            public void onLoadFailed(@Nullable Drawable errorDrawable) {
-                super.onLoadFailed(errorDrawable);
-                statusView.showError();
-            }
-        });*/
     }
 }

@@ -7,69 +7,77 @@
     android:background="@color/windowBackground">
 
     <include layout="@layout/view_toolbar_common"/>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/sms_setting_layout"
+    <com.chris.tiantian.view.MultipleStatusView
+        android:id="@+id/strategy_setting_status_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:clickable="true"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="16dp"
-        card_view:cardCornerRadius="5dp"
-        card_view:cardElevation="2dp"
-        android:foreground="?android:attr/selectableItemBackground"
-        card_view:cardBackgroundColor="@color/white">
-
-        <RelativeLayout
+        android:layout_height="match_parent"
+        app:emptyView="@layout/layout_empty_view"
+        app:errorView="@layout/layout_error_view"
+        app:loadingView="@layout/layout_loading_view"
+        app:noNetworkView="@layout/layout_no_network_view">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sms_setting_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
-            <TextView
-                android:id="@+id/sms_setting_title"
-                android:layout_width="wrap_content"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:clickable="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardElevation="2dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardBackgroundColor="@color/white">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/primary_text_dark_color"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="启动短信定制"/>
+                android:padding="16dp">
+                <TextView
+                    android:id="@+id/sms_setting_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primary_text_dark_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="启动短信定制"/>
 
-            <TextView
-                android:id="@+id/sms_setting_result"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:background="@drawable/sms_setting_background"
-                android:text="设置"/>
+                <TextView
+                    android:id="@+id/sms_setting_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:background="@drawable/sms_setting_background"
+                    android:text="设置"/>
 
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/strategy_setting_tabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:tabIndicatorFullWidth="false"
-        android:background="@color/white"
-        app:tabMode="fixed"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divider_text_dark_color"/>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/strategy_setting_tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:tabIndicatorFullWidth="false"
+            android:background="@color/white"
+            app:tabMode="fixed"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_text_dark_color"/>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/strategy_setting_viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingTop="8dp"/>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/strategy_setting_viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingTop="8dp"/>
+    </com.chris.tiantian.view.MultipleStatusView>
 </LinearLayout>

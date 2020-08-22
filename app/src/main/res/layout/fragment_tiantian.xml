@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
-                    android:paddingTop="10dp"
+                    android:paddingTop="4dp"
                     android:paddingBottom="16dp"
                     android:layout_below="@id/ttFragment_banner"/>
 
@@ -77,6 +77,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/mainFrm_slidingTabLayout"
+                        app:tabTextAppearance="@style/TabLayoutTextStyle"
                         app:tabIndicatorFullWidth="false"
                         app:tabMode="fixed"/>
                     <View

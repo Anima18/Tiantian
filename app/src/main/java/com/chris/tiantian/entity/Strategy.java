@@ -7,20 +7,24 @@ import android.os.Parcelable;
  * Created by jianjianhong on 20-7-29
  */
 public class Strategy implements Parcelable {
-    private String code;
-    private String name;
-    private int imageRes;
 
-    public Strategy(String code, String name, int imageRes) {
-        this.code = code;
-        this.name = name;
-        this.imageRes = imageRes;
-    }
+    /**
+     * market : ETH
+     * marketIconUrl : https://static.aicoinstorge.com/coin/20180613/152885626571451.png?x-oss-process=image/resize,m_fill,h_108,w_108,limit_0
+     * policyChoosed : null
+     * signalChoosed : null
+     */
+
+    private String market;
+    private String marketIconUrl;
+    private String policyChoosed;
+    private String signalChoosed;
 
     protected Strategy(Parcel in) {
-        code = in.readString();
-        name = in.readString();
-        imageRes = in.readInt();
+        market = in.readString();
+        marketIconUrl = in.readString();
+        policyChoosed = in.readString();
+        signalChoosed = in.readString();
     }
 
     public static final Creator<Strategy> CREATOR = new Creator<Strategy>() {
@@ -35,30 +39,37 @@ public class Strategy implements Parcelable {
         }
     };
 
-    public String getCode() {
-        return code;
+    public String getMarket() {
+        return market;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setMarket(String market) {
+        this.market = market;
     }
 
-    public String getName() {
-        return name;
+    public String getMarketIconUrl() {
+        return marketIconUrl;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMarketIconUrl(String marketIconUrl) {
+        this.marketIconUrl = marketIconUrl;
     }
 
-    public int getImageRes() {
-        return imageRes;
+    public String getPolicyChoosed() {
+        return policyChoosed;
     }
 
-    public void setImageRes(int imageRes) {
-        this.imageRes = imageRes;
+    public void setPolicyChoosed(String policyChoosed) {
+        this.policyChoosed = policyChoosed;
     }
 
+    public String getSignalChoosed() {
+        return signalChoosed;
+    }
+
+    public void setSignalChoosed(String signalChoosed) {
+        this.signalChoosed = signalChoosed;
+    }
 
     @Override
     public int describeContents() {
@@ -67,8 +78,9 @@ public class Strategy implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(code);
-        dest.writeString(name);
-        dest.writeInt(imageRes);
+        dest.writeString(market);
+        dest.writeString(marketIconUrl);
+        dest.writeString(policyChoosed);
+        dest.writeString(signalChoosed);
     }
 }

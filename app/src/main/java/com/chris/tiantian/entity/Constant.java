@@ -15,10 +15,16 @@ public interface Constant {
     double SMS_PRICE = 0.1;
 
 
+    /**
+     * 用户登录信息
+     */
     String SP_USER_DATA = "SP_USER_DATA";
     String SP_USER_ID = "SP_USER_ID";
     String SP_TOKEN = "SP_TOKEN";
     String SP_OPENID = "SP_OPENID";
+
+    //策略列表是否要更新
+    String SP_STRATEGY_LOADED = "SP_STRATEGY_LOADED";
 
     //当前策略ID
     String SP_CURRENT_POLICY = "SP_CURRENT_POLICY";

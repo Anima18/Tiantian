@@ -6,6 +6,8 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.anima.networkrequest.util.sharedprefs.ConfigSharedPreferences;
+import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.module.login.LoginActivity;
 
 /**
@@ -16,7 +18,7 @@ public class IndexActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ConfigSharedPreferences.Companion.getInstance(this).putBooleanValue(Constant.SP_STRATEGY_LOADED, true);
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {

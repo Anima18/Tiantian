@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<com.chris.tiantian.view.MultipleStatusView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/strategyMessageFragment_status_view"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/windowBackground"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    app:emptyView="@layout/layout_empty_view"
+    app:errorView="@layout/layout_error_view"
+    app:loadingView="@layout/layout_loading_view"
+    app:noNetworkView="@layout/layout_no_network_view">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/strategyMessage_listView"
         android:layout_width="match_parent"
@@ -11,4 +15,4 @@
         android:layout_marginTop="10dp"
         />
 
-</LinearLayout>
+</com.chris.tiantian.view.MultipleStatusView>

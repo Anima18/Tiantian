@@ -13,24 +13,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chris.tiantian.R;
 import com.chris.tiantian.util.UIAdapter;
+import com.chris.tiantian.view.MultipleStatusView;
 
 /**
  * Created by jianjianhong on 20-3-25
  */
 public class SignalSettingFragment extends Fragment {
     private View rootView;
-
+    private MultipleStatusView statusView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_leader_board, container, false);
-            RecyclerView listView = rootView.findViewById(R.id.testListView);
+            statusView = rootView.findViewById(R.id.status_view);
+            statusView.showEmpty();
+            /*RecyclerView listView = rootView.findViewById(R.id.settingtListView);
             listView.setNestedScrollingEnabled(false);
             UIAdapter adapter = new UIAdapter(getContext(), R.layout.listview_signal_setting_item, 5);
             listView.setAdapter(adapter);
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-           listView.setLayoutManager(layoutManager);
+           listView.setLayoutManager(layoutManager);*/
         }
         return rootView;
 

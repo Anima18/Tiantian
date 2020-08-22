@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragmentLayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants">
-
+    <com.chris.tiantian.view.MultipleStatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:loadingView="@layout/layout_loading_view"
+        app:emptyView="@layout/layout_empty_view"
+        app:errorView="@layout/layout_error_view"
+        app:noNetworkView="@layout/layout_no_network_view">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/testListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    </com.chris.tiantian.view.MultipleStatusView>
 
 </LinearLayout>

@@ -11,8 +11,8 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:src="@drawable/ic_new"/>
         <TextView
             android:layout_width="match_parent"
@@ -24,7 +24,17 @@
             android:text="头条新闻"/>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/empty_title_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/windowBackground"
+        android:visibility="gone"
+        android:gravity="center"
+        android:text="没有数据！"/>
+
     <LinearLayout
+        android:id="@+id/new_List_view"
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:orientation="horizontal">
@@ -83,6 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="wrap_content"
@@ -99,6 +110,7 @@
                     android:id="@+id/secondNew_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:lines="1"
                     android:ellipsize="end"
                     android:lineSpacingExtra="2dp"
                     android:textColor="@color/black"
@@ -110,6 +122,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="wrap_content"
@@ -127,11 +140,39 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:lines="1"
                     android:lineSpacingExtra="2dp"
                     android:textColor="@color/black"
                     android:text="       区块链数据时代技术来临"/>
             </RelativeLayout>
-
+            <RelativeLayout
+                android:id="@+id/fourNew_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/white"
+                    android:text="4"
+                    android:textSize="11sp"
+                    android:background="@android:color/holo_red_light"
+                    />
+                <TextView
+                    android:id="@+id/fourNew_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:lineSpacingExtra="2dp"
+                    android:textColor="@color/black"
+                    android:text="       区块链数据时代技术来临"/>
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -6,28 +6,31 @@ import android.os.Parcelable;
 /**
  * Created by jianjianhong on 20-1-7
  */
-public class New implements Parcelable {
+public class New extends ImageDetail implements Parcelable {
 
     /**
-     * id : 1
-     * title : 标题1
-     * comefrom : 新闻来源
-     * time : 发布时间
-     * text : 新闻正文新闻正文
+     * id : 13
+     * title : 测试
+     * comefrom : 天机1
+     * time : 2020-05-17 22:20:00
+     * text :
+     * imgFileName : 1598041153416_a1.png
+     * detailFileName : 1598041153416_detail_detail_a1.png
+     * img : http://114.67.204.96:8080/upload/news/1598041153416_a1.png
+     * detail : http://114.67.204.96:8080/upload/news/1598041153416_detail_detail_a1.png
      */
 
-    private int id;
-    private String title;
     private String comefrom;
     private String time;
     private String text;
+    private String detailFileName;
 
-    protected New(Parcel in) {
-        id = in.readInt();
-        title = in.readString();
+    public New(Parcel in) {
+        super(in);
         comefrom = in.readString();
         time = in.readString();
         text = in.readString();
+        detailFileName = in.readString();
     }
 
     public static final Creator<New> CREATOR = new Creator<New>() {
@@ -41,22 +44,6 @@ public class New implements Parcelable {
             return new New[size];
         }
     };
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public String getComefrom() {
         return comefrom;
@@ -82,6 +69,14 @@ public class New implements Parcelable {
         this.text = text;
     }
 
+    public String getDetailFileName() {
+        return detailFileName;
+    }
+
+    public void setDetailFileName(String detailFileName) {
+        this.detailFileName = detailFileName;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -89,10 +84,10 @@ public class New implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(title);
+        super.writeToParcel(dest, flags);
         dest.writeString(comefrom);
         dest.writeString(time);
         dest.writeString(text);
+        dest.writeString(detailFileName);
     }
 }

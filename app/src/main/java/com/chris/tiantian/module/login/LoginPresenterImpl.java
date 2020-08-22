@@ -3,14 +3,12 @@ package com.chris.tiantian.module.login;
 import android.content.Context;
 import android.text.TextUtils;
 
-import androidx.annotation.NonNull;
-
 import com.anima.networkrequest.NetworkRequest;
 import com.anima.networkrequest.callback.DataObjectCallback;
 import com.anima.networkrequest.entity.RequestParam;
+import com.anima.networkrequest.util.sharedprefs.ConfigSharedPreferences;
 import com.anima.networkrequest.util.sharedprefs.UserInfoSharedPreferences;
 import com.chris.tiantian.entity.Constant;
-import com.chris.tiantian.entity.TestResult;
 import com.chris.tiantian.entity.User;
 import com.chris.tiantian.entity.UserData;
 import com.chris.tiantian.entity.dataparser.ObjectDataParser;
@@ -133,5 +131,7 @@ public class LoginPresenterImpl implements LoginPresenter {
         if(!TextUtils.isEmpty(user.getOpenId())) {
             preferences.putStringValue(Constant.SP_OPENID, user.getOpenId());
         }
+
+        PreferencesUtil.getConfigPreference().putBooleanValue(Constant.SP_STRATEGY_LOADED, true);
     }
 }
