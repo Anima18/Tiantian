@@ -11,7 +11,6 @@ public class DateUtil {
 
     public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-
     public static Date getDate(int year, int month, int dayOfMonth,int hourOfDay,int minute,int second){
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR,year);

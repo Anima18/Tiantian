@@ -17,14 +17,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.anima.componentlib.toolbar.Toolbar;
 import com.chris.tiantian.R;
+import com.chris.tiantian.base.db.dao.PolicySignalDao;
 import com.chris.tiantian.entity.ActionMenuItem;
+import com.chris.tiantian.entity.Constant;
+import com.chris.tiantian.entity.PolicySignal;
 import com.chris.tiantian.entity.User;
 import com.chris.tiantian.module.commom.ActionAdapter;
 import com.chris.tiantian.module.commom.UserInfoAdapter;
 import com.chris.tiantian.module.login.LoginActivity;
+import com.chris.tiantian.util.CommonUtil;
+import com.chris.tiantian.util.DateUtil;
+import com.chris.tiantian.util.PreferencesUtil;
 import com.chris.tiantian.util.UserUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,6 +54,7 @@ public class UserInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 UserUtil.logout();
+                UserUtil.resetMessage();
                 UserInfoActivity.this.finish();
                 startActivity(new Intent(UserInfoActivity.this, LoginActivity.class));
             }

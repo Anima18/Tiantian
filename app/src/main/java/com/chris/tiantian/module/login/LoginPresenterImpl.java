@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import com.anima.networkrequest.NetworkRequest;
 import com.anima.networkrequest.callback.DataObjectCallback;
 import com.anima.networkrequest.entity.RequestParam;
-import com.anima.networkrequest.util.sharedprefs.ConfigSharedPreferences;
 import com.anima.networkrequest.util.sharedprefs.UserInfoSharedPreferences;
 import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.User;

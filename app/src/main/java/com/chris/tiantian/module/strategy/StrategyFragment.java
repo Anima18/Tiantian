@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,6 +92,12 @@ public class StrategyFragment extends Fragment {
         if (loadingStrategy) {
             initData();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i("cccccccc", "StrategyFragment onDestroy");
     }
 
     private void initData() {

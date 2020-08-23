@@ -10,14 +10,12 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.anima.componentlib.toolbar.Toolbar;
-import com.chris.tiantian.module.main.activity.TestViewPager;
 import com.chris.tiantian.module.main.activity.TiantianFragment;
 import com.chris.tiantian.module.me.activity.MeFragment;
 import com.chris.tiantian.module.message.MessageFragment;
-import com.chris.tiantian.module.plaza.activity.PlazaFragment;
-import com.chris.tiantian.module.signal.activity.PolicySignalFragment;
 import com.chris.tiantian.module.strategy.StrategyFragment;
 import com.chris.tiantian.util.BackgrounderSetting;
 import com.chris.tiantian.util.BottomNavigationViewHelper;
@@ -25,6 +23,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import rx.functions.Action1;
 
@@ -36,11 +37,13 @@ public class MainActivity extends AppCompatActivity {
     private View toolbarLayout;
     private Toolbar toolbar;
     private BottomNavigationView navigationView;
-    private TiantianFragment tiantainFragment;
+/*    private TiantianFragment tiantainFragment;
     private Fragment subscriptionFragment;
     private Fragment plazaFragment;
-    private Fragment meFragment;
+    private Fragment meFragment;*/
     private int currentPageIndex = 0;
+
+    private List<Fragment> fragments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,46 +93,33 @@ public class MainActivity extends AppCompatActivity {
 
     private void initNavigationView() {
         BottomNavigationViewHelper.disableShiftMode(navigationView);
-
+        fragments.add(new TiantianFragment());
+        fragments.add(new StrategyFragment());
+        fragments.add(new MessageFragment());
+        fragments.add(new MeFragment());
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.bottom_nav_home:
-                        if(tiantainFragment == null) {
-                            tiantainFragment = new TiantianFragment();
-                        }
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, tiantainFragment).commitAllowingStateLoss();
+                        switchFragment(0);
                         toolbarLayout.setVisibility(View.GONE);
-                        currentPageIndex = 0;
                         break;
                     case R.id.bottom_nav_role:
-                        if(subscriptionFragment == null) {
-                            //subscriptionFragment = new PolicySignalFragment();
-                            subscriptionFragment = new StrategyFragment();
-                        }
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, subscriptionFragment).commitAllowingStateLoss();
+                        switchFragment(1);
                         toolbar.setTitle((String) item.getTitle());
                         toolbarLayout.setVisibility(View.VISIBLE);
-                        currentPageIndex = 1;
                         break;
                     case R.id.bottom_nav_message:
-                        if(plazaFragment == null) {
-                            plazaFragment = new MessageFragment();
-                        }
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, plazaFragment).commitAllowingStateLoss();
+                        switchFragment(2);
                         toolbar.setTitle((String)item.getTitle());
                         toolbarLayout.setVisibility(View.VISIBLE);
-                        currentPageIndex = 2;
+
                         break;
                     case R.id.bottom_nav_me:
-                        if(meFragment == null) {
-                            meFragment = new MeFragment();
-                        }
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, meFragment).commitAllowingStateLoss();
+                        switchFragment(3);
                         toolbar.setTitle((String) item.getTitle());
                         toolbarLayout.setVisibility(View.VISIBLE);
-                        currentPageIndex = 3;
                         break;
                 }
                 return true;
@@ -137,6 +127,27 @@ public class MainActivity extends AppCompatActivity {
         });
 
         setCurrentPage();
+    }
+
+    private void switchFragment(int pos) {
+        //Toast.makeText(this,prePos+" -> "+pos,Toast.LENGTH_LONG).show();
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
+        Fragment from = fragments.get(currentPageIndex);
+        Fragment to = fragments.get(pos);
+        if(!to.isAdded()){
+            if(from != to) {
+                transaction.hide(from);
+            }
+
+            transaction.add(R.id.content_frame,fragments.get(pos), pos+"")
+                    .commit();
+        }else{
+            transaction.hide(from)
+                    .show(to)
+                    .commit();
+        }
+        currentPageIndex = pos;
     }
 
     private void setCurrentPage() {

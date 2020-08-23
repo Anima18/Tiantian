@@ -15,7 +15,9 @@ import android.util.Base64;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
+import androidx.sqlite.db.SimpleSQLiteQuery;
 
+import com.anima.componentlib.paginglistview.PagingRecycleView;
 import com.anima.eventflow.Event;
 import com.anima.eventflow.EventFlow;
 import com.anima.eventflow.EventResult;
@@ -26,9 +28,12 @@ import com.anima.networkrequest.util.sharedprefs.UserInfoSharedPreferences;
 import com.chris.tiantian.MainActivity;
 import com.chris.tiantian.R;
 import com.chris.tiantian.base.db.dao.PolicySignalDao;
+import com.chris.tiantian.entity.MarketTick;
 import com.chris.tiantian.entity.PolicySignal;
 import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.dataparser.ListDataParser;
+import com.chris.tiantian.entity.dataparser.ListStatusDataParser;
+import com.chris.tiantian.entity.eventmessage.MarketTIcksMessage;
 import com.chris.tiantian.entity.eventmessage.PolicySignalMessage;
 import com.chris.tiantian.entity.eventmessage.PolicySignalNoDataMessage;
 import com.chris.tiantian.module.signal.activity.PolicySignalActionView;
@@ -36,9 +41,11 @@ import com.chris.tiantian.util.CommonUtil;
 import com.chris.tiantian.util.DateUtil;
 import com.chris.tiantian.util.LocationLog;
 import com.chris.tiantian.util.PreferencesUtil;
+import com.chris.tiantian.util.UserUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -77,17 +84,20 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
     }
 
     @Override
-    public void requestDataByLocal() {
+    public void requestDataByLocal(PagingRecycleView.LoadCallback loadCallback, int startNo, int endNo) {
         Event event1 = new Event() {
             @Override
             protected Object run() {
-                return uniqData(policySignalDao.query());
+                String sql = String.format("select * from PolicySignal_Bean  order by time desc LIMIT %s, %s", startNo+"", endNo+"");
+
+                SimpleSQLiteQuery query = new SimpleSQLiteQuery(sql);
+                return uniqData(policySignalDao.query(query));
             }
         };
         EventFlow.create(context, event1).subscribe(new EventResult() {
             @Override
             public void onResult(Object data) {
-                actionView.showData((List<PolicySignal>)data);
+                actionView.showData(loadCallback, (List<PolicySignal>)data);
             }
         });
 
@@ -114,73 +124,51 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
     }
 
     @Override
-    public void requestDataByNetwork() {
-        int currentPolicy = preferences.getIntValue(Constant.SP_CURRENT_POLICY, -1);
-        if(currentPolicy == -1) {
-            actionView.showError("请在广场列表选择一个策略");
-        }else {
-            actionView.showLoading();
-            String url = String.format("%s/comment/apiv2/policysignallist/%s", CommonUtil.getBaseUrl(), currentPolicy+"");
-            new NetworkRequest<PolicySignal>(context)
-                    .url(url)
-                    .method(RequestParam.Method.GET)
-                    .dataClass(PolicySignal.class)
-                    .dataParser(new ListDataParser<PolicySignal>())
-                    .getList(new DataListCallback<PolicySignal>() {
-                        @Override
-                        public void onFailure(@NotNull String s) {
-                            actionView.showError(s);
-                        }
-
-                        @Override
-                        public void onSuccess(@NotNull List<? extends PolicySignal> list) {
-
-                            Event event = new Event() {
-                                @Override
-                                protected Object run() {
-                                    policySignalDao.clear();
-                                    policySignalDao.insertList((List<PolicySignal>) list);
-                                    return null;
-                                }
-                            };
-                            EventFlow.create(context, event).subscribe(new EventResult() {
-                                @Override
-                                public void onResult(Object data) {
-                                    actionView.showData((List<PolicySignal>)list);
-                                    preferences.putStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
-                                    preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, true);
-                                }
-                            });
-                        }
-                    });
-        }
-
-    }
-
-    @Override
     public void monitorPolicySignal() {
         refreshPolicySignal(false);
     }
 
     @Override
+    public void monitorMarketTicks() {
+        String url = String.format("%s/comment/apiv2/qryMarketTicks", CommonUtil.getBaseUrl());
+        new NetworkRequest<MarketTick>(context)
+                .url(url)
+                .method(RequestParam.Method.GET)
+                .dataClass(MarketTick.class)
+                .dataParser(new ListDataParser<>())
+                .getList(new DataListCallback<MarketTick>() {
+                    @Override
+                    public void onFailure(@NotNull String s) {
+                        actionView.showError(s);
+                    }
+
+                    @Override
+                    public void onSuccess(@Nullable List<? extends MarketTick> list) {
+                        EventBus.getDefault().post(new MarketTIcksMessage(list));
+                    }
+                });
+    }
+
+    @Override
     public void refreshPolicySignal(boolean isShowResultMessage) {
-        String lastTime = preferences.getStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, "");
-        int currentPolicy = preferences.getIntValue(Constant.SP_CURRENT_POLICY, -1);
-        if(currentPolicy == -1 || TextUtils.isEmpty(lastTime)) {
+        if(!UserUtil.isLogin()) {
             return;
         }
+        String lastTime = preferences.getStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, "2020.01.01 01:00:00");
         LocationLog.getInstance().i("PolicyMonitorService request policySignal at "+lastTime);
         lastTime = Base64.encodeToString(lastTime.getBytes(), Base64.DEFAULT);
-        String url = String.format("%s/comment/apiv2/policysignallist/%s/%s", CommonUtil.getBaseUrl(), currentPolicy+"", lastTime);
+        String url = String.format("%s/comment/apiv2/policySubscribedSignalList/%s/%s", CommonUtil.getBaseUrl(), UserUtil.getUserId(), lastTime);
         new NetworkRequest<PolicySignal>(context)
                 .url(url)
                 .method(RequestParam.Method.GET)
                 .dataClass(PolicySignal.class)
-                .dataParser(new ListDataParser<PolicySignal>())
+                .dataParser(new ListStatusDataParser<PolicySignal>())
                 .getList(new DataListCallback<PolicySignal>() {
                     @Override
                     public void onFailure(@NotNull String s) {
                         LocationLog.getInstance().i("PolicyMonitorService request error: "+s);
+                        EventBus.getDefault().post(new PolicySignalMessage(PreferencesUtil.getConfigPreference().getBooleanValue(Constant.SP_Message_LOADED, false)));
+                        PreferencesUtil.getConfigPreference().putBooleanValue(Constant.SP_Message_LOADED, false);
                     }
 
                     @Override
@@ -191,7 +179,7 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                             Event event = new Event() {
                                 @Override
                                 protected Object run() {
-                                    updateList((List<PolicySignal>) list);
+                                    policySignalDao.insertList((List<PolicySignal>) list);
                                     return null;
                                 }
                             };
@@ -199,18 +187,16 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
                                 @Override
                                 public void onResult(Object data) {
                                     preferences.putStringValue(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
-                                    preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, true);
-                                    EventBus.getDefault().post(new PolicySignalMessage());
+                                    EventBus.getDefault().post(new PolicySignalMessage(true));
                                     LocationLog.getInstance().i("PolicyMonitorService showNotification");
                                     showNotification(context);
                                 }
                             });
                         }else {
-                            if(isShowResultMessage) {
-                                EventBus.getDefault().post(new PolicySignalNoDataMessage());
-                            }
-                            LocationLog.getInstance().i("PolicyMonitorService no data");
+                            EventBus.getDefault().post(new PolicySignalMessage(PreferencesUtil.getConfigPreference().getBooleanValue(Constant.SP_Message_LOADED, false)));
+                            PreferencesUtil.getConfigPreference().putBooleanValue(Constant.SP_Message_LOADED, false);
                         }
+                        preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, false);
                     }
                 });
     }
@@ -256,7 +242,7 @@ public class PolicySignalPresenterImpl implements PolicySignalPresenter {
         }
 
         Intent mainIntent = new Intent(context, MainActivity.class);
-        mainIntent.putExtra("KEY_PAGE_INDEX", 1);
+        mainIntent.putExtra("KEY_PAGE_INDEX", 2);
         PendingIntent mainPendingIntent = PendingIntent.getActivity(context, 0, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         //实例化NotificationCompat.Builde并设置相关属性
         NotificationCompat.Builder builder = null;

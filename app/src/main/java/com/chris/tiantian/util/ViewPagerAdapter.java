@@ -1,4 +1,4 @@
-package com.chris.tiantian.module.plaza.adapter;
+package com.chris.tiantian.util;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

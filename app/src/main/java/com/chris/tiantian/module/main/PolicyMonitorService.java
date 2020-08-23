@@ -19,6 +19,7 @@ public class PolicyMonitorService implements KeepLiveService {
 
     private PolicySignalPresenter signalPresenter;
     private MonitorThread monitorThread;
+    private MarketTicksThread marketTicksThread;
     private boolean monitorFlag = true;
 
     public static PolicyMonitorService getInstance(Context context) {
@@ -46,11 +47,17 @@ public class PolicyMonitorService implements KeepLiveService {
             monitorThread.interrupt();
             monitorThread = null;
             monitorFlag = false;
+
+            marketTicksThread.interrupt();
+            marketTicksThread = null;
         }
         LocationLog.getInstance().i("PolicyMonitorService onWorking");
         monitorThread = new MonitorThread();
         monitorFlag = true;
         monitorThread.start();
+
+        marketTicksThread = new MarketTicksThread();
+        marketTicksThread.start();
     }
 
     @Override
@@ -72,6 +79,27 @@ public class PolicyMonitorService implements KeepLiveService {
                 try {
                     Thread.sleep(15000);
                     LocationLog.getInstance().i("PolicyMonitorService monitorPolicySignal");
+                    signalPresenter.monitorPolicySignal();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+    private class MarketTicksThread extends Thread {
+        public MarketTicksThread() {
+            Log.i("PolicyMonitorService", "new MarketTicksThread");
+        }
+
+
+        @Override
+        public void run() {
+            while (monitorFlag) {
+                try {
+                    Thread.sleep(10000);
+                    LocationLog.getInstance().i("PolicyMonitorService marketTicksThread");
                     signalPresenter.monitorPolicySignal();
                 } catch (InterruptedException e) {
                     e.printStackTrace();

@@ -67,10 +67,13 @@
             android:layout_marginTop="8dp"
             app:tabIndicatorFullWidth="false"
             android:background="@color/white"
+            android:layout_below="@id/sms_setting_layout"
             app:tabMode="fixed"/>
         <View
+            android:id="@+id/diver_view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_below="@id/strategy_setting_tabLayout"
             android:background="@color/divider_text_dark_color"/>
 
         <androidx.viewpager.widget.ViewPager
@@ -78,6 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            android:layout_below="@id/diver_view"
             android:paddingTop="8dp"/>
     </com.chris.tiantian.view.MultipleStatusView>
 </LinearLayout>

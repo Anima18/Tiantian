@@ -1,5 +1,6 @@
 package com.chris.tiantian.module.signal.activity;
 
+import com.anima.componentlib.paginglistview.PagingRecycleView;
 import com.chris.tiantian.entity.PolicySignal;
 
 import java.util.List;
@@ -10,5 +11,5 @@ import java.util.List;
 public interface PolicySignalActionView {
     void showLoading();
     void showError(String message);
-    void showData(List<PolicySignal> policySignalList);
+    void showData(PagingRecycleView.LoadCallback loadCallback, List<PolicySignal> policySignalList);
 }

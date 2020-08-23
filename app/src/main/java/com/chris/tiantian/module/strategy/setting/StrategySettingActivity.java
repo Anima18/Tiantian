@@ -27,9 +27,10 @@ import com.chris.tiantian.entity.StrategyTimeLevelGroup;
 import com.chris.tiantian.entity.dataparser.ListStatusDataParser;
 import com.chris.tiantian.entity.dataparser.ObjectStatusDataParser;
 import com.chris.tiantian.module.me.activity.SmsSettingActivity;
-import com.chris.tiantian.module.plaza.adapter.ViewPagerAdapter;
 import com.chris.tiantian.util.CommonUtil;
+import com.chris.tiantian.util.PreferencesUtil;
 import com.chris.tiantian.util.UserUtil;
+import com.chris.tiantian.util.ViewPagerAdapter;
 import com.chris.tiantian.view.MultipleStatusView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -191,7 +192,9 @@ public class StrategySettingActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(@org.jetbrains.annotations.Nullable String aBoolean) {
                         Toast.makeText(StrategySettingActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
-                        ConfigSharedPreferences.Companion.getInstance(StrategySettingActivity.this).putBooleanValue(Constant.SP_STRATEGY_LOADED, true);
+                        UserUtil.resetMessage();
+                        PreferencesUtil.getConfigPreference().putBooleanValue(Constant.SP_STRATEGY_LOADED, true);
+                        PreferencesUtil.getConfigPreference().putBooleanValue(Constant.SP_Message_LOADED, true);
                         StrategySettingActivity.this.finish();
                     }
 

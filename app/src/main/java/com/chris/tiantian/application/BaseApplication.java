@@ -79,7 +79,6 @@ public class BaseApplication extends Application {
             database.execSQL(PolicySignalTable.CREATE_TABLE);
             UserInfoSharedPreferences preferences = PreferencesUtil.getUserInfoPreference();
             preferences.putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, false);
-            preferences.putIntValue(Constant.SP_CURRENT_POLICY, -1);
         }
 
     };

@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,10 +26,9 @@ import com.chris.tiantian.module.main.activity.fragment.MonthLeaderboardFragment
 import com.chris.tiantian.module.main.activity.fragment.NewStrategyFragment;
 import com.chris.tiantian.module.main.activity.fragment.NewTeachingFragment;
 import com.chris.tiantian.module.main.activity.fragment.WeekLeaderboardFragment;
-import com.chris.tiantian.module.plaza.adapter.ViewPagerAdapter;
-import com.chris.tiantian.util.CommonItemViewHolder;
 import com.chris.tiantian.util.CommonUtil;
 import com.chris.tiantian.util.GlideImageLoader;
+import com.chris.tiantian.util.ViewPagerAdapter;
 import com.chris.tiantian.view.MultipleStatusView;
 import com.google.android.material.tabs.TabLayout;
 import com.youth.banner.Banner;

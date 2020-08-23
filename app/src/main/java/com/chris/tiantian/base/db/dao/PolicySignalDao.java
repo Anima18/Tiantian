@@ -3,6 +3,8 @@ package com.chris.tiantian.base.db.dao;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RawQuery;
+import androidx.sqlite.db.SupportSQLiteQuery;
 
 import com.chris.tiantian.entity.PolicySignal;
 
@@ -16,6 +18,9 @@ public interface PolicySignalDao {
 
     @Query("select * from PolicySignal_Bean order by time desc")
     List<PolicySignal> query();
+
+    @RawQuery
+    List<PolicySignal> query(SupportSQLiteQuery query);
 
     @Query("select * from PolicySignal_Bean where id=:id")
     List<PolicySignal> findPolicySignal(int id);
