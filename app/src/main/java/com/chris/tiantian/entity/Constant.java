@@ -25,12 +25,8 @@ public interface Constant {
 
     //策略列表是否要更新
     String SP_STRATEGY_LOADED = "SP_STRATEGY_LOADED";
-    //信息列表是否要更新
-    String SP_Message_LOADED = "SP_Message_LOADED";
-
-    String SP_LASTTIME_POLICY_SIGNAL_NETWORK = "SP_LASTTIME_POLICY_SIGNAL_NETWORK";
-    //刷新本地数据标志
-    String SP_LOADING_POLICY_SIGNAL_DATABASE = "SP_LOADING_POLICY_SIGNAL_DATABASE";
+    //获取上次更新时间
+    String SP_MESSAGE_TIME_STAMP = "SP_LASTTIME_POLICY_SIGNAL_NETWORK";
 
 
     //网络请求时间戳格式

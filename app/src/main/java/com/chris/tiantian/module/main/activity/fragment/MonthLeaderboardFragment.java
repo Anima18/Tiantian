@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chris.tiantian.MainActivity;
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.RankData;
+import com.chris.tiantian.util.CommonAdapter;
+import com.chris.tiantian.util.CommonItemViewHolder;
 import com.chris.tiantian.util.UIAdapter;
 import com.chris.tiantian.view.DividerItemDecoration;
 
@@ -41,9 +43,21 @@ public class MonthLeaderboardFragment extends Fragment {
             listView = rootView.findViewById(R.id.testListView);
             listView.setNestedScrollingEnabled(false);
             List<RankData.WeeklyRankBean>rankBeans = getArguments().getParcelableArrayList(DATA);
-            WeekLeaderboardAdapter adapter = new WeekLeaderboardAdapter(getContext(), rankBeans);
+            /*WeekLeaderboardAdapter adapter = new WeekLeaderboardAdapter(getContext(), rankBeans);
             listView.setAdapter(adapter);
 
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+            listView.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation(), DividerItemDecoration.DIVIDER_TYPE_INSET, layoutManager.getOrientation()));
+            listView.setLayoutManager(layoutManager);*/
+            CommonAdapter<RankData.WeeklyRankBean> adapter = new CommonAdapter(getContext(), R.layout.listview_leader_board_item);
+            adapter.setItemViewHolderCreator(new CommonAdapter.OnItemViewHolderCreator() {
+                @Override
+                public CommonItemViewHolder create(View itemView) {
+                    return new MonthLeaderItemViewHolder(itemView);
+                }
+            });
+            adapter.setData(rankBeans);
+            listView.setAdapter(adapter);
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
             listView.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation(), DividerItemDecoration.DIVIDER_TYPE_INSET, layoutManager.getOrientation()));
             listView.setLayoutManager(layoutManager);
@@ -51,6 +65,42 @@ public class MonthLeaderboardFragment extends Fragment {
 
         return rootView;
 
+    }
+
+    class MonthLeaderItemViewHolder extends CommonItemViewHolder<RankData.WeeklyRankBean> {
+        TextView indexTv;
+        TextView titleTv;
+        TextView timeTv;
+        TextView countTv;
+        TextView percentTv;
+        public MonthLeaderItemViewHolder(View itemView) {
+            super(itemView);
+            indexTv = itemView.findViewById(R.id.rank_index_tv);
+            titleTv = itemView.findViewById(R.id.rank_title_tv);
+            timeTv = itemView.findViewById(R.id.rank_time_tv);
+            countTv = itemView.findViewById(R.id.rank_count_tv);
+            percentTv = itemView.findViewById(R.id.rank_percent_tv);
+        }
+
+        @Override
+        public void bindto(@NonNull RankData.WeeklyRankBean rankBean) {
+
+            indexTv.setText(rankBean.getRank());
+            if("1".equals(rankBean.getRank())) {
+                indexTv.setBackground(getContext().getDrawable(R.drawable.rank_index1_background));
+                indexTv.setTextColor(getContext().getResources().getColor(R.color.index1_textColor));
+            }else if("2".equals(rankBean.getRank())) {
+                indexTv.setBackground(getContext().getDrawable(R.drawable.rank_index2_background));
+                indexTv.setTextColor(getContext().getResources().getColor(R.color.index2_textColor));
+            }else {
+                indexTv.setBackground(getContext().getDrawable(R.drawable.rank_index3_background));
+                indexTv.setTextColor(getContext().getResources().getColor(R.color.index3_textColor));
+            }
+            titleTv.setText(rankBean.getName());
+            timeTv.setText(rankBean.getTimeLevel());
+            countTv.setText(rankBean.getTimes());
+            percentTv.setText(rankBean.getProfit());
+        }
     }
 
 }

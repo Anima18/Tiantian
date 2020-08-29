@@ -5,11 +5,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <include android:id="@+id/activity_toolBar_layout" layout="@layout/view_toolbar_common"/>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/view_swipe_refresh_layout"
+        android:layout_marginTop="45dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <com.chris.tiantian.view.MultipleStatusView
         android:id="@+id/ttFragment_status_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="45dp"
         app:loadingView="@layout/layout_loading_view"
         app:emptyView="@layout/layout_empty_view"
         app:errorView="@layout/layout_error_view"
@@ -90,27 +94,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="410dp"/>
                 </LinearLayout>
-                <!--<TextView
-                    android:id="@+id/ttFragment_title_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/ttFragment_banner"
-                    android:background="@color/white"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="11dp"
-                    android:text="天机简讯"
-                    android:textSize="16dp"
-                    android:textColor="#727272" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/content_listView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/ttFragment_title_view"
-                    android:layout_alignParentBottom="true" />-->
             </RelativeLayout>
         </androidx.core.widget.NestedScrollView>
     </com.chris.tiantian.view.MultipleStatusView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>
 

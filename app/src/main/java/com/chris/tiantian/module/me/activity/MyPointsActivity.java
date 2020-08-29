@@ -98,12 +98,12 @@ public class MyPointsActivity extends Activity {
 
     private void initView() {
         pointDataList = new ArrayList<>();
-        pointDataList.add(new PointData(10));
-        pointDataList.add(new PointData(50));
-        pointDataList.add(new PointData(100));
-        pointDataList.add(new PointData(200));
-        pointDataList.add(new PointData(500));
-        pointDataList.add(new PointData(1000));
+        pointDataList.add(new PointData(10, R.drawable.points));
+        pointDataList.add(new PointData(50, R.drawable.points));
+        pointDataList.add(new PointData(100, R.drawable.points));
+        pointDataList.add(new PointData(200, R.drawable.points));
+        pointDataList.add(new PointData(500, R.drawable.points));
+        pointDataList.add(new PointData(1000, R.drawable.points));
 
         freedomPointListView.setNestedScrollingEnabled(false);
         freedomAdapter = new FreedomPointAdapter(this,pointDataList);

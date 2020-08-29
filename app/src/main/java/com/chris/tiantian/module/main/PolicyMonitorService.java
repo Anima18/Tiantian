@@ -3,8 +3,8 @@ package com.chris.tiantian.module.main;
 import android.content.Context;
 import android.util.Log;
 
-import com.chris.tiantian.module.signal.presenter.PolicySignalPresenter;
-import com.chris.tiantian.module.signal.presenter.PolicySignalPresenterImpl;
+import com.chris.tiantian.module.message.presenter.SyntheticMessagePresenter;
+import com.chris.tiantian.module.message.presenter.SyntheticMessagePresenterImpl;
 import com.chris.tiantian.util.LocationLog;
 import com.fanjun.keeplive.config.KeepLiveService;
 
@@ -17,7 +17,7 @@ public class PolicyMonitorService implements KeepLiveService {
     private static final String TAG = "PolicyMonitorService";
     private static PolicyMonitorService sInstance;
 
-    private PolicySignalPresenter signalPresenter;
+    private SyntheticMessagePresenter signalPresenter;
     private MonitorThread monitorThread;
     private MarketTicksThread marketTicksThread;
     private boolean monitorFlag = true;
@@ -38,7 +38,7 @@ public class PolicyMonitorService implements KeepLiveService {
 
     private PolicyMonitorService(Context context){
         LocationLog.getInstance().i("PolicyMonitorService create");
-        signalPresenter = new PolicySignalPresenterImpl(context);
+        signalPresenter = new SyntheticMessagePresenterImpl(context);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class PolicyMonitorService implements KeepLiveService {
         public void run() {
             while (monitorFlag) {
                 try {
-                    Thread.sleep(15000);
+                    Thread.sleep(5000);
                     LocationLog.getInstance().i("PolicyMonitorService monitorPolicySignal");
                     signalPresenter.monitorPolicySignal();
                 } catch (InterruptedException e) {
@@ -99,8 +99,8 @@ public class PolicyMonitorService implements KeepLiveService {
             while (monitorFlag) {
                 try {
                     Thread.sleep(10000);
-                    LocationLog.getInstance().i("PolicyMonitorService marketTicksThread");
-                    signalPresenter.monitorPolicySignal();
+                    //LocationLog.getInstance().i("PolicyMonitorService marketTicksThread");
+                    signalPresenter.monitorMarketTicks();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

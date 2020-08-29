@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.anima.componentlib.toolbar.Toolbar;
@@ -47,6 +48,7 @@ public class StrategySettingActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private MultipleStatusView statusView;
+    private SwipeRefreshLayout refreshLayout;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -70,6 +72,11 @@ public class StrategySettingActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.activity_toolBar);
         toolbar.setTitle(strategy.getMarket()+"定制");
         smsSettingResult = findViewById(R.id.sms_setting_result);
+        refreshLayout = findViewById(R.id.view_swipe_refresh_layout);
+        refreshLayout.setColorSchemeColors(getResources().getColor(android.R.color.holo_orange_light),
+                getResources().getColor(android.R.color.holo_red_light),
+                getResources().getColor(android.R.color.holo_blue_light),
+                getResources().getColor(android.R.color.holo_green_light));
 
         findViewById(R.id.sms_setting_layout).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,10 +88,25 @@ public class StrategySettingActivity extends AppCompatActivity {
         if(UserUtil.getUser() == null) {
             statusView.showError("请先登录！");
         }else {
-            statusView.showContent();
             initTabView();
             requestData();
+            statusView.setOnRetryClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    statusView.showLoading();
+                    requestData();
+                }
+            });
+
+            refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    statusView.showLoading();
+                    requestData();
+                }
+            });
         }
+
     }
 
     public void initTabView() {
@@ -99,11 +121,10 @@ public class StrategySettingActivity extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(4);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragmentList, fragmentNameList));
         tabLayout.setupWithViewPager(viewPager);
-
-
     }
 
     private void requestData() {
+        refreshLayout.setRefreshing(false);
         String smsUrl = String.format("%s/comment/apiv2/smsNotifyEnable/%s", CommonUtil.getBaseUrl(), UserUtil.getUserId());
         NetworkRequest smsRequest = new NetworkRequest<Boolean>(this)
                 .url(smsUrl)
@@ -123,12 +144,13 @@ public class StrategySettingActivity extends AppCompatActivity {
         RequestStream.Companion.create(this).parallel(smsRequest, policyDetailRequest).collect(new RequestStream.OnCollectListener() {
             @Override
             public void onFailure(@NotNull String s) {
-                Toast.makeText(StrategySettingActivity.this, s, Toast.LENGTH_SHORT).show();
+                statusView.showError(s);
             }
 
             @Override
             public void onSuccess(@NotNull List<?> list) {
-               Boolean isSmsSetting = (Boolean) list.get(0);
+                statusView.showContent();
+                Boolean isSmsSetting = (Boolean) list.get(0);
                 List<StrategyDetailItem> strategyDetailItems = (List<StrategyDetailItem>)list.get(1);
                 showSmsSetting(isSmsSetting);
                 strategySettingFragment.showSetting(strategyDetailItems);
@@ -154,7 +176,7 @@ public class StrategySettingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(UserUtil.getUser() == null) {
+        if(!UserUtil.isLogin()) {
             super.onBackPressed();
             return;
         }
@@ -193,8 +215,6 @@ public class StrategySettingActivity extends AppCompatActivity {
                     public void onSuccess(@org.jetbrains.annotations.Nullable String aBoolean) {
                         Toast.makeText(StrategySettingActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
                         UserUtil.resetMessage();
-                        PreferencesUtil.getConfigPreference().putBooleanValue(Constant.SP_STRATEGY_LOADED, true);
-                        PreferencesUtil.getConfigPreference().putBooleanValue(Constant.SP_Message_LOADED, true);
                         StrategySettingActivity.this.finish();
                     }
 

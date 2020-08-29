@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/windowBackground">
-
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/view_swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <com.chris.tiantian.view.MultipleStatusView
         android:id="@+id/strategyFragment_status_view"
         android:layout_width="match_parent"
@@ -14,12 +17,36 @@
         app:emptyView="@layout/layout_empty_view"
         app:errorView="@layout/layout_error_view"
         app:noNetworkView="@layout/layout_no_network_view">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/strategyListView"
+        <LinearLayout
+            android:id="@+id/strategy_tip_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="16dp"/>
-    </com.chris.tiantian.view.MultipleStatusView>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="8dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:tint="@color/app_blue"
+                android:src="@drawable/ic_info_black_24dp"/>
+            <TextView
+                android:id="@+id/strategy_tip_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:textSize="12sp"
+                android:textColor="@color/secondary_text_dark_color"
+                android:text="请先选择品种，在选择策略"/>
+        </LinearLayout>
 
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/strategyListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/strategy_tip_layout"
+                android:paddingTop="8dp"/>
+
+    </com.chris.tiantian.view.MultipleStatusView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

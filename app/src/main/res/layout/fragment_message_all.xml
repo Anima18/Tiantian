@@ -1,52 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.chris.tiantian.view.MultipleStatusView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/messageFragment_status_view"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:emptyView="@layout/layout_empty_view"
-    app:errorView="@layout/layout_error_view"
-    app:loadingView="@layout/layout_loading_view"
-    app:noNetworkView="@layout/layout_no_network_view">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/windowBackground"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/windowBackground"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:clickable="true"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        card_view:cardCornerRadius="5dp"
+        card_view:cardElevation="2dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardBackgroundColor="@color/white">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/currency_listView"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:scrollbars="horizontal"/>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:clickable="true"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            card_view:cardCornerRadius="5dp"
-            card_view:cardElevation="2dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            card_view:cardBackgroundColor="@color/white">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/currency_listView"
-                android:layout_width="wrap_content"
-                android:layout_height="80dp"
-                android:scrollbars="horizontal"/>
+    </androidx.cardview.widget.CardView>
 
-        </androidx.cardview.widget.CardView>
+    <com.anima.componentlib.paginglistview.PagingRecycleView
+        android:id="@+id/allMessage_listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:pagesize="30"
+        app:dividerItemDecoration="true"
+        app:lagoutid="@layout/listview_message_item"/>
 
-        <com.anima.componentlib.paginglistview.PagingRecycleView
-            android:id="@+id/allMessage_listView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:pagesize="30"
-            app:dividerItemDecoration="true"
-
-            app:lagoutid="@layout/listview_message_item"/>
-
-    </LinearLayout>
-</com.chris.tiantian.view.MultipleStatusView>
-
+</LinearLayout>
 

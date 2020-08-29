@@ -6,8 +6,8 @@ android {
         applicationId "com.chris.tiantian"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 13
-        versionName "1.1.4"
+        versionCode 19
+        versionName "1.1.9"
         flavorDimensions "default"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -53,7 +53,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -107,7 +107,7 @@ dependencies {
 
     implementation(name:'eventflow-1.0.6', ext:'aar')
 
-    implementation(name:'componentlib-1.0.0', ext:'aar')
+    implementation(name:'componentlib-1.0.1', ext:'aar')
     implementation 'io.reactivex:rxandroid:1.2.0'
     implementation 'io.reactivex:rxjava:1.1.5'
 

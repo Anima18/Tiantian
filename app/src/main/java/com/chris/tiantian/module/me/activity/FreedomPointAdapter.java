@@ -57,6 +57,7 @@ public class FreedomPointAdapter extends RecyclerView.Adapter<FreedomPointAdapte
         PointData pointData = pointList.get(position);
         holder.pointValue.setText(pointData.point+"");
         holder.itemView.setSelected(pointData.selected);
+        holder.pointImage.setImageResource(pointData.iconId);
         if(pointData.selected) {
             holder.pointImage.setColorFilter(context.getResources().getColor(R.color.white));
             holder.pointValue.setTextColor(context.getResources().getColor(R.color.white));

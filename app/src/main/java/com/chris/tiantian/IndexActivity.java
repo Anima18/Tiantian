@@ -19,8 +19,6 @@ public class IndexActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ConfigSharedPreferences.Companion.getInstance(this).putBooleanValue(Constant.SP_STRATEGY_LOADED, true);
-        PreferencesUtil.getUserInfoPreference().putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, true);
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {

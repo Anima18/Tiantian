@@ -170,7 +170,7 @@ public class StrategySettingFragment extends Fragment {
                     holder.timeLevel1View.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            updateTimeLevel(group, timeLevel);
+                            updateTimeLevel(group, timeLevel, holder.timeLevel1View);
                         }
                     });
                 }else if(timeLevel.getTimeLevel().equals("1hour")) {
@@ -184,7 +184,7 @@ public class StrategySettingFragment extends Fragment {
                     holder.timeLevel2View.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            updateTimeLevel(group, timeLevel);
+                            updateTimeLevel(group, timeLevel, holder.timeLevel2View);
                         }
                     });
                 }else if(timeLevel.getTimeLevel().equals("4hour")) {
@@ -198,12 +198,12 @@ public class StrategySettingFragment extends Fragment {
                     holder.timeLevel3View.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            updateTimeLevel(group, timeLevel);
+                            updateTimeLevel(group, timeLevel, holder.timeLevel3View);
                         }
                     });
                 }
 
-                holder.choosedRadio.setOnTouchListener(new View.OnTouchListener() {
+                /*holder.choosedRadio.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
                         if(group.getChoosed()) {
@@ -219,19 +219,25 @@ public class StrategySettingFragment extends Fragment {
                         }
 
                     }
-                });
+                });*/
             }
         }
 
-        private void updateTimeLevel(StrategyTimeLevelGroup selectGroup, StrategyTimeLevelGroup.TimeLevel selectedTimeLevel) {
+        private void updateTimeLevel(StrategyTimeLevelGroup selectGroup, StrategyTimeLevelGroup.TimeLevel selectedTimeLevel, View view) {
             for(StrategyTimeLevelGroup group : strategyList) {
                 group.setChoosed(false);
                 for (StrategyTimeLevelGroup.TimeLevel timeLevel : group.getTimeLevels()) {
                     timeLevel.setChoosed(false);
                 }
             }
-            selectGroup.setChoosed(true);
-            selectedTimeLevel.setChoosed(true);
+            if(!view.isSelected()) {
+                selectGroup.setChoosed(true);
+                selectedTimeLevel.setChoosed(true);
+                view.setSelected(true);
+            }else {
+                view.setSelected(false);
+            }
+
             notifyDataSetChanged();
         }
 

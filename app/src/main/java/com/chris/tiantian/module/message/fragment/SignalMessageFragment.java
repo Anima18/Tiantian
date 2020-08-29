@@ -30,13 +30,6 @@ public class SignalMessageFragment extends Fragment {
         if(rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_message_signal, container, false);
             statusView = rootView.findViewById(R.id.signalMessageFragment_status_view);
-            User user = UserUtil.getUser();
-            if(user == null) {
-                statusView.showError("请先登录！");
-            }else {
-                statusView.showEmpty();
-            }
-
 
             RecyclerView listView = rootView.findViewById(R.id.signalMessage_listView);
             listView.setNestedScrollingEnabled(false);
@@ -48,4 +41,22 @@ public class SignalMessageFragment extends Fragment {
         return rootView;
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        /*if(!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }*/
+        requestData();
+    }
+
+    private void requestData() {
+        if(UserUtil.isLogin()) {
+            statusView.showEmpty();
+        }else {
+            statusView.showError("请先登录！");
+        }
+    }
+
 }

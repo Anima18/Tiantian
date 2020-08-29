@@ -1,7 +1,6 @@
-package com.chris.tiantian.module.message.fragment;
+package com.chris.tiantian.entity;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,11 +8,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.anima.componentlib.paginglistview.viewholder.PagingRecycleItemViewHolder;
+import com.bumptech.glide.Glide;
 import com.chris.tiantian.R;
-import com.chris.tiantian.entity.PolicySignal;
 
 /**
- * Created by jianjianhong on 20-8-23
+ * Created by jianjianhong on 20-8-26
  */
 public class MessageItemViewHolder extends PagingRecycleItemViewHolder<PolicySignal> {
 
@@ -26,7 +25,7 @@ public class MessageItemViewHolder extends PagingRecycleItemViewHolder<PolicySig
     TextView currentPriceView;
     TextView optionView;
     TextView optionDetailView;
-
+    TextView marketNameView;
 
     public MessageItemViewHolder(Context context, View itemView) {
         super(itemView);
@@ -39,11 +38,14 @@ public class MessageItemViewHolder extends PagingRecycleItemViewHolder<PolicySig
         this.currentPriceView = itemView.findViewById(R.id.message_currPrice);
         this.optionView = itemView.findViewById(R.id.message_option);
         this.optionDetailView = itemView.findViewById(R.id.message_optionDetail);
+        this.marketNameView = itemView.findViewById(R.id.message_market_name);
     }
 
     @Override
     public void bindto(@NonNull PolicySignal signal) {
+        Glide.with(context).load(signal.getMarketIconUrl()).placeholder(R.drawable.ic_broken_image_black_24dp).into(marketIcon);
         policyNameView.setText(signal.getPolicyName());
+        marketNameView.setText(signal.getPolicyMarket());
         timeView.setText(signal.getTime());
         policyTimeLevelView.setText(signal.getPolicyTimeLevel());
         stopPriceView.setText(signal.getStopPrice()+"");

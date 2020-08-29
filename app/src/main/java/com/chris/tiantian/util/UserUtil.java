@@ -44,12 +44,10 @@ public class UserUtil {
     }
 
     public static void resetMessage() {
-        PolicySignalDao policySignalDao = CommonUtil.getDatabase().policySignalDao();
-        policySignalDao.clear();
+        /*PolicySignalDao policySignalDao = CommonUtil.getDatabase().policySignalDao();
+        policySignalDao.clear();*/
         //clear message lastTime
-        PreferencesUtil.getUserInfoPreference().remove(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK);
-        //set request message from network
-        PreferencesUtil.getUserInfoPreference().putBooleanValue(Constant.SP_LOADING_POLICY_SIGNAL_DATABASE, false);
+        //PreferencesUtil.getUserInfoPreference().remove(Constant.SP_LASTTIME_POLICY_SIGNAL_NETWORK);
         PreferencesUtil.getConfigPreference().putBooleanValue(Constant.SP_STRATEGY_LOADED, true);
     }
 }

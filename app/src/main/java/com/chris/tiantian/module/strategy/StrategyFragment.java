@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.anima.networkrequest.NetworkRequest;
 import com.anima.networkrequest.callback.DataListCallback;
@@ -48,6 +49,7 @@ import static com.chris.tiantian.module.strategy.setting.StrategySettingActivity
 public class StrategyFragment extends Fragment {
     private View rootView;
     private MultipleStatusView statusView;
+    private SwipeRefreshLayout refreshLayout;
     private StrategyAdapter adapter;
     private List<Strategy> strategyList = new ArrayList<>();
 
@@ -57,8 +59,13 @@ public class StrategyFragment extends Fragment {
         if(rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_strategy, container, false);
             statusView = rootView.findViewById(R.id.strategyFragment_status_view);
-            RecyclerView listView = rootView.findViewById(R.id.strategyListView);
+            refreshLayout = rootView.findViewById(R.id.view_swipe_refresh_layout);
+            refreshLayout.setColorSchemeColors(getResources().getColor(android.R.color.holo_orange_light),
+                    getResources().getColor(android.R.color.holo_red_light),
+                    getResources().getColor(android.R.color.holo_blue_light),
+                    getResources().getColor(android.R.color.holo_green_light));
 
+            RecyclerView listView = rootView.findViewById(R.id.strategyListView);
             adapter = new StrategyAdapter(getContext(), strategyList);
             adapter.setOnItemClickListener(new StrategyAdapter.OnItemClickListener() {
                 @Override
@@ -81,6 +88,12 @@ public class StrategyFragment extends Fragment {
                     initData();
                 }
             });
+            refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    initData();
+                }
+            });
         }
         return rootView;
     }
@@ -88,10 +101,12 @@ public class StrategyFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        boolean loadingStrategy = ConfigSharedPreferences.Companion.getInstance(getContext()).getBooleanValue(Constant.SP_STRATEGY_LOADED, true);
+        Log.i("cccccccc", "onResume");
+        /*boolean loadingStrategy = ConfigSharedPreferences.Companion.getInstance(getContext()).getBooleanValue(Constant.SP_STRATEGY_LOADED, true);
         if (loadingStrategy) {
             initData();
-        }
+        }*/
+        initData();
     }
 
     @Override
@@ -101,6 +116,7 @@ public class StrategyFragment extends Fragment {
     }
 
     private void initData() {
+        refreshLayout.setRefreshing(false);
         statusView.showLoading();
         String url = String.format("%s/comment/apiv2/policySquare/%s", CommonUtil.getBaseUrl(), UserUtil.getUserId());
         new NetworkRequest<Strategy>(getContext())
@@ -112,6 +128,7 @@ public class StrategyFragment extends Fragment {
                 .getList(new DataListCallback<Strategy>() {
                     @Override
                     public void onFailure(@NotNull String s) {
+
                         statusView.showError(s);
                     }
 

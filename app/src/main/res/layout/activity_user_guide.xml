@@ -126,6 +126,28 @@
                     android:text="如果没有开启后台运行权限,将可能导致不能及时收到新消息."/>
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F9F9F9"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_info_black_24dp"
+                    android:tint="@color/app_blue"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:textColor="@color/primary_text_dark_color"
+                    android:text="各种手机型号不同设置稍有不同.例如：华为手机需要先关闭应用自动启动管理 在手动中打开所有选项"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

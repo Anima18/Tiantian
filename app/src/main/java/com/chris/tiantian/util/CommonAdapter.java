@@ -75,7 +75,9 @@ public class CommonAdapter<T> extends RecyclerView.Adapter {
 
     public void setData(List<? extends T> data) {
         this.list.clear();
-        this.list.addAll(data);
+        if(data != null) {
+            this.list.addAll(data);
+        }
         this.notifyDataSetChanged();
     }
 

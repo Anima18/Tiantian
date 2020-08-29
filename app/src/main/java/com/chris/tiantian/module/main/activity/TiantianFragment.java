@@ -11,6 +11,7 @@ import android.view.ViewOutlineProvider;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.anima.networkrequest.NetworkRequest;
@@ -46,6 +47,7 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
     private View rootView;
     private Banner banner;
     private MultipleStatusView statusView;
+    private SwipeRefreshLayout refreshLayout;
     private NewHotView newHotView;
 
     private TabLayout mSlidingTabLayout;
@@ -66,6 +68,11 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
             banner = rootView.findViewById(R.id.ttFragment_banner);
             statusView = rootView.findViewById(R.id.ttFragment_status_view);
             newHotView = rootView.findViewById(R.id.ttFragment_hot_new);
+            refreshLayout = rootView.findViewById(R.id.view_swipe_refresh_layout);
+            refreshLayout.setColorSchemeColors(getResources().getColor(android.R.color.holo_orange_light),
+                    getResources().getColor(android.R.color.holo_red_light),
+                    getResources().getColor(android.R.color.holo_blue_light),
+                    getResources().getColor(android.R.color.holo_green_light));
 
             mSlidingTabLayout = rootView.findViewById(R.id.mainFrm_slidingTabLayout);
             mViewPager = rootView.findViewById(R.id.mainFrm_viewpager);
@@ -77,10 +84,10 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
                     requestData();
                 }
             });
-            statusView.setOnViewStatusChangeListener(new MultipleStatusView.OnViewStatusChangeListener() {
+            refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
-                public void onChange(int oldViewStatus, int newViewStatus) {
-
+                public void onRefresh() {
+                    requestData();
                 }
             });
         }
@@ -130,6 +137,7 @@ public class TiantianFragment extends Fragment implements OnBannerListener {
 
     private void requestData() {
         statusView.showLoading();
+        refreshLayout.setRefreshing(false);
         String adUrl = String.format("%s/comment/apiv2/homead", CommonUtil.getBaseUrl());
         NetworkRequest adRequest = new NetworkRequest<Advertise>(getActivity())
                 .url(adUrl)

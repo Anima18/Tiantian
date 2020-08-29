@@ -12,9 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.chris.tiantian.R;
-import com.chris.tiantian.module.message.fragment.AllMessageFragment;
-import com.chris.tiantian.module.message.fragment.SignalMessageFragment;
 import com.chris.tiantian.module.message.fragment.StrategyMessageFragment;
+import com.chris.tiantian.module.message.fragment.SyntheticMessageFragment;
+import com.chris.tiantian.module.message.fragment.SignalMessageFragment;
 import com.chris.tiantian.util.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -51,12 +51,13 @@ public class MessageFragment extends Fragment {
     public void initTabView() {
         fragmentList = new ArrayList<>();
         fragmentNameList = new ArrayList<>();
-        fragmentList.add(new AllMessageFragment());
-        fragmentList.add(new SignalMessageFragment());
+        fragmentList.add(new SyntheticMessageFragment());
         fragmentList.add(new StrategyMessageFragment());
+        fragmentList.add(new SignalMessageFragment());
+
         fragmentNameList.add("综合提醒");
-        fragmentNameList.add("信号提醒");
         fragmentNameList.add("策略提醒");
+        fragmentNameList.add("信号提醒");
 
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), fragmentList, fragmentNameList));

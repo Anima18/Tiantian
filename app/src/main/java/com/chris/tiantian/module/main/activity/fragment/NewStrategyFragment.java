@@ -1,6 +1,5 @@
 package com.chris.tiantian.module.main.activity.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.RankData;
-import com.chris.tiantian.util.UIAdapter;
+import com.chris.tiantian.util.CommonAdapter;
+import com.chris.tiantian.util.CommonItemViewHolder;
 import com.chris.tiantian.view.DividerItemDecoration;
 
 import java.util.List;
@@ -37,7 +37,19 @@ public class NewStrategyFragment extends Fragment {
             listView.setNestedScrollingEnabled(false);
 
             List<RankData.NewPolicyBean>rankBeans = getArguments().getParcelableArrayList(DATA);
-            NewStrategyAdapter adapter = new NewStrategyAdapter(getContext(), rankBeans);
+            /*NewStrategyAdapter adapter = new NewStrategyAdapter(getContext(), rankBeans);
+            listView.setAdapter(adapter);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+            listView.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation(), DividerItemDecoration.DIVIDER_TYPE_INSET, layoutManager.getOrientation()));
+            listView.setLayoutManager(layoutManager);*/
+            CommonAdapter<RankData.NewPolicyBean> adapter = new CommonAdapter(getContext(), R.layout.listview_new_strategy_item);
+            adapter.setItemViewHolderCreator(new CommonAdapter.OnItemViewHolderCreator() {
+                @Override
+                public CommonItemViewHolder create(View itemView) {
+                    return new NewStrategyItemViewHolder(itemView);
+                }
+            });
+            adapter.setData(rankBeans);
             listView.setAdapter(adapter);
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
             listView.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation(), DividerItemDecoration.DIVIDER_TYPE_INSET, layoutManager.getOrientation()));
@@ -46,8 +58,30 @@ public class NewStrategyFragment extends Fragment {
         return rootView;
     }
 
+    class NewStrategyItemViewHolder extends CommonItemViewHolder<RankData.NewPolicyBean> {
+        TextView developerTv;
+        TextView titleTv;
+        TextView timeTv;
+        TextView percentTv;
+        public NewStrategyItemViewHolder(View itemView) {
+            super(itemView);
+            developerTv = itemView.findViewById(R.id.strategy_developer_tv);
+            titleTv = itemView.findViewById(R.id.strategy_title_tv);
+            timeTv = itemView.findViewById(R.id.strategy_launchTime_tv);
+            percentTv = itemView.findViewById(R.id.strategy_percent_tv);
+        }
 
-    static class NewStrategyAdapter extends RecyclerView.Adapter<NewStrategyAdapter.ViewHolder> {
+        @Override
+        public void bindto(@NonNull RankData.NewPolicyBean rankBean) {
+
+            developerTv.setText(rankBean.getDeveloper());
+            timeTv.setText(rankBean.getLaunchTime());
+            percentTv.setText(rankBean.getBackAccuracy());
+            titleTv.setText(rankBean.getName());
+        }
+    }
+
+    /*static class NewStrategyAdapter extends RecyclerView.Adapter<NewStrategyAdapter.ViewHolder> {
 
         private Context context;
         private List<RankData.NewPolicyBean> weeklyRankBeans;
@@ -82,10 +116,10 @@ public class NewStrategyFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             RankData.NewPolicyBean rankBean = weeklyRankBeans.get(position);
-            holder.developerTv.setText(rankBean.getDeveloper());
-            holder.timeTv.setText(rankBean.getLaunchTime());
-            holder.percentTv.setText(rankBean.getBackAccuracy());
-            holder.titleTv.setText(rankBean.getName());
+            developerTv.setText(rankBean.getDeveloper());
+            timeTv.setText(rankBean.getLaunchTime());
+            percentTv.setText(rankBean.getBackAccuracy());
+            titleTv.setText(rankBean.getName());
         }
 
         // Return the total count of items
@@ -117,6 +151,6 @@ public class NewStrategyFragment extends Fragment {
                 });
             }
         }
-    }
+    }*/
 
 }

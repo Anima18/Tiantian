@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 /**
  * Created by jianjianhong on 20-1-10
  */
-@Entity(tableName = PolicySignalTable.TABLE_NAME)
+@Entity(tableName = PolicySignalTable.STRATEGY_TABLE_NAME)
 public class PolicySignal {
 
     /**
@@ -35,6 +35,26 @@ public class PolicySignal {
     public String policyKind;
     public String policyMarket;
     public String policyTimeLevel;
+    public String marketIconUrl;
+    public int userId;
+
+    public PolicySignal() {}
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getMarketIconUrl() {
+        return marketIconUrl;
+    }
+
+    public void setMarketIconUrl(String marketIconUrl) {
+        this.marketIconUrl = marketIconUrl;
+    }
 
     public int getId() {
         return id;

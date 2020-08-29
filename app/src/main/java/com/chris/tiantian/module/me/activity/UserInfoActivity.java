@@ -55,6 +55,8 @@ public class UserInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 UserUtil.logout();
                 UserUtil.resetMessage();
+                /*PolicySignalDao policySignalDao = CommonUtil.getDatabase().policySignalDao();
+                policySignalDao.clear();*/
                 UserInfoActivity.this.finish();
                 startActivity(new Intent(UserInfoActivity.this, LoginActivity.class));
             }
