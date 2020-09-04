@@ -56,7 +56,7 @@ public class StrategySettingFragment extends Fragment {
             statusView.showLoading();
 
             RecyclerView listView = rootView.findViewById(R.id.testListView);
-            listView.setNestedScrollingEnabled(false);
+            //listView.setNestedScrollingEnabled(false);
             adapter= new StrategySettingAdapter(getContext(), groupList);
             /*adapter.setOnItemClickListener(new StrategySettingAdapter.OnItemClickListener() {
                 @Override
@@ -158,14 +158,27 @@ public class StrategySettingFragment extends Fragment {
             StrategyTimeLevelGroup group = strategyList.get(position);
             holder.choosedRadio.setChecked(group.getChoosed());
             holder.nameView.setText(group.getName());
+
+            holder.timeLevel1View.setBackground(null);
+            holder.timeLevel1View.setTextColor(context.getResources().getColor(R.color.disabled_text_dark_color));
+            //holder.timeLevel1View.setOnClickListener(null);
+            holder.timeLevel2View.setBackground(null);
+            holder.timeLevel2View.setTextColor(context.getResources().getColor(R.color.disabled_text_dark_color));
+            //holder.timeLevel2View.setOnClickListener(null);
+            holder.timeLevel3View.setBackground(null);
+            holder.timeLevel3View.setTextColor(context.getResources().getColor(R.color.disabled_text_dark_color));
+            //holder.timeLevel3View.setOnClickListener(null);
+
             for(StrategyTimeLevelGroup.TimeLevel timeLevel : group.getTimeLevels()) {
                 if(timeLevel.getTimeLevel().equals("15min")) {
                     if(timeLevel.isChoosed()) {
                         holder.timeLevel1View.setTextColor(context.getResources().getColor(R.color.white));
                         holder.timeLevel1View.setBackground(context.getDrawable(R.drawable.time_background));
+                        holder.timeLevel1View.setSelected(true);
                     }else {
                         holder.timeLevel1View.setBackground(null);
                         holder.timeLevel1View.setTextColor(context.getResources().getColor(R.color.primary_text_dark_color));
+                        holder.timeLevel1View.setSelected(false);
                     }
                     holder.timeLevel1View.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -177,9 +190,11 @@ public class StrategySettingFragment extends Fragment {
                     if(timeLevel.isChoosed()) {
                         holder.timeLevel2View.setTextColor(context.getResources().getColor(R.color.white));
                         holder.timeLevel2View.setBackground(context.getDrawable(R.drawable.time_background));
+                        holder.timeLevel2View.setSelected(true);
                     }else {
                         holder.timeLevel2View.setBackground(null);
                         holder.timeLevel2View.setTextColor(context.getResources().getColor(R.color.primary_text_dark_color));
+                        holder.timeLevel2View.setSelected(false);
                     }
                     holder.timeLevel2View.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -191,9 +206,11 @@ public class StrategySettingFragment extends Fragment {
                     if(timeLevel.isChoosed()) {
                         holder.timeLevel3View.setTextColor(context.getResources().getColor(R.color.white));
                         holder.timeLevel3View.setBackground(context.getDrawable(R.drawable.time_background));
+                        holder.timeLevel3View.setSelected(true);
                     }else {
                         holder.timeLevel3View.setBackground(null);
                         holder.timeLevel3View.setTextColor(context.getResources().getColor(R.color.primary_text_dark_color));
+                        holder.timeLevel3View.setSelected(false);
                     }
                     holder.timeLevel3View.setOnClickListener(new View.OnClickListener() {
                         @Override

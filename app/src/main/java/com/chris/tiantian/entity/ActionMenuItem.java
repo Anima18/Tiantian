@@ -25,6 +25,12 @@ public class ActionMenuItem {
         this.iconResId = iconResId;
     }
 
+    public ActionMenuItem(String title, Integer iconResId, Integer iconColor) {
+        this.title = title;
+        this.iconResId = iconResId;
+        this.iconColor = iconColor;
+    }
+
     public ActionMenuItem(String title, String value, Integer iconResId) {
         this.title = title;
         this.value = value;

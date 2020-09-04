@@ -29,7 +29,7 @@ public class PreferencesUtil {
             return null;
         }
         String userIdStr = userId+"";
-        Map<String, String> timeStampMap = getMessageTimestampMap(userIdStr);
+        Map<String, String> timeStampMap = getMessageTimestampMap();
         if(timeStampMap.containsKey(userIdStr)) {
             return timeStampMap.get(userIdStr);
         }else {
@@ -47,13 +47,13 @@ public class PreferencesUtil {
             return ;
         }
         String userIdStr = userId+"";
-        Map<String, String> timeStampMap = getMessageTimestampMap(userIdStr);
+        Map<String, String> timeStampMap = getMessageTimestampMap();
         timeStampMap.put(userIdStr, DateUtil.getTime(new Date(), Constant.DATA_TIME_FORMAT));
         String timeStampData = UTJsonFactory.createJson().toJson(timeStampMap);
         PreferencesUtil.getUserInfoPreference().putStringValue(Constant.SP_MESSAGE_TIME_STAMP, timeStampData);
     }
 
-    private static Map<String, String> getMessageTimestampMap(String userIdStr) {
+    private static Map<String, String> getMessageTimestampMap() {
 
         String timeStampData = PreferencesUtil.getUserInfoPreference().getStringValue(Constant.SP_MESSAGE_TIME_STAMP, "");
         Log.i("PreferencesUtil", timeStampData);

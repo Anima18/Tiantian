@@ -23,6 +23,8 @@ public interface Constant {
     String SP_TOKEN = "SP_TOKEN";
     String SP_OPENID = "SP_OPENID";
 
+    String SP_CURRENT_STRATEGY_ID = "SP_CURRENT_STRATEGY_ID";
+
     //策略列表是否要更新
     String SP_STRATEGY_LOADED = "SP_STRATEGY_LOADED";
     //获取上次更新时间

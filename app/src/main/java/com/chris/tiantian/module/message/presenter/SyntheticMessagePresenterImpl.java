@@ -114,7 +114,7 @@ public class SyntheticMessagePresenterImpl implements SyntheticMessagePresenter 
 
     @Override
     public void monitorPolicySignal() {
-        refreshPolicySignal(false);
+        refreshPolicySignal();
     }
 
     @Override
@@ -142,7 +142,7 @@ public class SyntheticMessagePresenterImpl implements SyntheticMessagePresenter 
     }
 
     @Override
-    public void refreshPolicySignal(boolean isShowResultMessage) {
+    public void refreshPolicySignal() {
         if(!UserUtil.isLogin()) {
             return;
         }
@@ -160,6 +160,7 @@ public class SyntheticMessagePresenterImpl implements SyntheticMessagePresenter 
                     @Override
                     public void onFailure(@NotNull String s) {
                         LocationLog.getInstance().i("PolicyMonitorService request error: "+s);
+                        EventBus.getDefault().post(new PolicySignalMessage(true));
                     }
 
                     @Override
@@ -185,6 +186,8 @@ public class SyntheticMessagePresenterImpl implements SyntheticMessagePresenter 
                             });
                         }else {
                             LocationLog.getInstance().i("PolicyMonitorService request not data");
+                            PreferencesUtil.updateMessageTimestamp();
+                            EventBus.getDefault().post(new PolicySignalMessage(true));
                         }
                     }
                 });

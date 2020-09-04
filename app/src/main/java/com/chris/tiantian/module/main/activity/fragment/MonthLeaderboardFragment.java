@@ -43,12 +43,6 @@ public class MonthLeaderboardFragment extends Fragment {
             listView = rootView.findViewById(R.id.testListView);
             listView.setNestedScrollingEnabled(false);
             List<RankData.WeeklyRankBean>rankBeans = getArguments().getParcelableArrayList(DATA);
-            /*WeekLeaderboardAdapter adapter = new WeekLeaderboardAdapter(getContext(), rankBeans);
-            listView.setAdapter(adapter);
-
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-            listView.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation(), DividerItemDecoration.DIVIDER_TYPE_INSET, layoutManager.getOrientation()));
-            listView.setLayoutManager(layoutManager);*/
             CommonAdapter<RankData.WeeklyRankBean> adapter = new CommonAdapter(getContext(), R.layout.listview_leader_board_item);
             adapter.setItemViewHolderCreator(new CommonAdapter.OnItemViewHolderCreator() {
                 @Override

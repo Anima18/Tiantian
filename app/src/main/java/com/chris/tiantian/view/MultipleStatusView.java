@@ -16,13 +16,6 @@ import com.chris.tiantian.R;
 
 import java.util.ArrayList;
 
-/**
- * 类描述：  一个方便在多种状态切换的view
- * <p>
- * 创建人:   续写经典
- * 创建时间: 2016/1/15 10:20.
- */
-@SuppressWarnings("unused")
 public class MultipleStatusView extends RelativeLayout {
     private static final String TAG = "MultipleStatusView";
 

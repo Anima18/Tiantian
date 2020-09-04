@@ -7,5 +7,5 @@ public interface SyntheticMessagePresenter {
     void requestStrategyDataByLocal();
     void monitorPolicySignal();
     void monitorMarketTicks();
-    void refreshPolicySignal(boolean isShowResultMessage);
+    void refreshPolicySignal();
 }

@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.anima.componentlib.toolbar.Toolbar;
@@ -19,7 +18,6 @@ import com.anima.networkrequest.NetworkRequest;
 import com.anima.networkrequest.RequestStream;
 import com.anima.networkrequest.callback.DataObjectCallback;
 import com.anima.networkrequest.entity.RequestParam;
-import com.anima.networkrequest.util.sharedprefs.ConfigSharedPreferences;
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.Strategy;
@@ -48,7 +46,7 @@ public class StrategySettingActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private MultipleStatusView statusView;
-    private SwipeRefreshLayout refreshLayout;
+    //private SwipeRefreshLayout refreshLayout;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -72,11 +70,11 @@ public class StrategySettingActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.activity_toolBar);
         toolbar.setTitle(strategy.getMarket()+"定制");
         smsSettingResult = findViewById(R.id.sms_setting_result);
-        refreshLayout = findViewById(R.id.view_swipe_refresh_layout);
+        /*refreshLayout = findViewById(R.id.view_swipe_refresh_layout);
         refreshLayout.setColorSchemeColors(getResources().getColor(android.R.color.holo_orange_light),
                 getResources().getColor(android.R.color.holo_red_light),
                 getResources().getColor(android.R.color.holo_blue_light),
-                getResources().getColor(android.R.color.holo_green_light));
+                getResources().getColor(android.R.color.holo_green_light));*/
 
         findViewById(R.id.sms_setting_layout).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,13 +96,13 @@ public class StrategySettingActivity extends AppCompatActivity {
                 }
             });
 
-            refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            /*refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
                     statusView.showLoading();
                     requestData();
                 }
-            });
+            });*/
         }
 
     }
@@ -124,7 +122,7 @@ public class StrategySettingActivity extends AppCompatActivity {
     }
 
     private void requestData() {
-        refreshLayout.setRefreshing(false);
+        //refreshLayout.setRefreshing(false);
         String smsUrl = String.format("%s/comment/apiv2/smsNotifyEnable/%s", CommonUtil.getBaseUrl(), UserUtil.getUserId());
         NetworkRequest smsRequest = new NetworkRequest<Boolean>(this)
                 .url(smsUrl)
@@ -214,6 +212,7 @@ public class StrategySettingActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(@org.jetbrains.annotations.Nullable String aBoolean) {
                         Toast.makeText(StrategySettingActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                        PreferencesUtil.getUserInfoPreference().putStringValue(Constant.SP_CURRENT_STRATEGY_ID, newId);
                         UserUtil.resetMessage();
                         StrategySettingActivity.this.finish();
                     }

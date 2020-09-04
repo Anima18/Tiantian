@@ -28,13 +28,34 @@
 
     </androidx.cardview.widget.CardView>
 
-    <com.anima.componentlib.paginglistview.PagingRecycleView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/view_swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.chris.tiantian.view.MultipleStatusView
+            android:id="@+id/strategyFragment_status_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:loadingView="@layout/layout_loading_view"
+            app:emptyView="@layout/layout_empty_view"
+            app:errorView="@layout/layout_error_view"
+            app:noNetworkView="@layout/layout_no_network_view">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/allMessage_listView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.chris.tiantian.view.MultipleStatusView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <!--<com.anima.componentlib.paginglistview.PagingRecycleView
         android:id="@+id/allMessage_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:pagesize="30"
         app:dividerItemDecoration="true"
-        app:lagoutid="@layout/listview_message_item"/>
+        app:lagoutid="@layout/listview_message_item"/>-->
 
 </LinearLayout>
 

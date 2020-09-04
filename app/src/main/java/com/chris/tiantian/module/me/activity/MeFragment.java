@@ -1,7 +1,9 @@
 package com.chris.tiantian.module.me.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +13,28 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.anima.networkrequest.NetworkRequest;
+import com.anima.networkrequest.callback.DataObjectCallback;
+import com.anima.networkrequest.entity.RequestParam;
 import com.chris.tiantian.R;
+import com.chris.tiantian.base.db.dao.PolicySignalDao;
 import com.chris.tiantian.base.service.VersionUploadService;
 import com.chris.tiantian.entity.ActionMenuItem;
+import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.entity.User;
-import com.chris.tiantian.module.login.LoginActivity;
-import com.chris.tiantian.module.strategy.setting.StrategySettingActivity;
-import com.chris.tiantian.util.CommonUtil;
+import com.chris.tiantian.entity.dataparser.ObjectStatusDataParser;
 import com.chris.tiantian.module.commom.ActionAdapter;
+import com.chris.tiantian.module.login.LoginActivity;
+import com.chris.tiantian.util.CommonUtil;
+import com.chris.tiantian.util.PreferencesUtil;
 import com.chris.tiantian.util.UserUtil;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,14 +129,62 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     case 2:
                         startActivity(new Intent(getContext(), UserGuideActivity.class));
                         break;
+                    case 4:
+                        new AlertDialog.Builder(getContext())
+                                .setTitle("提示")
+                                .setMessage("初始设置会重置策略定制，和清空综合提醒数据，是否继续？")
+                                .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        resetData();
+                                    }
+                                })
+                                .setNegativeButton("否", null)
+                                .show();
+
+                        break;
                     default:
                         Toast.makeText(getContext(), "暂未实现", Toast.LENGTH_SHORT).show();
 
                 }
-
             }
         });
         dataRv.setAdapter(adapter);
+    }
+
+    private void resetData() {
+        String currentStrategyId = PreferencesUtil.getUserInfoPreference().getStringValue(Constant.SP_CURRENT_STRATEGY_ID, "0");
+        String saveUrl = String.format("%s/comment/apiv2/policySubscribe/%s/%s/%s", CommonUtil.getBaseUrl(), UserUtil.getUserId(), currentStrategyId, "0");
+        new NetworkRequest<String>(getContext())
+                .url(saveUrl)
+                .method(RequestParam.Method.GET)
+                .loadingMessage("正在重置中...")
+                .dataClass(String.class)
+                .dataParser(new ObjectStatusDataParser<String>())
+                .getObject(new DataObjectCallback<String>() {
+                    @Override
+                    public void onSuccess(@org.jetbrains.annotations.Nullable String aBoolean) {
+                        UserUtil.resetMessage();
+                        PolicySignalDao policySignalDao = CommonUtil.getDatabase().policySignalDao();
+                        policySignalDao.clear();
+                        PreferencesUtil.updateMessageTimestamp();
+                        Toast.makeText(getContext(), "重置成功", Toast.LENGTH_SHORT).show();
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent LaunchIntent = getContext().getPackageManager().getLaunchIntentForPackage(getActivity().getApplication().getPackageName());
+                                LaunchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(LaunchIntent);
+                            }
+                        }, 100);// 1秒钟后重启应用
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull String s) {
+                        Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override
@@ -165,10 +224,11 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
     private List<ActionMenuItem> getActionMenuItems() {
         List<ActionMenuItem> itemList = new ArrayList<>();
-        itemList.add(new ActionMenuItem("版本更新",  CommonUtil.getVersionName(getContext()), R.drawable.settings_ic_update));
-        itemList.add(new ActionMenuItem("我的积分", R.drawable.settings_ic_score));
-        itemList.add(new ActionMenuItem("使用教程", R.drawable.settings_ic_using_tutorials));
-        itemList.add(new ActionMenuItem("关于我们", R.drawable.settings_ic_about_us));
+        itemList.add(new ActionMenuItem("版本更新",  CommonUtil.getVersionName(getContext()), R.drawable.settings_ic_update, R.color.secondary_text_dark_color));
+        itemList.add(new ActionMenuItem("我的积分", R.drawable.settings_ic_score, R.color.secondary_text_dark_color));
+        itemList.add(new ActionMenuItem("使用教程", R.drawable.settings_ic_using_tutorials, R.color.secondary_text_dark_color));
+        itemList.add(new ActionMenuItem("关于我们", R.drawable.settings_ic_about_us, R.color.secondary_text_dark_color));
+        itemList.add(new ActionMenuItem("初始设置", R.drawable.ic_reset, R.color.secondary_text_dark_color));
         itemList.get(2).setMake(true);
         return itemList;
     }
