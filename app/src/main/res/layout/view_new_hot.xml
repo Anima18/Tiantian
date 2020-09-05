@@ -38,20 +38,19 @@
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:orientation="horizontal">
-        <RelativeLayout
+        <com.chris.tiantian.view.RoundRectLayout
             android:id="@+id/firstNew_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="?android:attr/selectableItemBackground"
             android:layout_weight="3">
 
-            <com.shehuan.niv.NiceImageView
+            <ImageView
                 android:id="@+id/firstNew_imageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/new_image"
-                app:corner_radius="5dp" />
+                android:src="@drawable/new_image" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -82,7 +81,7 @@
                     android:textColor="@color/white"
                     android:text="区块链数据时代技术来临顶顶顶"/>
             </LinearLayout>
-        </RelativeLayout>
+        </com.chris.tiantian.view.RoundRectLayout>
 
         <LinearLayout
             android:layout_width="0dp"

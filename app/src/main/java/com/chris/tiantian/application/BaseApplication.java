@@ -21,6 +21,7 @@ import com.chris.tiantian.util.PreferencesUtil;
 import com.fanjun.keeplive.KeepLive;
 import com.fanjun.keeplive.config.ForegroundNotification;
 import com.fanjun.keeplive.config.ForegroundNotificationClickListener;
+import com.next.uceh.UCEHandler;
 
 import java.util.Date;
 
@@ -44,6 +45,12 @@ public class BaseApplication extends Application {
                 //.fallbackToDestructiveMigration()
                 .build();
         startForegroundKeepLive();
+
+        new UCEHandler.Builder(this)
+                .setUCEHEnabled(true)
+                .setTrackActivitiesEnabled(true)
+                .setBackgroundModeEnabled(true)
+                .build();
     }
 
     public AppDatabase getAppDatabase() {

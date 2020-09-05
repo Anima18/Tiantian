@@ -207,7 +207,7 @@ public class MyPointsActivity extends Activity {
         }
         int total = (buyFreedomPoint *2 + buyLockedPoint)*100;
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("body", "天机APP-购买测试");
+        paramMap.put("body", "天机APP-购买积分");
         paramMap.put("attach", attach);
         paramMap.put("total_fee", total+"");
         paramMap.put("spbill_create_ip", ip);

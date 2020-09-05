@@ -6,8 +6,8 @@ android {
         applicationId "com.chris.tiantian"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 22
-        versionName "1.2.2"
+        versionCode 23
+        versionName "1.2.3"
         flavorDimensions "default"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -125,7 +125,10 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:2.2.3"
     annotationProcessor 'android.arch.persistence.room:compiler:2.2.3'
 
-    implementation 'com.github.SheHuan:NiceImageView:1.0.5'
-
+    //weixi
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+
+    //crash
+    debugImplementation 'com.github.kingideayou.UCE-Handler:uce_handler:1.5.2'
+    releaseImplementation 'com.github.kingideayou.UCE-Handler:uce_handler_no_op:1.5.2'
 }

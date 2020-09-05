@@ -37,10 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private View toolbarLayout;
     private Toolbar toolbar;
     private BottomNavigationView navigationView;
-/*    private TiantianFragment tiantainFragment;
-    private Fragment subscriptionFragment;
-    private Fragment plazaFragment;
-    private Fragment meFragment;*/
     private int currentPageIndex = 0;
 
     private List<Fragment> fragments = new ArrayList<>();
@@ -49,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        int i = 1/0;
         if (savedInstanceState!=null){
             currentPageIndex = savedInstanceState.getInt("KEY_PAGE_INDEX");
         }else {

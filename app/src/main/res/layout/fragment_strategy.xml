@@ -36,7 +36,7 @@
                 android:paddingLeft="4dp"
                 android:textSize="12sp"
                 android:textColor="@color/secondary_text_dark_color"
-                android:text="请先选择品种，在选择策略"/>
+                android:text="请先选择品种，再选择策略"/>
         </LinearLayout>
 
 

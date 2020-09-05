@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.New;
+import com.chris.tiantian.view.RoundRectLayout;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class NewHotView extends LinearLayout {
 
     private View emptyView;
     private View newListView;
-    private View firstNewLayout;
+    private RoundRectLayout firstNewLayout;
     private ImageView firstNewImageView;
     private TextView firstNewTitle;
     private View secondNewLayout;
@@ -55,6 +56,8 @@ public class NewHotView extends LinearLayout {
         threeNewTitle = rootView.findViewById(R.id.threeNew_title);
         fourNewLayout = rootView.findViewById(R.id.fourNew_layout);
         fourNewTitle = rootView.findViewById(R.id.fourNew_title);
+
+        firstNewLayout.setCornerRadius(20);
     }
 
     public void setDataList(List<New> dataList) {
