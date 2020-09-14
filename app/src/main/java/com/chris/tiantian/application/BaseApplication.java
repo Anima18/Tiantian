@@ -44,13 +44,12 @@ public class BaseApplication extends Application {
                 .addMigrations(MIGRATION_3_4,MIGRATION_4_5)
                 //.fallbackToDestructiveMigration()
                 .build();
-        startForegroundKeepLive();
-
         new UCEHandler.Builder(this)
                 .setUCEHEnabled(true)
                 .setTrackActivitiesEnabled(true)
                 .setBackgroundModeEnabled(true)
                 .build();
+        startForegroundKeepLive();
     }
 
     public AppDatabase getAppDatabase() {

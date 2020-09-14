@@ -6,8 +6,8 @@ android {
         applicationId "com.chris.tiantian"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 23
-        versionName "1.2.3"
+        versionCode 25
+        versionName "1.2.5"
         flavorDimensions "default"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -48,6 +48,7 @@ android {
             storePassword '123456'
             keyPassword '123456'
             keyAlias = 'key'
+
         }
     }
 

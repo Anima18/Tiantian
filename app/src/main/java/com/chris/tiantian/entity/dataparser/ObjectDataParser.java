@@ -40,10 +40,14 @@ public class ObjectDataParser<T> implements ResponseParser {
    
     @Override
     public ResponseParser parser(String s, Class<?> aClass) {
-        try {
-            resultData = (T)new Gson().fromJson(s.toString(), aClass);
-        } catch (Exception e) {
-            errorMessage = e.getMessage();
+        if(TextUtils.isEmpty(s)) {
+            errorMessage = "没有数据";
+        }else {
+            try {
+                resultData = (T) new Gson().fromJson(s.toString(), aClass);
+            } catch (Exception e) {
+                errorMessage = e.getMessage();
+            }
         }
 
         return this;

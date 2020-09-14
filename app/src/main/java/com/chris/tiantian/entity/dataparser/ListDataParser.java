@@ -46,11 +46,15 @@ public class ListDataParser<T> implements ResponseParser {
    
     @Override
     public ResponseParser parser(String s, Class<?> aClass) {
-        try {
-            Type type = new ParameterizedTypeImpl(List.class, new Class[]{aClass});
-            resultData = new Gson().fromJson(new StringReader(s), type);
-        } catch (Exception e) {
-            errorMessage = e.getMessage();
+        if(TextUtils.isEmpty(s)) {
+            errorMessage = "没有数据";
+        }else {
+            try {
+                Type type = new ParameterizedTypeImpl(List.class, new Class[]{aClass});
+                resultData = new Gson().fromJson(new StringReader(s), type);
+            } catch (Exception e) {
+                errorMessage = e.getMessage();
+            }
         }
 
         return this;

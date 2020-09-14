@@ -16,6 +16,7 @@ public class UserUtil {
 
     public static User getUser() {
         String userData = PreferencesUtil.getUserInfoPreference().getStringValue(Constant.SP_USER_DATA, "");
+        //String userData = "{\"id\":23,\"name\":\"u-18933215731\",\"password\":null,\"chName\":null,\"phoneNumber\":\"18933215731\",\"token\":\"token\",\"level\":\"初级\",\"levelInt\":1,\"msg\":null,\"openId\":\"om3Aet4sKPfXzReYGM0ggUUABwhI\"}";
         if(TextUtils.isEmpty(userData)) {
             return null;
         }else {
@@ -25,10 +26,12 @@ public class UserUtil {
 
     public static int getUserId() {
         return PreferencesUtil.getUserInfoPreference().getIntValue(Constant.SP_USER_ID, -1);
+
     }
 
     public static String getToken() {
         return PreferencesUtil.getUserInfoPreference().getStringValue(Constant.SP_TOKEN, "");
+
     }
 
     public static boolean isLogin() {

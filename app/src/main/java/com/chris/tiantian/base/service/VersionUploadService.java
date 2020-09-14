@@ -201,7 +201,7 @@ public class VersionUploadService {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         Uri uri;
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_ACTIVITY_NEW_TASK);
             //第二个参数需要与<provider>标签中的android:authorities属性相同
             uri = FileProvider.getUriForFile(context,"com.chris.tiantian.fileprovider222",apkFile);
         }else{

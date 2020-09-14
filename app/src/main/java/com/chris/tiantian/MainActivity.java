@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        int i = 1/0;
         if (savedInstanceState!=null){
             currentPageIndex = savedInstanceState.getInt("KEY_PAGE_INDEX");
         }else {
