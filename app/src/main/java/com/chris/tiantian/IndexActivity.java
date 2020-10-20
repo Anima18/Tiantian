@@ -6,10 +6,7 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.anima.networkrequest.util.sharedprefs.ConfigSharedPreferences;
-import com.chris.tiantian.entity.Constant;
 import com.chris.tiantian.module.login.LoginActivity;
-import com.chris.tiantian.util.PreferencesUtil;
 
 /**
  * Created by Chris on 2016/1/17.

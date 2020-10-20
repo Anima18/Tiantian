@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.anima.componentlib.toolbar.Toolbar;
 import com.chris.tiantian.module.main.activity.TiantianFragment;
 import com.chris.tiantian.module.me.activity.MeFragment;
 import com.chris.tiantian.module.message.MessageFragment;
@@ -23,6 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.anima.componentlib.toolbar.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;

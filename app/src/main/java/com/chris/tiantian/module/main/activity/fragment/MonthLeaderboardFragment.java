@@ -1,12 +1,9 @@
 package com.chris.tiantian.module.main.activity.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,12 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chris.tiantian.MainActivity;
 import com.chris.tiantian.R;
 import com.chris.tiantian.entity.RankData;
 import com.chris.tiantian.util.CommonAdapter;
 import com.chris.tiantian.util.CommonItemViewHolder;
-import com.chris.tiantian.util.UIAdapter;
 import com.chris.tiantian.view.DividerItemDecoration;
 
 import java.util.List;
@@ -67,6 +62,8 @@ public class MonthLeaderboardFragment extends Fragment {
         TextView timeTv;
         TextView countTv;
         TextView percentTv;
+        TextView countLabel;
+        TextView percentLabel;
         public MonthLeaderItemViewHolder(View itemView) {
             super(itemView);
             indexTv = itemView.findViewById(R.id.rank_index_tv);
@@ -74,6 +71,10 @@ public class MonthLeaderboardFragment extends Fragment {
             timeTv = itemView.findViewById(R.id.rank_time_tv);
             countTv = itemView.findViewById(R.id.rank_count_tv);
             percentTv = itemView.findViewById(R.id.rank_percent_tv);
+            countLabel = itemView.findViewById(R.id.rank_count_label);
+            percentLabel = itemView.findViewById(R.id.rank_percent_label);
+            countLabel.setText("一月内出现次数: ");
+            percentLabel.setText("月盈利率: ");
         }
 
         @Override

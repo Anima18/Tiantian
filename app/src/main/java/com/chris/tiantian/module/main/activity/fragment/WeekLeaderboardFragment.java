@@ -67,6 +67,8 @@ public class WeekLeaderboardFragment extends Fragment {
         TextView timeTv;
         TextView countTv;
         TextView percentTv;
+        TextView countLabel;
+        TextView percentLabel;
         public WeekLeaderItemViewHolder(View itemView) {
             super(itemView);
             indexTv = itemView.findViewById(R.id.rank_index_tv);
@@ -74,6 +76,10 @@ public class WeekLeaderboardFragment extends Fragment {
             timeTv = itemView.findViewById(R.id.rank_time_tv);
             countTv = itemView.findViewById(R.id.rank_count_tv);
             percentTv = itemView.findViewById(R.id.rank_percent_tv);
+            countLabel = itemView.findViewById(R.id.rank_count_label);
+            percentLabel = itemView.findViewById(R.id.rank_percent_label);
+            countLabel.setText("一周内出现次数: ");
+            percentLabel.setText("周盈利率: ");
         }
 
         @Override
